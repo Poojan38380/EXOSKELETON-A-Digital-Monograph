@@ -29,15 +29,21 @@
     var(--rule) 90%,
     transparent 100%
   );
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.nav-rail--expanded .nav-rail__spine {
+  opacity: 1;
 }
 
 .nav-rail__pages {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 100%;
-  padding: 1rem 0;
+  justify-content: flex-start;
+  padding: 1.25rem 0 0.75rem;
   min-width: 48px;
+  flex: 1;
 }
 
 .nav-rail__item {

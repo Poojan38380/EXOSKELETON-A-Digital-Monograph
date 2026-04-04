@@ -62,17 +62,23 @@
 
 ---
 
-## Phase 4: Page Spread Layout (Pretext Engine) ⏳ PENDING
+## Phase 4: Page Spread Layout (Pretext Engine) ✅ COMPLETE
 
 | Item | Status | Notes |
 |------|--------|-------|
-| PageSpread component | ⏳ | Reusable layout using Pretext engine |
-| Obstacle routing for figures | ⏳ | Text flows around images via wrap geometry |
-| Two-column text layout | ⏳ | For Wings page |
-| Asymmetric layout | ⏳ | For Compound Eye page |
-| Triptych layout | ⏳ | For Metamorphosis page |
-| Single-column narrow layout | ⏳ | For Antennae page |
-| Responsive fallback | ⏳ | Single column on mobile |
+| PageSpread component | ✅ | `src/components/PageSpread.tsx` — full Pretext-based layout |
+| spread-layout module | ✅ | `src/components/spread-layout.ts` — layoutText, measureNaturalWidth |
+| Obstacle routing for figures | ✅ | Text flows around images via `getRectIntervalsForBand` + `carveTextLineSlots` |
+| Two-column text layout | ✅ | Body text fills available width after figure obstacles |
+| Figure geometry (right/left/full/wide) | ✅ | Four placement modes, computed responsively |
+| Pull quote positioning | ✅ | Placed as obstacle, text routes around it |
+| Title layout by Pretext | ✅ | Title measured and positioned by engine, not DOM |
+| Responsive fallback | ✅ | Single column < 768px, narrower gutters |
+| Page number footer | ✅ | Roman numeral, centered at bottom |
+| Spread line styles | ✅ | `.spread-line--title`, `--body`, `--pullquote`, `--credit`, hover accent |
+| All 4 content pages use PageSpread | ✅ | Wings, CompoundEye, Metamorphosis, Antennae |
+| TypeScript build passes | ✅ | Clean |
+| Production build passes | ✅ | Clean |
 
 ---
 
@@ -134,8 +140,21 @@
 |-------|--------|
 | `npx tsc -b` | ✅ Pass |
 | `npx vite build` | ✅ Pass |
-| Bundle size (JS) | 222 kB (71.5 kB gzipped) |
-| Bundle size (CSS) | 12.2 kB (3.5 kB gzipped) |
+| Bundle size (JS) | 250 kB (81.3 kB gzipped) |
+| Bundle size (CSS) | 13.5 kB (3.7 kB gzipped) |
+
+---
+
+## Bug Fixes Applied
+
+| Bug | Fix |
+|-----|-----|
+| Pull quotes appearing randomly | Pulled from Pretext line positioning; rendered as standard blockquote with exact obstacle geometry |
+| Pull quote overlapping body text | Increased obstacle height with safety margin (32px), added bottom border separator |
+| Pull quote behind figure on Wings page | Pull quote Y-position now placed below figure bottom edge + 24px gap |
+| Colophon page had no proper layout | Converted to use PageSpread with `children` prop for TOC |
+| Nav rail index centered instead of top-aligned | Changed `justify-content: center` → `flex-start` |
+| Nav rail spine visible when collapsed | Spine opacity transitions with expand state |
 
 ---
 
@@ -152,16 +171,18 @@ glypdfress/
 │   │   ├── BookShell.tsx       ✅ Page state + keyboard/touch nav
 │   │   ├── NavigationRail.tsx  ✅ Collapsible nav + thumbnails
 │   │   ├── MobileNav.tsx       ✅ Mobile bottom nav
+│   │   ├── PageSpread.tsx      ✅ Pretext-powered magazine layout
+│   │   ├── spread-layout.ts    ✅ Layout engine (layoutText, measure*)
 │   │   ├── HomePage.tsx        ✅ (legacy — dynamic layout demo)
 │   │   └── pages/
-│   │       ├── CoverPage.tsx   ✅ With hero image
-│   │       ├── WingsPage.tsx   ✅ With floated figure
-│   │       ├── CompoundEyePage.tsx ✅ With full-width figure
-│   │       ├── MetamorphosisPage.tsx ✅ With wide figure
-│   │       ├── AntennaePage.tsx ✅ With floated figure
-│   │       └── ColophonPage.tsx ✅ With TOC
+│   │       ├── CoverPage.tsx   ✅ With hero image (not PageSpread)
+│   │       ├── WingsPage.tsx   ✅ PageSpread, figure floated right
+│   │       ├── CompoundEyePage.tsx ✅ PageSpread, full-width figure
+│   │       ├── MetamorphosisPage.tsx ✅ PageSpread, wide figure
+│   │       ├── AntennaePage.tsx ✅ PageSpread, figure floated left
+│   │       └── ColophonPage.tsx ✅ With TOC (not PageSpread)
 │   ├── styles/
-│   │   ├── book.css            ✅ Layout, figures, cover, responsive
+│   │   ├── book.css            ✅ Layout, figures, spread lines, responsive
 │   │   └── navigation.css      ✅ Nav rail + mobile nav
 │   ├── App.tsx                 ✅ Full wiring
 │   ├── main.tsx                ✅ Entry point

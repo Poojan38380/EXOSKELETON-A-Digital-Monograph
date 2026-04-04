@@ -184,9 +184,11 @@
   font-size: 0.9rem;
   color: var(--marginalia);
   text-align: center;
-  margin-top: 0.75rem;
-  padding-top: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 0.65rem;
+  padding-bottom: 0.5rem;
   border-top: 1px solid var(--rule-light);
+  border-bottom: 1px solid var(--rule-light);
 }
 
 .page-figure--right {
@@ -221,10 +223,89 @@
   object-position: center;
 }
 
+/* ── Page Spread (Pretext layout engine) ─────────────── */
+.page-spread {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  padding: 0; /* Pretext handles all positioning */
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.spread-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.spread-line {
+  position: absolute;
+  white-space: pre;
+  pointer-events: auto;
+  user-select: text;
+  cursor: text;
+  color: var(--ink);
+  transition: color 120ms ease;
+}
+
+.spread-line--title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  color: var(--iron-gall);
+  cursor: text;
+}
+
+.spread-line--body {
+  font-family: "EB Garamond", Georgia, serif;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.spread-line--body:hover {
+  color: var(--ochre);
+}
+
+.spread-line--pullquote {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  color: var(--iron-gall);
+}
+
+.spread-line--credit {
+  font-family: "Source Code Pro", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--marginalia);
+}
+
+.spread-page-number {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Source Code Pro", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--marginalia);
+}
+
+.spread-extra {
+  z-index: 1;
+  padding: 0 4rem 3rem;
+}
+
+.colophon__toc-wrap {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+}
+
 /* ── Responsive ────────────────────────────────────────── */
 @media (max-width: 768px) {
   .page-spread {
-    padding: 2rem 1.5rem;
+    padding: 1rem;
   }
 
   .cover {
