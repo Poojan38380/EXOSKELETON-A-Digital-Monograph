@@ -28,7 +28,7 @@ export type LayoutResult = {
   remainingText: string
 }
 
-type BandObstacle = {
+export type BandObstacle = {
   rect: Rect
   horizontalPadding: number
   verticalPadding: number

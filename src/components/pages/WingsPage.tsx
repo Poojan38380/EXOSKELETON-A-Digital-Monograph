@@ -1,5 +1,7 @@
+import { useRef, useState } from 'react'
 import { PageSpread } from '../PageSpread'
-import type { SpreadConfig } from '../PageSpread'
+import type { SpreadConfig, AnchorPositions } from '../PageSpread'
+import type { BandObstacle } from '../spread-layout'
 import {
   WINGS_TITLE,
   WINGS_CREDIT,
@@ -8,6 +10,7 @@ import {
   PAGES,
 } from '../../content/entomology-text'
 import { IMG_DRAGONFLY_WING } from '../../content/image-urls'
+import { Butterfly } from '../Butterfly'
 
 const config: SpreadConfig = {
   title: WINGS_TITLE,
@@ -24,5 +27,23 @@ const config: SpreadConfig = {
 }
 
 export function WingsPage() {
-  return <PageSpread config={config} />
+  const spreadRef = useRef<HTMLDivElement>(null)
+  const [anchorPositions, setAnchorPositions] = useState<AnchorPositions | null>(null)
+  const [butterflyObstacle, setButterflyObstacle] = useState<BandObstacle | null>(null)
+
+  return (
+    <div style={{ position: 'relative', overflow: 'hidden' }}>
+      <PageSpread
+        config={config}
+        ref={spreadRef}
+        onAnchorPositions={setAnchorPositions}
+        butterflyObstacle={butterflyObstacle}
+      />
+      <Butterfly
+        containerRef={spreadRef}
+        anchorPositions={anchorPositions}
+        onObstacleChange={setButterflyObstacle}
+      />
+    </div>
+  )
 }

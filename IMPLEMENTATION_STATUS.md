@@ -163,6 +163,27 @@
 
 ---
 
+## Butterfly — Interactive Element on "The Architecture of Wings" ✅ COMPLETE
+
+Planned in `butterfly-wings-plan.md` (5 phases). All phases shipped.
+
+| Phase | Item | Status | Notes |
+|-------|------|--------|-------|
+| 1 | Anchor positions from PageSpread | ✅ | `onAnchorPositions` callback; clean layout (no butterfly) used so anchor coords are never contaminated by displacement feedback loop |
+| 2 | Bidirectional navigation | ✅ | Phase enum `at-start / flying-forward / flying-backward / at-end`; click toggles direction; re-snaps on resize |
+| 3 | Live Pretext text displacement | ✅ | `BandObstacle` exported from `spread-layout.ts`; butterfly added as live obstacle; separate clean+live layout passes; `butterfly-text-line` CSS transitions body lines; edge-ramp on `horizontalPadding` |
+| 4 | Inline SVG with conditional wing beats | ✅ | Switched from `<img>` to inline SVG so `<animate>` elements can be conditionally rendered — wings beat only when flying, completely still when resting |
+| 5 | Visual polish | ✅ | Catmull-Rom spline path through 5 seeded waypoints; flutter easing; gentle settle + breathing-pulse animations; no-scrollbar overflow clamp |
+
+**Key decisions:**
+- Two layout passes per frame when butterfly is present: one without butterfly (anchor positions), one with (rendered body lines). Prevents the chase feedback loop where the butterfly displaced its own anchor word.
+- `lastWord` anchor = right edge of last body line (`last.x + last.width`), giving a natural diagonal from top-left ("To") to bottom-right ("alive.").
+- Butterfly start: right edge flush with left edge of "To". Butterfly end: left edge flush with right edge of "alive."
+- Wing beat `dur` = 0.5 s with `calcMode="spline"` for organic feel; 13 000 ms total flight duration.
+- `overflow: hidden` on WingsPage wrapper prevents waypoints that wander outside content from creating a scrollbar.
+
+---
+
 ## Bug Fixes Applied
 
 | Bug | Fix |

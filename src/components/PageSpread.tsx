@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState, useCallback, type ReactNode } from 'react'
-import { layoutText, type PositionedLine } from './spread-layout'
+import { layoutText, type PositionedLine, type BandObstacle } from './spread-layout'
 import type { Rect } from '../layout-engine/wrap-geometry'
 
 /* ── PageSpread: Pretext-powered magazine layout ── */
@@ -25,9 +25,18 @@ export interface SpreadConfig {
   bottomReserve?: number
 }
 
+export type AnchorPositions = {
+  firstWord: { x: number; y: number }
+  lastWord: { x: number; y: number }
+}
+
 export interface PageSpreadProps {
   config: SpreadConfig
   children?: ReactNode
+  /** Called after each layout pass with the pixel positions of the first and last body-text words. */
+  onAnchorPositions?: (anchors: AnchorPositions) => void
+  /** Live obstacle from the butterfly; added to the layout engine so body text routes around it. */
+  butterflyObstacle?: BandObstacle | null
 }
 
 const BODY_FONT = '20px "EB Garamond", "Palatino Linotype", "Book Antiqua", Palatino, serif'
@@ -39,8 +48,11 @@ const PULL_QUOTE_FONT = 'italic 1.35rem "Cormorant Garamond", Georgia, serif'
 const PULL_QUOTE_LINE_HEIGHT = 28
 const GUTTER_DESKTOP = 64
 
-export function PageSpread({ config, children }: PageSpreadProps) {
+export function PageSpread({ config, children, onAnchorPositions, butterflyObstacle }: PageSpreadProps) {
   const containerRef = useRef<HTMLDivElement>(null)
+  // Stable ref so computeLayout's useCallback dep array stays clean
+  const onAnchorPositionsRef = useRef(onAnchorPositions)
+  useEffect(() => { onAnchorPositionsRef.current = onAnchorPositions }, [onAnchorPositions])
   const [layout, setLayout] = useState<{
     titleLines: PositionedLine[]
     creditPos: { x: number; y: number } | null
@@ -164,25 +176,38 @@ export function PageSpread({ config, children }: PageSpreadProps) {
 
     // Lay out body text in columns — reasonable max height
     const maxBodyHeight = bottomReserve > 0 ? 1200 : 4000
-    const bodyRegionHeight = maxBodyHeight
-    let bodyLines: PositionedLine[] = []
-
-    // Lay out body text in one region, letting obstacles carve out figure/pull-quote areas
     const bodyRegion: Rect = {
       x: gutter,
       y: copyTop,
       width: contentWidth,
-      height: bodyRegionHeight,
+      height: maxBodyHeight,
     }
 
-    const bodyResult = layoutText(
+    // ── Clean layout (no butterfly) — used for anchor positions only ──────
+    // Anchor positions must never be contaminated by butterfly displacement
+    // (which would cause a feedback loop: butterfly chasing its own displaced text).
+    const cleanResult = layoutText(
       config.body,
       BODY_FONT,
       BODY_LINE_HEIGHT,
       bodyRegion,
-      figureObstacles,
+      figureObstacles,  // figure + pull-quote only, no butterfly
     )
-    bodyLines = bodyResult.lines
+
+    // ── Live layout (with butterfly) — used for rendered body lines ────────
+    let bodyLines: PositionedLine[]
+    if (butterflyObstacle) {
+      const liveResult = layoutText(
+        config.body,
+        BODY_FONT,
+        BODY_LINE_HEIGHT,
+        bodyRegion,
+        [...figureObstacles, butterflyObstacle],
+      )
+      bodyLines = liveResult.lines
+    } else {
+      bodyLines = cleanResult.lines  // reuse clean result when no butterfly
+    }
 
     // Find where body text actually ends
     let actualBodyBottom = 0
@@ -206,18 +231,35 @@ export function PageSpread({ config, children }: PageSpreadProps) {
       contentHeight,
       extraY,
     })
-  }, [config])
 
-  // ── Effect: compute layout on mount and resize ─────────────────────
+    if (cleanResult.lines.length > 0) {
+      const first = cleanResult.lines[0]!
+      const last  = cleanResult.lines[cleanResult.lines.length - 1]!
+      onAnchorPositionsRef.current?.({
+        // Start: left edge of first word — butterfly will sit just to its left
+        firstWord: { x: first.x, y: first.y },
+        // End: right edge of last word's line — butterfly will sit just to its right
+        lastWord: { x: last.x + last.width, y: last.y },
+      })
+    }
+  }, [config, butterflyObstacle])
+
+  // Keep a ref so the resize handler always calls the latest computeLayout
+  // without needing to re-register on every butterfly position update.
+  const computeLayoutRef = useRef(computeLayout)
+  useEffect(() => { computeLayoutRef.current = computeLayout }, [computeLayout])
+
+  // ── Effect: register resize listener once ──────────────────────────
+  useEffect(() => {
+    const onResize = () => computeLayoutRef.current()
+    window.addEventListener('resize', onResize)
+    document.fonts.ready.then(() => computeLayoutRef.current())
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  // ── Effect: run layout whenever config or butterfly obstacle changes ─
   useEffect(() => {
     computeLayout()
-    const onResize = () => computeLayout()
-    window.addEventListener('resize', onResize)
-
-    // Small delay to ensure fonts are loaded
-    document.fonts.ready.then(() => computeLayout())
-
-    return () => window.removeEventListener('resize', onResize)
   }, [computeLayout])
 
   // ── Render ──────────────────────────────────────────────────────────
@@ -264,7 +306,7 @@ export function PageSpread({ config, children }: PageSpreadProps) {
           {layout.bodyLines.map((line, i) => (
             <span
               key={`body-${i}`}
-              className="spread-line spread-line--body"
+              className="spread-line spread-line--body butterfly-text-line"
               style={{
                 left: `${line.x}px`,
                 top: `${line.y}px`,
