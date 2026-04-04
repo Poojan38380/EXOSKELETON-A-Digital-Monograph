@@ -60,11 +60,17 @@
   mix-blend-mode: multiply;
 }
 
+/* ── Book Content ──────────────────────────────────────── */
+.book-content {
+  margin-left: 48px; /* always matches collapsed nav rail width */
+}
+
 /* ── Page Spread (generic content wrapper) ─────────────── */
 .page-spread {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 3rem 4rem;
+  width: 100%;
+  max-width: 960px;
+  margin: 0;
+  padding: 3rem 3.5rem 4rem;
   min-height: 100vh;
   position: relative;
 }
@@ -306,8 +312,12 @@
 
 /* ── Responsive ────────────────────────────────────────── */
 @media (max-width: 768px) {
+  .book-content {
+    margin-left: 0 !important;
+  }
+
   .page-spread {
-    padding: 1rem;
+    padding: 1.25rem 1rem 2rem;
   }
 
   .cover {

@@ -50,7 +50,7 @@ export function NavigationRail({ currentPage, onPageSelect }: NavRailProps) {
 
   return (
     <nav
-      className={`nav-rail ${expanded ? 'nav-rail--expanded' : ''}`}
+      className={`nav-rail ${expanded ? 'nav-rail--expanded' : 'nav-rail--collapsed'}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -66,11 +66,9 @@ export function NavigationRail({ currentPage, onPageSelect }: NavRailProps) {
             <span className="nav-rail__number">
               {i === currentPage ? '●' : page.number}
             </span>
-            {PAGE_THUMB[i] && (
-              <span className="nav-rail__thumb-wrap">
-                <img src={PAGE_THUMB[i]} alt="" className="nav-rail__thumb" />
-              </span>
-            )}
+            <span className="nav-rail__thumb-wrap">
+              <img src={PAGE_THUMB[i]} alt="" className="nav-rail__thumb" />
+            </span>
             <span className="nav-rail__label">{page.label}</span>
           </button>
         ))}

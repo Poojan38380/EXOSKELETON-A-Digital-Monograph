@@ -9,7 +9,7 @@ const config: SpreadConfig = {
   credit: COLOPHON_CREDIT,
   body: COLOPHON_BODY,
   pageNumber: PAGES[10].number,
-  bottomReserve: 420,
+  bottomReserve: 560,
 }
 
 export function ColophonPage() {

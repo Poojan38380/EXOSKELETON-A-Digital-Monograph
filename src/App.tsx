@@ -52,7 +52,10 @@ export default function App() {
         const PageComponent = PAGE_COMPONENTS[pageIndex] ?? CoverPage
         return (
           <>
-            <NavigationRail currentPage={currentPage} onPageSelect={handlePageSelect} />
+            <NavigationRail
+              currentPage={currentPage}
+              onPageSelect={handlePageSelect}
+            />
             <div className="book-content">
               <PageComponent />
             </div>

@@ -311,7 +311,7 @@ export function PageSpread({ config, children }: PageSpreadProps) {
             src={fig.src}
             alt={fig.alt}
             className="page-figure__img"
-            style={{ width: '100%', height: layout.figureImgHeight, objectFit: 'cover' }}
+            style={{ width: '100%', height: layout.figureImgHeight, objectFit: 'cover', maxHeight: 'none' }}
           />
           <figcaption className="page-figure__caption">{fig.caption}</figcaption>
         </figure>
