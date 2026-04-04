@@ -22,23 +22,16 @@
   backdrop-filter: blur(4px);
 }
 
-.nav-rail--collapsed .nav-rail__thumb-wrap,
 .nav-rail--collapsed .nav-rail__label {
-  width: 0;
-  height: 0;
+  max-width: 0;
   opacity: 0;
-  margin: 0;
-  padding: 0;
-  border: none;
   overflow: hidden;
-  flex: 0 0 0;
-  pointer-events: none;
-  transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms ease;
 }
 
 .nav-rail--collapsed .nav-rail__item {
-  padding: 0.5rem 0.3rem;
+  padding: 0.4rem 0;
   justify-content: center;
+  gap: 0;
 }
 
 .nav-rail--collapsed .nav-rail__spine {
@@ -142,14 +135,15 @@
 
 /* ── Thumbnail ─────────────────────────────────────────── */
 .nav-rail__thumb-wrap {
-  width: 0;
-  height: 0;
-  border-radius: 3px;
+  max-width: 0;
+  max-height: 0;
+  width: 48px;
+  height: 36px;
+  border-radius: 2px;
   overflow: hidden;
-  flex: 0 0 0;
+  flex-shrink: 0;
   opacity: 0;
-  transform: scale(0.8);
-  transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1), height 300ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms ease 60ms, transform 200ms ease 60ms;
+  transition: max-width 300ms cubic-bezier(0.4, 0, 0.2, 1), max-height 300ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms ease 60ms;
   border: 1px solid transparent;
 }
 
@@ -161,10 +155,10 @@
 }
 
 .nav-rail--expanded .nav-rail__thumb-wrap {
-  width: 48px;
-  height: 36px;
+  max-width: 48px;
+  max-height: 36px;
   opacity: 1;
-  transform: scale(1);
+  border-radius: 3px;
   border-color: var(--rule-light);
 }
 
@@ -175,18 +169,17 @@
   font-weight: 600;
   color: var(--iron-gall);
   white-space: nowrap;
-  width: 0;
+  max-width: 0;
   opacity: 0;
   overflow: hidden;
-  flex: 0 0 0;
+  flex-shrink: 0;
   transform: translateX(-4px);
-  transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1) 50ms, opacity 200ms ease 100ms, transform 200ms ease 100ms;
+  transition: max-width 300ms cubic-bezier(0.4, 0, 0.2, 1) 50ms, opacity 200ms ease 100ms, transform 200ms ease 100ms;
 }
 
 .nav-rail--expanded .nav-rail__label {
-  width: auto;
+  max-width: 200px;
   opacity: 1;
-  flex: 0 0 auto;
   transform: translateX(0);
 }
 
