@@ -92,8 +92,8 @@ export function PageSpread({ config, children }: PageSpreadProps) {
       figW = isNarrow ? contentWidth : Math.round(contentWidth * 0.45)
       const figImgH = isNarrow ? 200 : config.figure.placement === 'full' || config.figure.placement === 'wide' ? 280 : 320
       figureImgHeight = figImgH
-      // Extra space for caption below the image: margin-top + padding + border + padding-bottom
-      const figCaptionH = 48
+      // Extra space for caption below the image: padding + borders + up to 3 lines of text
+      const figCaptionH = 70
       const figH = figImgH + figCaptionH
       const figX = config.figure.placement === 'right'
         ? gutter + contentWidth - figW

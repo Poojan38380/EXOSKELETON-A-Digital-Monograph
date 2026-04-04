@@ -20,6 +20,10 @@ export function BookShell({
   const navigateTo = useCallback((nextIndex: number) => {
     if (transitioning || nextIndex === pageIndex) return
     if (nextIndex < 0 || nextIndex >= TOTAL_PAGES) return
+    // Scroll all scroll containers to top before transitioning
+    window.scrollTo(0, 0)
+    const pageEl = document.querySelector('.book-page')
+    if (pageEl) pageEl.scrollTop = 0
     setTransitioning(true)
     onPageChange?.(nextIndex)
     setPageIndex(nextIndex)
