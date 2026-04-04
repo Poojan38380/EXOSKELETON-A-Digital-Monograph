@@ -317,23 +317,7 @@ export function PageSpread({ config, children }: PageSpreadProps) {
         </figure>
       )}
 
-      {/* Page number — positioned after all content */}
-      {config.pageNumber && layout && (
-        <div
-          className="spread-page-number"
-          style={{
-            position: 'absolute',
-            left: '50%',
-            top: children ? `${layout.extraY + 180}px` : 'auto',
-            bottom: children ? 'auto' : '2rem',
-            transform: 'translateX(-50%)',
-          }}
-        >
-          {config.pageNumber}
-        </div>
-      )}
-
-      {/* Extra children (e.g. TOC for colophon) */}
+      {/* Extra children (e.g. TOC for colophon) with page number below */}
       {children && layout && (
         <div
           className="spread-extra"
@@ -345,7 +329,17 @@ export function PageSpread({ config, children }: PageSpreadProps) {
           }}
         >
           {children}
+          {config.pageNumber && (
+            <div className="spread-page-number" style={{ position: 'static', transform: 'none', marginTop: '1.5rem' }}>
+              {config.pageNumber}
+            </div>
+          )}
         </div>
+      )}
+
+      {/* Page number (no extra children) */}
+      {!children && config.pageNumber && (
+        <div className="spread-page-number">{config.pageNumber}</div>
       )}
     </div>
   )
