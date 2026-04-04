@@ -1,0 +1,188 @@
+/* ═══════════════════════════════════════════════════════════
+   BookShell & Page Styles
+   ═══════════════════════════════════════════════════════════ */
+
+.book-container {
+  display: flex;
+  min-height: 100vh;
+  background: var(--parchment);
+}
+
+.book-page {
+  flex: 1;
+  min-height: 100vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+/* Page turn animations */
+.page-enter {
+  animation: pageIn 400ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.page-exit {
+  animation: pageOut 400ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes pageIn {
+  from {
+    opacity: 0;
+    transform: scale(1.015);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pageOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+}
+
+/* ── Parchment Texture Overlay ─────────────────────────── */
+.book-container::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  mix-blend-mode: multiply;
+}
+
+/* ── Page Spread (generic content wrapper) ─────────────── */
+.page-spread {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 4rem;
+  min-height: 100vh;
+  position: relative;
+}
+
+.page-spread__header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.page-spread__content {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--ink);
+}
+
+.page-spread__content p {
+  margin: 0 0 1.25rem 0;
+  text-indent: 1.5em;
+}
+
+.page-spread__content p:first-of-type {
+  text-indent: 0;
+}
+
+/* ── Cover Page ────────────────────────────────────────── */
+.cover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 4rem;
+  position: relative;
+}
+
+.cover__title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: var(--iron-gall);
+  margin-bottom: 0.3em;
+  line-height: 1.1;
+}
+
+.cover__rule {
+  width: 80px;
+  height: 2px;
+  background: var(--ochre);
+  margin: 1.5rem 0;
+  border: none;
+}
+
+.cover__subtitle {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--marginalia);
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.cover__year {
+  font-family: "Source Code Pro", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  color: var(--marginalia);
+  margin-top: 2rem;
+  opacity: 0.6;
+}
+
+/* ── Responsive ────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .page-spread {
+    padding: 2rem 1.5rem;
+  }
+
+  .cover {
+    padding: 2rem 1.5rem;
+  }
+
+  .cover__title {
+    font-size: clamp(2rem, 10vw, 3rem);
+    letter-spacing: 0.04em;
+  }
+}
+
+/* ── Colophon TOC ──────────────────────────────────────── */
+.colophon__toc {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.colophon__toc li {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.colophon__toc-number {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ochre);
+  min-width: 1.5em;
+  text-align: right;
+}
+
+.colophon__toc-label {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--marginalia);
+}
