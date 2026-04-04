@@ -47,15 +47,19 @@ export default function App() {
   }, [])
 
   return (
-    <BookShell onPageChange={handlePageChange}>
+    <BookShell
+      onPageChange={handlePageChange}
+      sidebar={
+        <NavigationRail
+          currentPage={currentPage}
+          onPageSelect={handlePageSelect}
+        />
+      }
+    >
       {(pageIndex) => {
         const PageComponent = PAGE_COMPONENTS[pageIndex] ?? CoverPage
         return (
           <>
-            <NavigationRail
-              currentPage={currentPage}
-              onPageSelect={handlePageSelect}
-            />
             <div className="book-content">
               <PageComponent />
             </div>

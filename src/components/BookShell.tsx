@@ -7,9 +7,11 @@ const TOTAL_PAGES = PAGES.length
 
 export function BookShell({
   children,
+  sidebar,
   onPageChange,
 }: {
   children: (pageIndex: number) => ReactNode
+  sidebar?: ReactNode
   onPageChange?: (page: number) => void
 }) {
   const [pageIndex, setPageIndex] = useState(0)
@@ -87,6 +89,7 @@ export function BookShell({
 
   return (
     <div className="book-container">
+      {sidebar}
       <div className={`book-page ${transitioning ? 'page-exit' : 'page-enter'}`} key={pageIndex}>
         {children(pageIndex)}
       </div>
