@@ -9,7 +9,7 @@ const config: SpreadConfig = {
   credit: COLOPHON_CREDIT,
   body: COLOPHON_BODY,
   pageNumber: PAGES[10].number,
-  bottomReserve: 220,
+  bottomReserve: 420,
 }
 
 export function ColophonPage() {
@@ -22,8 +22,25 @@ export function ColophonPage() {
         <ul className="colophon__toc">
           {PAGES.map((page) => (
             <li key={page.id}>
-              <span className="colophon__toc-number">{page.number}</span>
-              <span className="colophon__toc-label">{page.label}</span>
+              <span
+                className="colophon__toc-link"
+                onClick={() => {
+                  // @ts-ignore
+                  window.__bookNav?.navigateTo(page.id)
+                }}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    // @ts-ignore
+                    window.__bookNav?.navigateTo(page.id)
+                  }
+                }}
+              >
+                <span className="colophon__toc-number">{page.number}</span>
+                <span className="colophon__toc-label">{page.label}</span>
+              </span>
             </li>
           ))}
         </ul>

@@ -116,17 +116,17 @@ To watch an insect antennate — to sweep its antennae through the air, sampling
 // ═══════════════════════════════════════════════════════════
 
 export const PAGES = [
-  { id: 0, number: 'I', label: 'Cover' },
-  { id: 1, number: 'II', label: 'Wings' },
-  { id: 2, number: 'III', label: 'Vision' },
-  { id: 3, number: 'IV', label: 'Metamorphosis' },
-  { id: 4, number: 'V', label: 'Antennae' },
-  { id: 5, number: 'VI', label: 'By the Numbers' },
-  { id: 6, number: 'VII', label: 'Records & Extremes' },
-  { id: 7, number: 'VIII', label: 'Strange Behavior' },
-  { id: 8, number: 'IX', label: 'Mimicry & Defense' },
-  { id: 9, number: 'X', label: 'Insects & Humans' },
-  { id: 10, number: 'XI', label: 'Colophon' },
+  { id: 0, number: '1', label: 'Cover' },
+  { id: 1, number: '2', label: 'Wings' },
+  { id: 2, number: '3', label: 'Vision' },
+  { id: 3, number: '4', label: 'Metamorphosis' },
+  { id: 4, number: '5', label: 'Antennae' },
+  { id: 5, number: '6', label: 'By the Numbers' },
+  { id: 6, number: '7', label: 'Records & Extremes' },
+  { id: 7, number: '8', label: 'Strange Behavior' },
+  { id: 8, number: '9', label: 'Mimicry & Defense' },
+  { id: 9, number: '10', label: 'Insects & Humans' },
+  { id: 10, number: '11', label: 'Colophon' },
 ] as const
 
 // ═══════════════════════════════════════════════════════════

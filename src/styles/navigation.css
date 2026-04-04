@@ -11,7 +11,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background: transparent;
+  background: rgba(235, 229, 212, 0.85);
+  backdrop-filter: blur(4px);
   transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
 }
@@ -94,12 +95,14 @@
 
 .nav-rail__number {
   font-family: "Source Code Pro", monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  color: var(--marginalia);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--iron-gall);
   min-width: 1.5em;
   text-align: center;
   transition: color 200ms ease;
+  flex-shrink: 0;
 }
 
 /* ── Thumbnail ─────────────────────────────────────────── */
@@ -109,16 +112,18 @@
   border-radius: 3px;
   overflow: hidden;
   flex-shrink: 0;
-  opacity: 0;
-  transform: scale(0.8);
+  opacity: 0.7;
+  transform: scale(0.9);
   transition: opacity 250ms ease 80ms, transform 250ms ease 80ms;
   border: 1px solid var(--rule-light);
+  background: var(--parchment);
 }
 
 .nav-rail__thumb {
   width: 100%;
   height: 100%;
   display: block;
+  object-fit: cover;
 }
 
 .nav-rail--expanded .nav-rail__thumb-wrap {
@@ -128,9 +133,10 @@
 
 /* ── Label ─────────────────────────────────────────────── */
 .nav-rail__label {
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 0.85rem;
-  color: var(--marginalia);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--iron-gall);
   white-space: nowrap;
   opacity: 0;
   transform: translateX(-4px);
@@ -145,7 +151,7 @@
 .nav-rail--expanded {
   background: linear-gradient(to right, var(--parchment-dark), var(--parchment));
   box-shadow: 2px 0 16px var(--shadow);
-  width: 190px;
+  width: 210px;
 }
 
 /* ── Mobile: hide nav rail, show bottom bar ────────────── */
