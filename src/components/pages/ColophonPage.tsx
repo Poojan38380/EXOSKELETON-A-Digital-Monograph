@@ -1,24 +1,20 @@
 import { PageSpread } from '../PageSpread'
 import type { SpreadConfig } from '../PageSpread'
 import {
-  COLOPHON_TITLE,
-  COLOPHON_CREDIT,
-  COLOPHON_BODY,
-  PAGES,
+  COLOPHON_TITLE, COLOPHON_CREDIT, COLOPHON_BODY, PAGES,
 } from '../../content/entomology-text'
 
 const config: SpreadConfig = {
   title: COLOPHON_TITLE,
   credit: COLOPHON_CREDIT,
   body: COLOPHON_BODY,
-  pageNumber: PAGES[5].number,
-  bottomReserve: 220, // space for TOC
+  pageNumber: PAGES[10].number,
+  bottomReserve: 220,
 }
 
 export function ColophonPage() {
   return (
     <PageSpread config={config}>
-      {/* TOC rendered below the body text, outside the Pretext region */}
       <div className="colophon__toc-wrap">
         <p className="page-credit" style={{ textAlign: 'center', marginBottom: '1rem' }}>
           Contents

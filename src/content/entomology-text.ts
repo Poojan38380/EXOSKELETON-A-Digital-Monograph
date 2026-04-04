@@ -112,24 +112,6 @@ The antennal sensilla of the fruit fly Drosophila melanogaster have become one o
 To watch an insect antennate — to sweep its antennae through the air, sampling, comparing, orienting — is to witness an animal reading a text written in molecules. The pages are invisible. The language is chemistry. And the insect reads it fluently.`
 
 // ═══════════════════════════════════════════════════════════
-// PAGE 5 — Colophon
-// ═══════════════════════════════════════════════════════════
-
-export const COLOPHON_TITLE = 'Colophon'
-export const COLOPHON_CREDIT = 'On the making of this monograph'
-
-export const COLOPHON_BODY = `\
-This digital monograph was typeset and laid out using the Pretext text-layout engine — a JavaScript library by Cheng Lou that measures and positions text without touching the DOM, using the Canvas API's measureText() for precision and speed. Every line of body copy was computed through a two-phase prepare-and-layout pipeline, flowing around algorithmic obstacles with no reliance on CSS text flow.
-
-The generative illustrations were created with p5.js, a JavaScript library for creative coding. Each piece is an algorithm — not an image — generated fresh from a seeded random number generator. The same seed always produces the same artwork, making every output deterministic and reproducible.
-
-The typefaces are Playfair Display for display headings, EB Garamond for body text, Cormorant Garamond Italic for captions, and Source Code Pro for navigational elements — all sourced from Google Fonts.
-
-The colour palette draws from the materials of nineteenth-century natural history printing: iron-gall ink on parchment, ochre pigment, verdigris patina, and carmine wash.
-
-The subject matter — insect morphology — was chosen not despite its familiarity but because of it. The insects are everywhere, and almost nobody looks at them closely. This monograph is an invitation to do so.`
-
-// ═══════════════════════════════════════════════════════════
 // Page metadata for navigation
 // ═══════════════════════════════════════════════════════════
 
@@ -139,5 +121,147 @@ export const PAGES = [
   { id: 2, number: 'III', label: 'Vision' },
   { id: 3, number: 'IV', label: 'Metamorphosis' },
   { id: 4, number: 'V', label: 'Antennae' },
-  { id: 5, number: 'VI', label: 'Colophon' },
+  { id: 5, number: 'VI', label: 'By the Numbers' },
+  { id: 6, number: 'VII', label: 'Records & Extremes' },
+  { id: 7, number: 'VIII', label: 'Strange Behavior' },
+  { id: 8, number: 'IX', label: 'Mimicry & Defense' },
+  { id: 9, number: 'X', label: 'Insects & Humans' },
+  { id: 10, number: 'XI', label: 'Colophon' },
 ] as const
+
+// ═══════════════════════════════════════════════════════════
+// PAGE 6 — By the Numbers (Insect Facts & Figures)
+// ═══════════════════════════════════════════════════════════
+
+export const NUMBERS_TITLE = 'By the Numbers'
+export const NUMBERS_CREDIT = 'The scale of the insect world'
+
+export const NUMBERS_PULL_QUOTE =
+  'There are 1.4 billion insects for every human being on Earth. Their collective biomass weighs roughly seventy times more than all of humanity combined.'
+
+export const NUMBERS_BODY = `\
+The numbers are so large that the human mind, evolved to track groups of perhaps a hundred and fifty individuals, simply cannot hold them. Start with the species count: over one million insect species have been discovered and formally described by science. The actual number is estimated at ten million. Nine million species remain unnamed — invisible to the record, living and dying in forests we have not catalogued, on islands we have not surveyed, in soil we have not sifted.
+
+Consider the proportion. Insects comprise roughly ninety percent of all animal species on the planet. More than half of every living organism — by species count, not weight — is an insect. The four largest orders tell the story. Coleoptera, the beetles, account for three to four hundred thousand described species alone. J. B. S. Haldane, when asked what his study of nature had revealed about the Creator, reportedly answered: "An inordinate fondness for beetles." The other great orders follow: Lepidoptera (butterflies and moths), Diptera (true flies), and Hymenoptera (ants, bees, and wasps). Each contains more species than all the mammals, birds, reptiles, amphibians, and fishes combined.
+
+The population figures are harder still to grasp. For every one human, there are approximately one point four billion insects. The total number of living insects at any given moment is estimated at ten quintillion — ten followed by eighteen zeros. If every insect on Earth were placed end to end, they would circle the equator millions of times.
+
+The collective weight of all insects alive today is roughly seventy times greater than the total weight of all humans. This is not because individual insects are large — most weigh less than a grain of rice — but because there are so inconceivably many of them.
+
+Honey production requires approximately ten million nectar-collecting trips by worker bees to produce a single pound of honey. A single bee may fly up to sixty miles in a single day. The silk needed to make one pound of fabric requires the cocoons of roughly two thousand silkworms.
+
+Insects inhabit nearly every terrestrial environment on Earth, from snow-covered mountain ranges to the hottest deserts. They have existed for more than three hundred and fifty million years, predating both dinosaurs and flowering plants by vast margins. They have survived five mass extinctions. They will, almost certainly, outlast us.`
+
+// ═══════════════════════════════════════════════════════════
+// PAGE 7 — Records & Extremes
+// ═══════════════════════════════════════════════════════════
+
+export const RECORDS_TITLE = 'Records & Extremes'
+export const RECORDS_CREDIT = 'The outer limits of insect biology'
+
+export const RECORDS_PULL_QUOTE =
+  'Male silk moths can detect a few hundred pheromone molecules among 25 quintillion air molecules in a single cubic centimetre — a sensitivity no electronic sensor has yet matched.'
+
+export const RECORDS_BODY = `\
+The natural world keeps records, and insects hold more of them than any other group of organisms. The extremes of insect biology stretch from the almost vanishingly small to the impossibly fecund, from creatures that survive in Antarctic ice to others that live for mere hours as adults.
+
+The only insect species native to Antarctica is the wingless midge, *Belgica antarctica*. At barely two millimetres long, it is also one of the smallest free-living insects on Earth. It survives the Antarctic winter by replacing the water in its body cells with glycerol, a natural antifreeze that prevents ice crystals from forming. It is the largest purely terrestrial animal native to the continent and has no wings — flight would be suicidal in winds that regularly exceed a hundred kilometres per hour.
+
+At the opposite end of the scale is the African goliath beetle, whose larvae can weigh over a hundred grams. But the weight records are not the most extraordinary extremes. The termite queen of certain *Macrotermes* species can lay up to forty thousand eggs per day — one every two seconds, continuously, for years. Her abdomen swells to many times the size of her thorax and head combined, rendering her immobile. Workers feed her and carry away her eggs around the clock.
+
+The ant *Formica rufa* can lift and carry more than fifty times its own body weight. If a human possessed equivalent relative strength, they could hoist a car above their head. Ants achieve this through a combination of small size — which gives them a favourable strength-to-weight ratio — and specialised muscle attachment points in their exoskeleton.
+
+The most sensitive biological sensor known to science belongs to the male silk moth *Bombyx mori*. Its feathery, bipectinate antennae can detect a few hundred molecules of the female sex pheromone bombykol among twenty-five quintillion air molecules in a single cubic centimetre. This is the olfactory equivalent of detecting a single grain of salt dissolved in an Olympic swimming pool.
+
+A housefly's feet are approximately ten million times more sensitive to sugar than the human tongue. Each foot is covered with chemoreceptor hairs that taste whatever the fly lands on, allowing it to find food with a single step. The monarch butterfly weighs so little that it takes roughly one hundred individuals to make a single ounce, yet a single monarch migrates up to three thousand miles from Canada to central Mexico.
+
+Ticks, though not insects but arachnids, hold the record for the most dramatic change in body size: an unfed tick is roughly the size of a grain of sand, but a fully engorged female can swell to the size of a small grape, having consumed hundreds of times her original body weight in blood.`
+
+// ═══════════════════════════════════════════════════════════
+// PAGE 8 — Strange Behavior
+// ═══════════════════════════════════════════════════════════
+
+export const BEHAVIOR_TITLE = 'Strange Behavior'
+export const BEHAVIOR_CREDIT = 'When insects do the unexpected'
+
+export const BEHAVIOR_PULL_QUOTE =
+  'Wasps that feed on fermenting fruit juices can become intoxicated, losing their ability to fly and, in extreme cases, passing out entirely.'
+
+export const BEHAVIOR_BODY = `\
+Insect behaviour is often dismissed as simple instinct, a mechanistic response to environmental stimuli. But the closer you look, the more the boundary between instinct and something more interesting begins to blur.
+
+The Mexican jumping bean is not a bean at all but the seed pod of the shrub *Sebastiania pavoniana*, native to Mexico. Inside each pod lives the caterpillar of the moth *Cydia saltitans*. When the pod is warmed by sunlight or the heat of a human hand, the caterpillar jerks and twists, causing the bean to jump and roll. The caterpillar does this not out of agitation but with purpose: it is trying to roll the pod into shade, where it is less likely to be killed by overheating. The jumping bean is a tiny capsule of insect-driven environmental engineering.
+
+Wasps of many species are attracted to the sugars in overripe, fermenting fruit. The fermentation produces ethanol, and wasps, it turns out, are affected by alcohol much as humans are. A wasp that has fed extensively on fermenting fruit juice can become visibly intoxicated — its flight becomes erratic, its movements slow and uncoordinated, and in extreme cases it may simply stop moving altogether, effectively passing out until the alcohol is metabolised.
+
+Dung beetles were deliberately imported to Australia in the 1960s to solve a problem created by human agriculture. The native Australian dung beetles had evolved to process the dry, fibrous droppings of marsupials. When European cattle were introduced, their wet, dense dung accumulated in vast quantities, fouling pastureland and breeding billions of flies. The Australian CSIRO launched a multi-year programme importing dung beetle species from Africa and Europe that were adapted to cattle dung. The beetles processed the dung, buried it, and restored the pasture. An entire ecosystem service, delivered by insects.
+
+The elm zigzag sawfly — *Aproceros leucopoda* — arrived in Europe from Asia and has since spread rapidly across the continent, now reaching North America. Its larvae create a distinctive zigzag pattern of cuts along the edges of elm and zelkova leaves. The pattern is so regular and so distinctive that it can be identified from a distance, a calling card written in living tissue.
+
+The housefly walks across surfaces that would repulse most animals — carrion, faeces, rotting food — yet it does so with feet ten million times more sensitive to sugar than the human tongue. Every step is a taste. Every landing is an analysis. The fly knows exactly what it is standing on, down to the molecular composition of the surface.
+
+And then there are the ticks found on an eel — a museum specimen that represents a first-of-its-kind discovery, showing that parasites will find hosts in places no one would think to look. The natural world is opportunistic, and the ectoparasites of the world do not read the textbooks that tell them which hosts are appropriate.`
+
+// ═══════════════════════════════════════════════════════════
+// PAGE 9 — Mimicry & Defense
+// ═══════════════════════════════════════════════════════════
+
+export const MIMICRY_TITLE = 'Mimicry & Defense'
+export const MIMICRY_CREDIT = 'The art of insect deception'
+
+export const MIMICRY_PULL_QUOTE =
+  'The Brazilian Hawk Moth caterpillar raises its head and inflates its thorax to resemble the head of a small snake — complete with false eyes and striking posture. Predators retreat.'
+
+export const MIMICRY_BODY = `\
+In the arms race between predator and prey, insects have evolved defences of extraordinary ingenuity. The most elegant of these is not armour or speed but deception — the art of being something you are not.
+
+The caterpillar of the Brazilian Hawk Moth (*Protambulyx strigilis*) is a master of theatrical deception. When disturbed, it rears up, retracting its true head and inflating its thoracic segments until they resemble the broad, triangular head of a small snake. The inflated segments bear markings that look remarkably like eyes — not perfect eyes, but close enough to trigger an instinctive retreat in a bird or lizard that has learned to associate that silhouette with danger. The caterpillar does not merely look like a snake; it behaves like one, swaying from side to side in a motion that mimics the alert posture of a viper.
+
+The monarch butterfly (*Danaus plexippus*) and its mimic, the viceroy, represent one of the most famous relationships in natural history. The monarch feeds on milkweed as a caterpillar, sequestering toxic cardenolides in its tissues. Its bright orange and black colouring signals this toxicity to predators — a warning written in colour. The viceroy, which is not toxic, evolved an almost identical wing pattern. Predators that have learned to avoid the monarch avoid the viceroy as well. This was long thought to be Batesian mimicry — a harmless species imitating a harmful one. Later research showed that the viceroy is also distasteful, making the relationship Müllerian: two unpalatable species reinforcing the same warning signal.
+
+Stick insects and leaf insects take deception further still. They do not merely resemble their background — they are detailed sculptures of twigs and leaves, complete with fake leaf damage, lichen-like patches, and the slight asymmetries of real plant material. Some stick insects sway when they walk, mimicking the motion of a twig in the wind.
+
+Many insects survive freezing temperatures through a chemical strategy. Instead of preventing freezing, they replace the water in their cells with glycerol — the same compound used in automotive antifreeze. The glycerol lowers the freezing point of the cell contents and prevents the formation of ice crystals that would puncture cell membranes. The insect effectively becomes a glass sculpture, frozen solid but alive, waiting for warmth to reverse the process.
+
+The monarch butterfly's wing scales — the source of its colour — are themselves a marvel. Each scale is a flattened, modified hair, overlapping its neighbours like tiles on a roof. The orange colour comes from pigments, but the iridescent sheen comes from the physical structure of the scales: microscopic ridges that interfere with light waves, reflecting certain wavelengths and cancelling others. The colour is not merely chemical but physical — it lives in the architecture of the surface.`
+
+// ═══════════════════════════════════════════════════════════
+// PAGE 10 — Insects & Humans
+// ═══════════════════════════════════════════════════════════
+
+export const HUMANS_TITLE = 'Insects & Humans'
+export const HUMANS_CREDIT = 'The entangled history of two kingdoms'
+
+export const HUMANS_PULL_QUOTE =
+  'The word "honeymoon" derives from a Middle Ages tradition of providing newlyweds with enough honey wine — mead — to last their first month of marriage, an insect-produced gift at the centre of human ritual.'
+
+export const HUMANS_BODY = `\
+The relationship between insects and humans is older than civilisation, older than language, older than the distinction between useful and harmful. Insects have shaped our food, our medicine, our language, and our understanding of the natural world.
+
+Forensic entomology — the use of insect evidence in criminal investigations — rests on a simple observation: blow flies of the family Calliphoridae are typically the first animals to arrive at an animal carcass following death, often within minutes. They detect the chemical signatures of decomposition from kilometres away. Their larvae develop at predictable rates, meaning that the age of the larvae found on a body can provide an estimate of the time since death. The blow fly is the first responder at the scene of a death, and its testimony is written in the developmental stages of its young.
+
+Vladimir Nabokov — the Russian-American novelist best known for *Lolita* — was also a serious lepidopterist. He spent decades studying the taxonomy of blue butterflies in the genus *Polyommatus*, collecting specimens, dissecting genitalia under microscopes, and publishing peer-reviewed papers in scientific journals. He identified and named what is now recognised as a subspecies of Karner Blue butterfly found in the pine barrens of the northeastern United States. The novelist and the entomologist were not two people but one: the same obsessive attention to detail that produced *Pale Fire* produced revisions to butterfly taxonomy.
+
+The Vector Guard application, released in early 2026, represents the latest chapter in the relationship between insects and public health. It provides real-time, local guidance on arthropod-borne disease risk — using data from mosquito traps, tick surveillance programmes, and climate models to tell communities where the risk of West Nile virus, dengue, and Lyme disease is highest. A tool in your phone, informed by insects you will never see.
+
+The word "honeymoon" derives from a Middle Ages tradition of providing newlyweds with enough mead — honey wine — to last their first month of marriage. The honey was produced by bees making those ten million nectar-collecting trips. The ritual was an insect subsidy, paid by humans to the descendants of the apian foragers that first tempted our ancestors to keep bees.
+
+As of 2025, the United States alone has approximately ninety-one thousand named insect species. Worldwide, roughly one and a half million species have been formally described. The gap between what we know and what exists is perhaps the largest knowledge gap in all of science.`
+
+// ═══════════════════════════════════════════════════════════
+// PAGE 11 — The Insect Crisis (Updated content for Colophon)
+// ═══════════════════════════════════════════════════════════
+
+export const COLOPHON_TITLE = 'Colophon'
+export const COLOPHON_CREDIT = 'On the making of this monograph'
+
+export const COLOPHON_BODY = `\
+This digital monograph was typeset and laid out using the Pretext text-layout engine — a JavaScript library by Cheng Lou that measures and positions text without touching the DOM, using the Canvas API's measureText() for precision and speed. Every line of body copy was computed through a two-phase prepare-and-layout pipeline, flowing around obstacles with no reliance on CSS text flow.
+
+The typefaces are Playfair Display for display headings, EB Garamond for body text, Cormorant Garamond Italic for captions, and Source Code Pro for navigational elements — all sourced from Google Fonts.
+
+The photographic illustrations were generated using AI image models prompted with specific entomological descriptions, then placed as figure elements alongside the text. Each image is positioned by the layout engine.
+
+The colour palette draws from the materials of nineteenth-century natural history printing: iron-gall ink on parchment, ochre pigment, verdigris patina, and carmine wash.
+
+The subject matter — insect morphology, behaviour, and ecology — was chosen not despite its familiarity but because of it. The insects are everywhere, and almost nobody looks at them closely. This monograph is an invitation to do so.`

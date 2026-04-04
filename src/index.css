@@ -19,7 +19,7 @@
   --shadow: rgba(26, 23, 20, 0.08);
   --shadow-heavy: rgba(26, 23, 20, 0.16);
 
-  /* Legacy dynamic-layout colours (kept for HomePage compat) */
+  /* Book colour variables */
   color-scheme: light;
   --paper: var(--parchment);
   --muted: var(--marginalia);
@@ -163,9 +163,7 @@ h1, h2, h3, h4 {
   letter-spacing: 0.1em;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   Legacy: Dynamic Layout (HomePage) styles
-   ═══════════════════════════════════════════════════════════ */
+/* ── Dynamic Layout Component Styles ─────────────────── */
 
 html, body {
   overscroll-behavior: none;

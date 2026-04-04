@@ -140,8 +140,26 @@
 |-------|--------|
 | `npx tsc -b` | ✅ Pass |
 | `npx vite build` | ✅ Pass |
-| Bundle size (JS) | 250 kB (81.3 kB gzipped) |
+| Bundle size (JS main) | ~268 kB (88 kB gzipped) |
 | Bundle size (CSS) | 13.5 kB (3.7 kB gzipped) |
+
+---
+
+## Phase 6: New Pages & Image Integration ✅ COMPLETE
+
+| Item | Status | Notes |
+|------|--------|-------|
+| 13 new images copied to public/images/ | ✅ | Clean filenames |
+| Image URL manifest updated | ✅ | 18 total images in `image-urls.ts` |
+| "By the Numbers" page (VI) | ✅ | Ant illustration, facts & figures |
+| "Records & Extremes" page (VII) | ✅ | Termite queen image |
+| "Strange Behavior" page (VIII) | ✅ | Jumping bean image |
+| "Mimicry & Defense" page (IX) | ✅ | Hawk moth caterpillar image |
+| "Insects & Humans" page (X) | ✅ | Blow fly image |
+| Colophon updated (XI) | ✅ | Now page 11, TOC lists all 11 pages |
+| PAGES metadata updated | ✅ | 11 pages, Roman numerals I–XI |
+| TypeScript build passes | ✅ | Clean |
+| Production build passes | ✅ | Clean |
 
 ---
 

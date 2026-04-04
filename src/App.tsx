@@ -7,6 +7,11 @@ import { WingsPage } from './components/pages/WingsPage'
 import { CompoundEyePage } from './components/pages/CompoundEyePage'
 import { MetamorphosisPage } from './components/pages/MetamorphosisPage'
 import { AntennaePage } from './components/pages/AntennaePage'
+import { NumbersPage } from './components/pages/NumbersPage'
+import { RecordsPage } from './components/pages/RecordsPage'
+import { BehaviorPage } from './components/pages/BehaviorPage'
+import { MimicryPage } from './components/pages/MimicryPage'
+import { HumansPage } from './components/pages/HumansPage'
 import { ColophonPage } from './components/pages/ColophonPage'
 import { PAGES } from './content/entomology-text'
 import './index.css'
@@ -19,6 +24,11 @@ const PAGE_COMPONENTS = [
   CompoundEyePage,
   MetamorphosisPage,
   AntennaePage,
+  NumbersPage,
+  RecordsPage,
+  BehaviorPage,
+  MimicryPage,
+  HumansPage,
   ColophonPage,
 ]
 
