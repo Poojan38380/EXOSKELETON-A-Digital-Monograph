@@ -4,6 +4,7 @@ import {
   ANTENNAE_PULL_QUOTE,
   ANTENNAE_BODY,
 } from '../../content/entomology-text'
+import { IMG_SATURNIID_MOTH } from '../../content/image-urls'
 import type { ReactNode } from 'react'
 
 function renderBodyWithDropCap(text: string): ReactNode[] {
@@ -29,6 +30,16 @@ export function AntennaePage() {
         <p className="page-credit">{ANTENNAE_CREDIT}</p>
       </header>
       <div className="page-spread__content">
+        <figure className="page-figure page-figure--left">
+          <img
+            src={IMG_SATURNIID_MOTH}
+            alt="Saturniid moth antennae, watercolor and ink"
+            className="page-figure__img"
+          />
+          <figcaption className="page-figure__caption">
+            Bipectinate antennae of a Saturniid moth — each branch a chemosensory array
+          </figcaption>
+        </figure>
         {renderBodyWithDropCap(ANTENNAE_BODY)}
         <hr className="ornamental-rule" />
         <blockquote className="pull-quote">{ANTENNAE_PULL_QUOTE}</blockquote>

@@ -4,9 +4,9 @@ import {
   WINGS_PULL_QUOTE,
   WINGS_BODY,
 } from '../../content/entomology-text'
+import { IMG_DRAGONFLY_WING } from '../../content/image-urls'
 import type { ReactNode } from 'react'
 
-/* Shared helper for rendering body paragraphs with a drop cap */
 function renderBodyWithDropCap(text: string): ReactNode[] {
   const paragraphs = text.split('\n\n').filter(Boolean)
   return paragraphs.map((p, i) => {
@@ -30,6 +30,16 @@ export function WingsPage() {
         <p className="page-credit">{WINGS_CREDIT}</p>
       </header>
       <div className="page-spread__content">
+        <figure className="page-figure page-figure--right">
+          <img
+            src={IMG_DRAGONFLY_WING}
+            alt="Dragonfly wing venation, scientific engraving"
+            className="page-figure__img"
+          />
+          <figcaption className="page-figure__caption">
+            Wing venation of <em>Anax imperator</em> — the Emperor Dragonfly
+          </figcaption>
+        </figure>
         {renderBodyWithDropCap(WINGS_BODY)}
         <hr className="ornamental-rule" />
         <blockquote className="pull-quote">{WINGS_PULL_QUOTE}</blockquote>

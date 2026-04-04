@@ -4,6 +4,7 @@ import {
   METAMORPHOSIS_PULL_QUOTE,
   METAMORPHOSIS_BODY,
 } from '../../content/entomology-text'
+import { IMG_BUTTERFLY_METAMORPHOSIS } from '../../content/image-urls'
 import type { ReactNode } from 'react'
 
 function renderBodyWithDropCap(text: string): ReactNode[] {
@@ -29,6 +30,16 @@ export function MetamorphosisPage() {
         <p className="page-credit">{METAMORPHOSIS_CREDIT}</p>
       </header>
       <div className="page-spread__content">
+        <figure className="page-figure page-figure--wide">
+          <img
+            src={IMG_BUTTERFLY_METAMORPHOSIS}
+            alt="Butterfly metamorphosis triptych"
+            className="page-figure__img"
+          />
+          <figcaption className="page-figure__caption">
+            The three acts: larva, pupa, imago — dissolution and reconstruction
+          </figcaption>
+        </figure>
         {renderBodyWithDropCap(METAMORPHOSIS_BODY)}
         <hr className="ornamental-rule" />
         <blockquote className="pull-quote">{METAMORPHOSIS_PULL_QUOTE}</blockquote>
