@@ -232,10 +232,10 @@ export function CompoundEyeCursor() {
         <g ref={cursorGroupRef} className="compound-eye-cursor__group">
           {FACET_OFFSETS.map((facet, i) => (
             <g key={i} clipPath={`url(#ce-facet-${i})`}>
-              {/* Subtle warm facet background */}
+              {/* Subtle amber/ochre facet tint — mimics ommatidia pigment */}
               <path
                 d={hexagonPath(facet.cx, facet.cy, FACET_RADIUS)}
-                fill="rgba(245, 240, 225, 0.3)"
+                fill="rgba(196, 150, 58, 0.12)"
               />
               {/* Text group — populated by rAF loop */}
               <g
