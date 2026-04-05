@@ -1,8 +1,8 @@
-import { useRef, useEffect, useState, useCallback, type ReactNode } from 'react'
-import { layoutText, type PositionedLine } from '../spread-layout'
+import { useRef, useEffect, useState, useCallback } from 'react'
+import { layoutText, type PositionedLine, type BandObstacle } from '../spread-layout'
 import { STATS, type StatData } from '../../content/stat-data'
 import { NUMBERS_TITLE, NUMBERS_CREDIT, NUMBERS_PULL_QUOTE, PAGES } from '../../content/entomology-text'
-import { IMG_HOUSEFLY_FOOT, IMG_ANT_LIFTING, IMG_JUMPING_BEAN } from '../../content/image-urls'
+import { IMG_HOUSEFLY_FOOT } from '../../content/image-urls'
 import { StatCard } from '../StatCard'
 
 const TITLE_FONT = '700 2.2rem "Playfair Display", Georgia, serif'
@@ -80,17 +80,11 @@ function NumbersPage() {
     const copyTop = ruleY + 32
 
     // Build obstacles and position content
-    const obstacles: Array<{ rect: { x: number; y: number; width: number; height: number }; hPad: number; vPad: number }> = []
+    const obstacles: BandObstacle[] = []
     const masonryItems: MasonryItem[] = []
     const textBlocks: TextBlock[] = []
     
     let currentY = copyTop
-
-    // Split stats into 3 columns for masonry
-    const columnCount = isNarrow ? 2 : 3
-    const columnWidth = Math.floor((contentWidth - (columnCount - 1) * 16) / columnCount)
-    const columnGap = 16
-    const columnHeights = new Array(columnCount).fill(0)
 
     // Place intro text first
     const introResult = layoutText(
@@ -112,7 +106,7 @@ function NumbersPage() {
     // Figure (full width)
     const figureHeight = isNarrow ? 270 : 350
     const figureRect = { x: gutter, y: currentY, width: contentWidth, height: figureHeight }
-    obstacles.push({ rect: figureRect, hPad: 22, vPad: 19 })
+    obstacles.push({ rect: figureRect, horizontalPadding: 22, verticalPadding: 19 })
     currentY += figureHeight + 24
 
     // Pull quote
@@ -128,7 +122,7 @@ function NumbersPage() {
     const pqHeight = pqTextHeight + 108
     const pqX = isNarrow ? gutter : gutter + contentWidth - pqWidth
     const pullQuoteBlock = { x: pqX, y: currentY, width: pqWidth, height: pqHeight }
-    obstacles.push({ rect: pullQuoteBlock, hPad: 26, vPad: 19 })
+    obstacles.push({ rect: pullQuoteBlock, horizontalPadding: 26, verticalPadding: 19 })
 
     // Mid text 1 (beside pull quote if not narrow)
     const mid1Width = isNarrow ? contentWidth : contentWidth - pqWidth - 24
@@ -151,41 +145,77 @@ function NumbersPage() {
 
     // Update currentY to below pull quote and mid text
     const pqBottom = currentY + pqHeight
-    const mid1Bottom = mid1Y + mid1Height
-    currentY = Math.max(pqBottom, mid1Bottom) + 24
+    const _mid1Bottom = mid1Y + mid1Height
+    currentY = Math.max(pqBottom, _mid1Bottom) + 24
 
     // Masonry grid for stat cards
-    const cardMinHeight = 120
-    const cardMaxHeight = 180
-    const statsPerColumn = Math.ceil(STATS.length / columnCount)
+    const cardHeight = isNarrow ? 160 : 175
+    const cardGap = isNarrow ? 12 : 16
+    
+    // Calculate the maximum Y that all obstacles reach
+    const obstaclesBottom = Math.max(
+      figureRect.y + figureRect.height,
+      pullQuoteBlock.y + pullQuoteBlock.height,
+    )
 
-    STATS.forEach((stat, index) => {
-      const columnIndex = Math.floor(index / statsPerColumn)
-      const rowInColumn = index % statsPerColumn
-      
-      // Vary card height based on content
-      const cardHeight = cardMinHeight + (index % 3) * 30
-      
-      const x = gutter + columnIndex * (columnWidth + columnGap)
-      const y = currentY + rowInColumn * (cardMaxHeight + columnGap)
-      
-      masonryItems.push({
-        x,
-        y,
-        width: columnWidth,
-        height: cardHeight,
-        stat,
+    // Add mid1 text obstacle and recalculate bottom
+    const mid1Bottom = mid1Y + mid1Height
+    const allContentBottom = Math.max(obstaclesBottom, mid1Bottom)
+    
+    // Cards start below ALL content with a gap
+    let cardStartY = allContentBottom + 32
+    
+    if (isNarrow) {
+      // Mobile: single column, simple vertical stack
+      STATS.forEach((stat, index) => {
+        const x = gutter
+        const y = cardStartY + index * (cardHeight + cardGap)
+        
+        masonryItems.push({
+          x,
+          y,
+          width: contentWidth,
+          height: cardHeight,
+          stat,
+        })
+      })
+      currentY = cardStartY + STATS.length * (cardHeight + cardGap) + 48
+    } else {
+      // Desktop: true masonry with 3 columns
+      const columnCount = 3
+      const columnWidth = Math.floor((contentWidth - (columnCount - 1) * cardGap) / columnCount)
+      const columnY = new Array(columnCount).fill(cardStartY)
+
+      STATS.forEach((stat, index) => {
+        // Find the shortest column
+        let columnIndex = 0
+        let minHeight = columnY[0]
+        for (let c = 1; c < columnCount; c++) {
+          if (columnY[c] < minHeight) {
+            minHeight = columnY[c]
+            columnIndex = c
+          }
+        }
+        
+        // Vary card height slightly for visual interest
+        const variedHeight = cardHeight + (index % 4) * 15
+        
+        const x = gutter + columnIndex * (columnWidth + cardGap)
+        const y = columnY[columnIndex]
+        
+        masonryItems.push({
+          x,
+          y,
+          width: columnWidth,
+          height: variedHeight,
+          stat,
+        })
+
+        columnY[columnIndex] = y + variedHeight + cardGap
       })
 
-      // Track column height
-      const itemBottom = y + cardHeight
-      if (itemBottom > columnHeights[columnIndex]) {
-        columnHeights[columnIndex] = itemBottom
-      }
-    })
-
-    const maxColumnHeight = Math.max(...columnHeights)
-    currentY = currentY + maxColumnHeight + 32
+      currentY = Math.max(...columnY) + 48
+    }
 
     // Mid text 2
     const mid2Result = layoutText(
@@ -299,39 +329,43 @@ function NumbersPage() {
           ))}
 
           {/* Pull quote */}
-          <blockquote
-            className="numbers-page__pull-quote"
-            style={{
-              position: 'absolute',
-              left: `${layout.pullQuoteBlock.x}px`,
-              top: `${layout.pullQuoteBlock.y}px`,
-              width: `${layout.pullQuoteBlock.width}px`,
-            }}
-          >
-            {NUMBERS_PULL_QUOTE}
-          </blockquote>
+          {layout.pullQuoteBlock && (
+            <blockquote
+              className="numbers-page__pull-quote"
+              style={{
+                position: 'absolute',
+                left: `${layout.pullQuoteBlock.x}px`,
+                top: `${layout.pullQuoteBlock.y}px`,
+                width: `${layout.pullQuoteBlock.width}px`,
+              }}
+            >
+              {NUMBERS_PULL_QUOTE}
+            </blockquote>
+          )}
 
           {/* Figure */}
-          <figure
-            className="page-figure page-figure--full"
-            style={{
-              position: 'absolute',
-              left: `${layout.figureRect.x}px`,
-              top: `${layout.figureRect.y}px`,
-              width: `${layout.figureRect.width}px`,
-              margin: 0,
-            }}
-          >
-            <img
-              src={IMG_HOUSEFLY_FOOT}
-              alt="Housefly foot macro, SEM photograph"
-              className="page-figure__img"
-              style={{ width: '100%', height: 280, objectFit: 'cover' }}
-            />
-            <figcaption className="page-figure__caption">
-              Tarsal chemoreceptors — ten million times more sensitive to sugar than the human tongue
-            </figcaption>
-          </figure>
+          {layout.figureRect && (
+            <figure
+              className="page-figure page-figure--full"
+              style={{
+                position: 'absolute',
+                left: `${layout.figureRect.x}px`,
+                top: `${layout.figureRect.y}px`,
+                width: `${layout.figureRect.width}px`,
+                margin: 0,
+              }}
+            >
+              <img
+                src={IMG_HOUSEFLY_FOOT}
+                alt="Housefly foot macro, SEM photograph"
+                className="page-figure__img"
+                style={{ width: '100%', height: 280, objectFit: 'cover' }}
+              />
+              <figcaption className="page-figure__caption">
+                Tarsal chemoreceptors — ten million times more sensitive to sugar than the human tongue
+              </figcaption>
+            </figure>
+          )}
 
           {/* Masonry grid */}
           {layout.masonryItems.map((item, i) => (
