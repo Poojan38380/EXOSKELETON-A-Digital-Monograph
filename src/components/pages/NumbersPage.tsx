@@ -1,12 +1,14 @@
-import { useRef, useEffect, useState } from 'react'
-import { layoutText } from '../spread-layout'
-import { STATS } from '../../content/stat-data'
+import { useRef, useEffect, useState, useCallback, type ReactNode } from 'react'
+import { layoutText, type PositionedLine } from '../spread-layout'
+import { STATS, type StatData } from '../../content/stat-data'
 import { NUMBERS_TITLE, NUMBERS_CREDIT, NUMBERS_PULL_QUOTE, PAGES } from '../../content/entomology-text'
-import { IMG_HOUSEFLY_FOOT } from '../../content/image-urls'
+import { IMG_HOUSEFLY_FOOT, IMG_ANT_LIFTING, IMG_JUMPING_BEAN } from '../../content/image-urls'
 import { StatCard } from '../StatCard'
 
 const TITLE_FONT = '700 2.2rem "Playfair Display", Georgia, serif'
 const TITLE_LINE_HEIGHT = 38
+const BODY_FONT = '20px "EB Garamond", "Palatino Linotype", "Book Antiqua", Palatino, serif'
+const BODY_LINE_HEIGHT = 32
 const PULL_QUOTE_FONT = 'italic 1.35rem "Cormorant Garamond", Georgia, serif'
 const PULL_QUOTE_LINE_HEIGHT = 28
 
@@ -22,15 +24,34 @@ const MID_TEXT_2 =
 const CLOSING_TEXT =
   'Insects inhabit nearly every terrestrial environment on Earth. They have existed for more than three hundred and fifty million years, predating both dinosaurs and flowering plants by vast margins. They have survived five mass extinctions. They will, almost certainly, outlast us.'
 
+interface MasonryItem {
+  x: number
+  y: number
+  width: number
+  height: number
+  stat: StatData
+}
+
+interface TextBlock {
+  x: number
+  y: number
+  width: number
+  lines: PositionedLine[]
+}
+
 function NumbersPage() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [layout, setLayout] = useState<{
     titleLines: Array<{ x: number; y: number; width: number; text: string }>
     creditPos: { x: number; y: number } | null
-    pullQuoteHeight: number
+    pullQuoteBlock: { x: number; y: number; width: number; height: number } | null
+    textBlocks: TextBlock[]
+    masonryItems: MasonryItem[]
+    figureRect: { x: number; y: number; width: number; height: number } | null
+    contentHeight: number
   } | null>(null)
 
-  const computeLayout = () => {
+  const computeLayout = useCallback(() => {
     const container = containerRef.current
     if (!container) return
 
@@ -38,9 +59,10 @@ function NumbersPage() {
     if (containerWidth === 0) return
 
     const isNarrow = containerWidth < 768
-    const gutter = isNarrow ? 20 : 64
+    const gutter = isNarrow ? 16 : 32
     const contentWidth = containerWidth - gutter * 2
 
+    // Header region
     const headerY = 32
     const titleResult = layoutText(
       NUMBERS_TITLE,
@@ -51,8 +73,49 @@ function NumbersPage() {
     )
 
     const creditY = headerY + titleResult.lines.length * TITLE_LINE_HEIGHT + 12
+    const creditPos: { x: number; y: number } | null = { x: gutter, y: creditY }
 
-    // Compute pull quote dimensions (same approach as PageSpread)
+    // Rule + gap after header
+    const ruleY = creditY + 16
+    const copyTop = ruleY + 32
+
+    // Build obstacles and position content
+    const obstacles: Array<{ rect: { x: number; y: number; width: number; height: number }; hPad: number; vPad: number }> = []
+    const masonryItems: MasonryItem[] = []
+    const textBlocks: TextBlock[] = []
+    
+    let currentY = copyTop
+
+    // Split stats into 3 columns for masonry
+    const columnCount = isNarrow ? 2 : 3
+    const columnWidth = Math.floor((contentWidth - (columnCount - 1) * 16) / columnCount)
+    const columnGap = 16
+    const columnHeights = new Array(columnCount).fill(0)
+
+    // Place intro text first
+    const introResult = layoutText(
+      INTRO_TEXT,
+      BODY_FONT,
+      BODY_LINE_HEIGHT,
+      { x: gutter, y: currentY, width: contentWidth, height: 1000 },
+      [],
+    )
+    const introHeight = introResult.lines.length * BODY_LINE_HEIGHT + 24
+    textBlocks.push({
+      x: gutter,
+      y: currentY,
+      width: contentWidth,
+      lines: introResult.lines,
+    })
+    currentY += introHeight
+
+    // Figure (full width)
+    const figureHeight = isNarrow ? 270 : 350
+    const figureRect = { x: gutter, y: currentY, width: contentWidth, height: figureHeight }
+    obstacles.push({ rect: figureRect, hPad: 22, vPad: 19 })
+    currentY += figureHeight + 24
+
+    // Pull quote
     const pqWidth = isNarrow ? contentWidth : Math.round(contentWidth * 0.4)
     const pqResult = layoutText(
       NUMBERS_PULL_QUOTE,
@@ -62,18 +125,114 @@ function NumbersPage() {
       [],
     )
     const pqTextHeight = pqResult.lines.length * PULL_QUOTE_LINE_HEIGHT
-    // CSS overhead: padding 1.25rem*2 = 40px, border-left = 3px
-    const cssOverhead = 43
-    const pqTotalHeight = pqTextHeight + cssOverhead
+    const pqHeight = pqTextHeight + 108
+    const pqX = isNarrow ? gutter : gutter + contentWidth - pqWidth
+    const pullQuoteBlock = { x: pqX, y: currentY, width: pqWidth, height: pqHeight }
+    obstacles.push({ rect: pullQuoteBlock, hPad: 26, vPad: 19 })
+
+    // Mid text 1 (beside pull quote if not narrow)
+    const mid1Width = isNarrow ? contentWidth : contentWidth - pqWidth - 24
+    const mid1X = isNarrow ? gutter : gutter
+    const mid1Y = currentY
+    const mid1Result = layoutText(
+      MID_TEXT_1,
+      BODY_FONT,
+      BODY_LINE_HEIGHT,
+      { x: mid1X, y: mid1Y, width: mid1Width, height: 1000 },
+      obstacles,
+    )
+    const mid1Height = mid1Result.lines.length * BODY_LINE_HEIGHT + 24
+    textBlocks.push({
+      x: mid1X,
+      y: mid1Y,
+      width: mid1Width,
+      lines: mid1Result.lines,
+    })
+
+    // Update currentY to below pull quote and mid text
+    const pqBottom = currentY + pqHeight
+    const mid1Bottom = mid1Y + mid1Height
+    currentY = Math.max(pqBottom, mid1Bottom) + 24
+
+    // Masonry grid for stat cards
+    const cardMinHeight = 120
+    const cardMaxHeight = 180
+    const statsPerColumn = Math.ceil(STATS.length / columnCount)
+
+    STATS.forEach((stat, index) => {
+      const columnIndex = Math.floor(index / statsPerColumn)
+      const rowInColumn = index % statsPerColumn
+      
+      // Vary card height based on content
+      const cardHeight = cardMinHeight + (index % 3) * 30
+      
+      const x = gutter + columnIndex * (columnWidth + columnGap)
+      const y = currentY + rowInColumn * (cardMaxHeight + columnGap)
+      
+      masonryItems.push({
+        x,
+        y,
+        width: columnWidth,
+        height: cardHeight,
+        stat,
+      })
+
+      // Track column height
+      const itemBottom = y + cardHeight
+      if (itemBottom > columnHeights[columnIndex]) {
+        columnHeights[columnIndex] = itemBottom
+      }
+    })
+
+    const maxColumnHeight = Math.max(...columnHeights)
+    currentY = currentY + maxColumnHeight + 32
+
+    // Mid text 2
+    const mid2Result = layoutText(
+      MID_TEXT_2,
+      BODY_FONT,
+      BODY_LINE_HEIGHT,
+      { x: gutter, y: currentY, width: contentWidth, height: 1000 },
+      [],
+    )
+    const mid2Height = mid2Result.lines.length * BODY_LINE_HEIGHT + 24
+    textBlocks.push({
+      x: gutter,
+      y: currentY,
+      width: contentWidth,
+      lines: mid2Result.lines,
+    })
+    currentY += mid2Height + 24
+
+    // Closing text
+    const closingResult = layoutText(
+      CLOSING_TEXT,
+      BODY_FONT,
+      BODY_LINE_HEIGHT,
+      { x: gutter, y: currentY, width: contentWidth, height: 1000 },
+      [],
+    )
+    const closingHeight = closingResult.lines.length * BODY_LINE_HEIGHT + 48
+    textBlocks.push({
+      x: gutter,
+      y: currentY,
+      width: contentWidth,
+      lines: closingResult.lines,
+    })
+    currentY += closingHeight + 60
 
     setLayout({
       titleLines: titleResult.lines,
-      creditPos: { x: gutter, y: creditY },
-      pullQuoteHeight: pqTotalHeight,
+      creditPos: creditPos!,
+      pullQuoteBlock,
+      textBlocks,
+      masonryItems,
+      figureRect,
+      contentHeight: currentY,
     })
-  }
+  }, [])
 
-  // Initial layout + resize handling (same pattern as PageSpread)
+  // Initial layout + resize handling
   const computeLayoutRef = useRef(computeLayout)
   useEffect(() => { computeLayoutRef.current = computeLayout }, [computeLayout])
 
@@ -84,17 +243,16 @@ function NumbersPage() {
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
-  // Compute layout when page mounts
   useEffect(() => {
     computeLayout()
   }, [computeLayout])
 
   return (
-    <div ref={containerRef} className="page-spread numbers-page">
+    <div ref={containerRef} className="page-spread numbers-page" style={{ minHeight: layout?.contentHeight ? `${layout.contentHeight}px` : '100vh' }}>
       {/* Pretext-rendered header */}
-      <div className="numbers-page__header">
-        {layout && (
-          <>
+      {layout && (
+        <>
+          <div className="numbers-page__header">
             {layout.titleLines.map((line, i) => (
               <span
                 key={`title-${i}`}
@@ -118,50 +276,81 @@ function NumbersPage() {
                 {NUMBERS_CREDIT}
               </span>
             )}
-          </>
-        )}
-      </div>
+          </div>
 
-      {/* Intro paragraph */}
-      <p className="numbers-page__body">{INTRO_TEXT}</p>
+          {/* Pretext-rendered text blocks */}
+          {layout.textBlocks.map((block, blockIndex) => (
+            <div key={`text-block-${blockIndex}`}>
+              {block.lines.map((line, i) => (
+                <span
+                  key={`block-${blockIndex}-line-${i}`}
+                  className="spread-line spread-line--body"
+                  style={{
+                    left: `${line.x}px`,
+                    top: `${line.y}px`,
+                    font: BODY_FONT,
+                    lineHeight: `${BODY_LINE_HEIGHT}px`,
+                  }}
+                >
+                  {line.text}
+                </span>
+              ))}
+            </div>
+          ))}
 
-      {/* Figure */}
-      <figure className="page-figure page-figure--full">
-        <img
-          src={IMG_HOUSEFLY_FOOT}
-          alt="Housefly foot macro, SEM photograph"
-          className="page-figure__img"
-        />
-        <figcaption className="page-figure__caption">
-          Tarsal chemoreceptors — ten million times more sensitive to sugar than the human tongue
-        </figcaption>
-      </figure>
+          {/* Pull quote */}
+          <blockquote
+            className="numbers-page__pull-quote"
+            style={{
+              position: 'absolute',
+              left: `${layout.pullQuoteBlock.x}px`,
+              top: `${layout.pullQuoteBlock.y}px`,
+              width: `${layout.pullQuoteBlock.width}px`,
+            }}
+          >
+            {NUMBERS_PULL_QUOTE}
+          </blockquote>
 
-      {/* Pull quote — height reserved to prevent overlap with surrounding content */}
-      {layout && (
-        <blockquote
-          className="numbers-page__pull-quote"
-          style={{ minHeight: `${layout.pullQuoteHeight}px` }}
-        >
-          {NUMBERS_PULL_QUOTE}
-        </blockquote>
+          {/* Figure */}
+          <figure
+            className="page-figure page-figure--full"
+            style={{
+              position: 'absolute',
+              left: `${layout.figureRect.x}px`,
+              top: `${layout.figureRect.y}px`,
+              width: `${layout.figureRect.width}px`,
+              margin: 0,
+            }}
+          >
+            <img
+              src={IMG_HOUSEFLY_FOOT}
+              alt="Housefly foot macro, SEM photograph"
+              className="page-figure__img"
+              style={{ width: '100%', height: 280, objectFit: 'cover' }}
+            />
+            <figcaption className="page-figure__caption">
+              Tarsal chemoreceptors — ten million times more sensitive to sugar than the human tongue
+            </figcaption>
+          </figure>
+
+          {/* Masonry grid */}
+          {layout.masonryItems.map((item, i) => (
+            <div
+              key={`masonry-${i}`}
+              className="numbers-page__masonry-card"
+              style={{
+                position: 'absolute',
+                left: `${item.x}px`,
+                top: `${item.y}px`,
+                width: `${item.width}px`,
+                height: `${item.height}px`,
+              }}
+            >
+              <StatCard stat={item.stat} />
+            </div>
+          ))}
+        </>
       )}
-
-      {/* Mid-text 1 */}
-      <p className="numbers-page__body">{MID_TEXT_1}</p>
-
-      {/* Stat grid */}
-      <div className="numbers-page__grid">
-        {STATS.map((stat, i) => (
-          <StatCard key={i} stat={stat} />
-        ))}
-      </div>
-
-      {/* Mid-text 2 */}
-      <p className="numbers-page__body">{MID_TEXT_2}</p>
-
-      {/* Closing passage */}
-      <p className="numbers-page__body numbers-page__closing">{CLOSING_TEXT}</p>
 
       {/* Page number */}
       <div className="spread-page-number">{PAGES[5].number}</div>
