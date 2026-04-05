@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { PageThemeProvider, usePageTheme, PAGE_THEMES } from '../PageThemeContext'
 
@@ -105,7 +105,7 @@ describe('PageThemeContext', () => {
     })
 
     it('should have valid theme structure for each page', () => {
-      for (const [pageId, theme] of Object.entries(PAGE_THEMES)) {
+      for (const [_pageId, theme] of Object.entries(PAGE_THEMES)) {
         expect(typeof theme.accentColor).toBe('string')
         expect(typeof theme.glowPattern).toBe('string')
         expect(typeof theme.pageClass).toBe('string')
