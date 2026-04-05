@@ -30,7 +30,13 @@ The pterostigma, that darkened cell near the tip of each wing, is a small weight
 
 Fossil evidence from the Carboniferous period — three hundred million years ago — shows dragonfly ancestors such as Meganeura with wingspans exceeding seventy centimetres, their venation patterns recognizably modern. The architecture has endured because it works at a fundamental level: it is the intersection of material constraint and aerodynamic necessity, resolved with a precision that no human draftsmanship has yet improved upon.
 
-When you hold a dragonfly and examine its wing against the light — a practice requiring both gentleness and the acceptance that you are in the presence of superior engineering — you see not a flat surface but a topography. Veins rise like ridges, membrane stretches between them like taut parchment, and the whole assembly flexes with a controlled compliance that is neither rigid nor flaccid but precisely, purposefully alive.`
+Dragonflies possess four wings that rotate independently, granting them unparalleled aerial mastery. They can hover motionless, fly backwards, execute razor-sharp turns at full speed, and accelerate faster than most birds. Each wing is mounted on its own muscular hinge, allowing the dragonfly to adjust the angle of attack, stroke amplitude, and phase relationship of each wing independently. This is control of a sophistication that helicopter designers can only dream of.
+
+Their hunting success rate is staggering: dragonflies capture approximately ninety-five percent of their targets, making them the most efficient predators on Earth. By comparison, wolves succeed twenty percent of the time, lions thirty percent, and sharks fifty percent. A dragonfly does not merely chase its prey — it intercepts it, computing the target's trajectory and positioning itself for capture with a precision that borders on the computational.
+
+When you hold a dragonfly and examine its wing against the light — a practice requiring both gentleness and the acceptance that you are in the presence of superior engineering — you see not a flat surface but a topography. Veins rise like ridges, membrane stretches between them like taut parchment, and the whole assembly flexes with a controlled compliance that is neither rigid nor flaccid but precisely, purposefully alive.
+
+The Globe Skimmer dragonfly (Pantala flavescens) holds the record for the longest insect migration, travelling eleven thousand two hundred miles across multiple generations. Individual dragonflies fly up to four thousand miles of this journey, likely using oceanic wind currents to traverse open water — a navigational feat performed by a brain smaller than a grain of rice.`
 
 // ═══════════════════════════════════════════════════════════
 // PAGE 2 — Compound Vision
@@ -54,6 +60,10 @@ The superposition eye — found in moths and fireflies — abandons this isolati
 What the insect gains over the human is not acuity but temporal resolution. A human retina integrates light over roughly one tenth of a second — the basis of the persistence of vision that makes cinema possible. The compound eye of a blowfly samples the world at over two hundred frames per second. To such an eye, a human hand moving at normal speed appears to drift through syrup. This is why swatting a fly is so often futile: the animal sees the approach, computes the escape trajectory, and executes it in the time it takes your hand to traverse a fraction of the distance.
 
 Some insects see ultraviolet light invisible to humans. Many flowers display nectar guides — patterns visible only in UV — that function as landing strips for pollinators. The honeybee navigates by the polarization pattern of the sky, a map of electromagnetic orientation that persists even when the sun itself is hidden behind cloud. The mantis shrimp, not an insect but a fellow arthropod, possesses twelve distinct classes of photoreceptor to our three, though recent work suggests it uses them not for fine colour discrimination but for rapid, coarse categorization — a different philosophy of perception entirely.
+
+The praying mantis stands alone in the insect world with its ability to perceive depth. While humans use binocular vision — the slight disparity between what each eye sees — to judge distance, the mantis employs a different trick. It scans its environment with rhythmic swaying movements, using motion parallax: closer objects appear to move faster than distant ones. It is the same phenomenon that makes telephone poles flash past your car window while distant mountains seem to crawl.
+
+Fireflies, those living lanterns of summer nights, produce light through a chemical reaction between luciferin and the enzyme luciferase in specialized abdominal glands. Each species has its own species-specific flash pattern — a Morse code of courtship. Some fireflies have evolved synchronized flashing, where thousands of males flash in unison, creating waves of light that pulse through mangrove forests in Southeast Asia. The phenomenon, called synchrony, remains one of the great unsolved mysteries of animal behaviour.
 
 The compound eye does not produce the sharp, continuous visual world we experience. It produces a fragmented, low-resolution, high-temporal-fidelity stream of data — a representation of the world optimized not for beauty but for survival. And in this, perhaps, it is a more honest depiction of what vision actually is: not a window onto reality but a compressed encoding of it, shaped by the evolutionary pressures that made each species good enough to persist.`
 
@@ -82,6 +92,8 @@ The process is guided by hormonal signals. Juvenile hormone, present at high lev
 
 What makes this process so remarkable from an evolutionary perspective is that it requires the animal to be vulnerable — utterly helpless — for days or weeks during the pupal stage. A pupa cannot feed, cannot flee, cannot fight. It survives only because its casing is tough and camouflaged, and because the transformation happens quickly enough that predation does not eliminate the lineage before reproduction. The fact that holometabolous insects are the most diverse group of organisms on Earth — representing roughly eighty percent of all animal species — suggests that the gamble has paid off spectacularly.
 
+Recent research has revealed something even more astonishing: butterflies retain memories from their caterpillar stage. Scientists trained caterpillars to avoid a particular odour by pairing it with a mild electric shock. After metamorphosis, the adult butterflies still avoided that odour — despite the fact that their brains had been completely dissolved and rebuilt during the pupal stage. Memory, it seems, can survive the dissolution of the body that housed it.
+
 The larva and the adult often occupy entirely different ecological niches. The caterpillar eats leaves; the butterfly drinks nectar. The grub feeds on rotting wood; the beetle flies between flowers. This division of labour within a single genome eliminates competition between juvenile and adult, allowing the species to exploit two resources simultaneously. It is, in a sense, the ultimate form of specialization — one animal, two lives, no overlap.`
 
 // ═══════════════════════════════════════════════════════════
@@ -108,6 +120,8 @@ The mosquito Aedes aegypti uses its antennae to detect the carbon dioxide exhale
 Antennae also serve non-olfactory functions. The Johnston's organ in the pedicel detects mechanical deflection, providing information about wind speed and direction — critical for flight stability. In mosquitoes, it is exquisitely tuned to the wing-beat frequency of potential mates, allowing males to detect the characteristic buzz of a female in flight. Some ants use their antennae as tactile probes, tapping nest-mates in species-specific patterns that function as recognition signals. The antennal code of the ant is a language of touch and taste, each tap conveying information about colony membership, caste, and task.
 
 The antennal sensilla of the fruit fly Drosophila melanogaster have become one of the most intensively studied sensory systems in biology. Sixty-two olfactory receptor genes, each expressed in a specific subset of sensilla, project to identified glomeruli in the antennal lobe. The map from odour to receptor to glomerulus to behaviour is being traced with a precision that approaches complete understanding — and what it reveals is a sensory world of staggering complexity, encoded in the firing patterns of neurons no wider than a bacterium.
+
+Caddisfly larvae, aquatic insects that spin protective silk casings, have evolved an extraordinary antennal behaviour: they ornament their casings with rocks, gravel, sticks, and river debris for structural reinforcement. In mineral-rich waters, the designs become elaborate architectural works — tiny underwater sculptures built by an animal guided entirely by tactile and chemical feedback from its antennae.
 
 To watch an insect antennate — to sweep its antennae through the air, sampling, comparing, orienting — is to witness an animal reading a text written in molecules. The pages are invisible. The language is chemistry. And the insect reads it fluently.`
 
@@ -148,7 +162,11 @@ The population figures are harder still to grasp. For every one human, there are
 
 The collective weight of all insects alive today is roughly seventy times greater than the total weight of all humans. This is not because individual insects are large — most weigh less than a grain of rice — but because there are so inconceivably many of them.
 
-Honey production requires approximately ten million nectar-collecting trips by worker bees to produce a single pound of honey. A single bee may fly up to sixty miles in a single day. The silk needed to make one pound of fabric requires the cocoons of roughly two thousand silkworms.
+Honey production requires approximately ten million nectar-collecting trips by worker bees to produce a single pound of honey. A single bee may fly up to sixty miles in a single day, visiting up to five thousand flowers. The silk needed to make one pound of fabric requires the cocoons of roughly two thousand silkworms.
+
+Leafcutter ant colonies can contain up to eight million individuals, all working in coordinated harmony. The Argentine ant supercolony extends three thousand seven hundred miles across Europe — the largest known animal cooperative society. Ants practice agriculture (fungi farming), animal husbandry (herding aphids for honeydew), and coordinated inter-colony warfare that rivals human military campaigns.
+
+The honeybee communicates precise food source locations using the waggle dance — a figure-eight movement that encodes both the distance and direction to a food source relative to the sun's position. The dance is so precise that other bees can fly directly to a location they have never visited, guided only by the movements of a nest-mate.
 
 Insects inhabit nearly every terrestrial environment on Earth, from snow-covered mountain ranges to the hottest deserts. They have existed for more than three hundred and fifty million years, predating both dinosaurs and flowering plants by vast margins. They have survived five mass extinctions. They will, almost certainly, outlast us.`
 
@@ -175,7 +193,13 @@ The most sensitive biological sensor known to science belongs to the male silk m
 
 A housefly's feet are approximately ten million times more sensitive to sugar than the human tongue. Each foot is covered with chemoreceptor hairs that taste whatever the fly lands on, allowing it to find food with a single step. The monarch butterfly weighs so little that it takes roughly one hundred individuals to make a single ounce, yet a single monarch migrates up to three thousand miles from Canada to central Mexico.
 
-Ticks, though not insects but arachnids, hold the record for the most dramatic change in body size: an unfed tick is roughly the size of a grain of sand, but a fully engorged female can swell to the size of a small grape, having consumed hundreds of times her original body weight in blood.`
+Ticks, though not insects but arachnids, hold the record for the most dramatic change in body size: an unfed tick is roughly the size of a grain of sand, but a fully engorged female can swell to the size of a small grape, having consumed hundreds of times her original body weight in blood.
+
+The Argentine ant supercolony in Europe extends over three thousand seven hundred miles across national borders — the largest cooperative animal society on Earth, with billions of individuals working seamlessly together despite never meeting.
+
+The cicada *Magicicada* holds the record for the longest developmental period: thirteen or seventeen years spent underground as a nymph before emerging as an adult. In 2024, two broods emerged simultaneously in the Eastern United States — an event involving trillions of insects and a cacophony exceeding ninety decibels, loud enough to cause permanent hearing damage at close range.
+
+The dragonfly is the most efficient predator in the animal kingdom: it captures ninety-five percent of its targets, a success rate that dwarfs that of wolves, lions, and sharks. It does not chase its prey — it intercepts it, computing the target's trajectory with a brain the size of a poppy seed. Four independently rotating wings give it the ability to hover, fly backwards, and execute turns that would tear apart any conventional aircraft.`
 
 // ═══════════════════════════════════════════════════════════
 // PAGE 8 — Strange Behavior
@@ -192,13 +216,17 @@ Insect behaviour is often dismissed as simple instinct, a mechanistic response t
 
 The Mexican jumping bean is not a bean at all but the seed pod of the shrub *Sebastiania pavoniana*, native to Mexico. Inside each pod lives the caterpillar of the moth *Cydia saltitans*. When the pod is warmed by sunlight or the heat of a human hand, the caterpillar jerks and twists, causing the bean to jump and roll. The caterpillar does this not out of agitation but with purpose: it is trying to roll the pod into shade, where it is less likely to be killed by overheating. The jumping bean is a tiny capsule of insect-driven environmental engineering.
 
-Wasps of many species are attracted to the sugars in overripe, fermenting fruit. The fermentation produces ethanol, and wasps, it turns out, are affected by alcohol much as humans are. A wasp that has fed extensively on fermenting fruit juice can become visibly intoxicated — its flight becomes erratic, its movements slow and uncoordinated, and in extreme cases it may simply stop moving altogether, effectively passing out until the alcohol is metabolised.
+Wasps of many species are attracted to the sugars in overripe, fermenting fruit. The fermentation produces ethanol, and wasps, it turns out, are affected by alcohol much as humans are. A wasp that has fed extensively on fermenting fruit juice can become visibly intoxicated — its flight becomes erratic, its movements slow and uncoordinated, and in extreme cases it may simply stop moving altogether, effectively passing out until the alcohol is metabolised. This is not mere curiosity: intoxication has real consequences for wasp survival and behaviour, and researchers have documented parallels between insect and human responses to alcohol.
 
-Dung beetles were deliberately imported to Australia in the 1960s to solve a problem created by human agriculture. The native Australian dung beetles had evolved to process the dry, fibrous droppings of marsupials. When European cattle were introduced, their wet, dense dung accumulated in vast quantities, fouling pastureland and breeding billions of flies. The Australian CSIRO launched a multi-year programme importing dung beetle species from Africa and Europe that were adapted to cattle dung. The beetles processed the dung, buried it, and restored the pasture. An entire ecosystem service, delivered by insects.
+Dung beetles were deliberately imported to Australia in the 1960s to solve a problem created by human agriculture. The native Australian dung beetles had evolved to process the dry, fibrous droppings of marsupials. When European cattle were introduced, their wet, dense dung accumulated in vast quantities, fouling pastureland and breeding billions of flies. The Australian CSIRO launched a multi-year programme importing dung beetle species from Africa and Europe that were adapted to cattle dung. The beetles processed the dung, buried it, and restored the pasture. An entire ecosystem service, delivered by insects. There are over five thousand species of dung beetle worldwide, each performing the same invaluable service in their own ecosystems.
 
 The elm zigzag sawfly — *Aproceros leucopoda* — arrived in Europe from Asia and has since spread rapidly across the continent, now reaching North America. Its larvae create a distinctive zigzag pattern of cuts along the edges of elm and zelkova leaves. The pattern is so regular and so distinctive that it can be identified from a distance, a calling card written in living tissue.
 
+Cicadas hold the record for the longest developmental period of any insect. Periodical cicadas spend thirteen or seventeen years underground as nymphs, feeding on root nutrients and moulting through five instar stages. In 2024, Brood XIX (thirteen-year) and Brood XIII (seventeen-year) emerged simultaneously in the Eastern United States — a double emergence involving billions of insects singing continuously for over a month. The loudness of a cicada chorus can exceed ninety decibels, loud enough to cause permanent hearing damage at close range.
+
 The housefly walks across surfaces that would repulse most animals — carrion, faeces, rotting food — yet it does so with feet ten million times more sensitive to sugar than the human tongue. Every step is a taste. Every landing is an analysis. The fly knows exactly what it is standing on, down to the molecular composition of the surface.
+
+Leafcutter ants demonstrate one of the most sophisticated agricultural systems known to science. They do not eat the leaves they harvest — instead, they use them to cultivate a specialised fungus that serves as their primary food source. The ants have evolved a caste system to manage this operation: workers cut and carry leaf fragments, soldiers defend the colony, and gardeners tend the fungus. They have even evolved an obligate symbiotic relationship with their crop: neither the ants nor the fungus can survive without the other.
 
 And then there are the ticks found on an eel — a museum specimen that represents a first-of-its-kind discovery, showing that parasites will find hosts in places no one would think to look. The natural world is opportunistic, and the ectoparasites of the world do not read the textbooks that tell them which hosts are appropriate.`
 
@@ -223,6 +251,10 @@ Stick insects and leaf insects take deception further still. They do not merely 
 
 Many insects survive freezing temperatures through a chemical strategy. Instead of preventing freezing, they replace the water in their cells with glycerol — the same compound used in automotive antifreeze. The glycerol lowers the freezing point of the cell contents and prevents the formation of ice crystals that would puncture cell membranes. The insect effectively becomes a glass sculpture, frozen solid but alive, waiting for warmth to reverse the process.
 
+The bombardier beetle takes chemical defence to another level. When threatened, it mixes hydroquinone and hydrogen peroxide in specialised abdominal glands, producing an exothermic reaction that ejects a boiling chemical spray at nearly one hundred degrees Celsius. The spray is aimed with precision — the beetle can rotate its abdominal turret and direct the spray at attackers from multiple angles. The mechanism is so elegant that it has inspired biomimetic designs in robotics and materials science.
+
+Moths have evolved a different kind of defence: natural sonar blockers. Their bodies are covered in fluffy scales that absorb bat echolocation sound waves without reflecting them, rendering the moths effectively invisible to bat sonar. It is a stealth technology honed by millions of years of evolutionary pressure from their primary nocturnal predators.
+
 The monarch butterfly's wing scales — the source of its colour — are themselves a marvel. Each scale is a flattened, modified hair, overlapping its neighbours like tiles on a roof. The orange colour comes from pigments, but the iridescent sheen comes from the physical structure of the scales: microscopic ridges that interfere with light waves, reflecting certain wavelengths and cancelling others. The colour is not merely chemical but physical — it lives in the architecture of the surface.`
 
 // ═══════════════════════════════════════════════════════════
@@ -246,7 +278,11 @@ The Vector Guard application, released in early 2026, represents the latest chap
 
 The word "honeymoon" derives from a Middle Ages tradition of providing newlyweds with enough mead — honey wine — to last their first month of marriage. The honey was produced by bees making those ten million nectar-collecting trips. The ritual was an insect subsidy, paid by humans to the descendants of the apian foragers that first tempted our ancestors to keep bees.
 
-As of 2025, the United States alone has approximately ninety-one thousand named insect species. Worldwide, roughly one and a half million species have been formally described. The gap between what we know and what exists is perhaps the largest knowledge gap in all of science.`
+Wasps serve as highly efficient natural pest controllers. A single small colony can consume thousands of mosquitoes, flies, spiders, and caterpillars daily. The parasitoid wasps — families Ichneumonidae, Chalcididae, and Braconidae — have evolved an extraordinary relationship with their hosts: they paralyze prey with their stingers and lay their eggs inside or on the host's body, providing their larvae with a fresh, living food source. Despite their fearsome reputation, these wasps rarely sting humans.
+
+Silkworms have shaped human civilisation in ways that are easy to forget. The silk needed to make one pound of fabric requires the cocoons of roughly two thousand silkworms. The silk road that connected East and West for millennia was driven by demand for this single insect product. China guarded the secret of sericulture for thousands of years — the penalty for smuggling silkworm eggs was death.
+
+As of 2025, the United States alone has approximately ninety-one thousand named insect species. Worldwide, roughly one and a half million species have been formally described. The gap between what we know and what exists is perhaps the largest knowledge gap in all of science. Insect populations are declining globally — a trend with potentially devastating consequences for pollination, decomposition, and the food chains that sustain virtually all terrestrial ecosystems.`
 
 // ═══════════════════════════════════════════════════════════
 // PAGE 11 — The Insect Crisis (Updated content for Colophon)

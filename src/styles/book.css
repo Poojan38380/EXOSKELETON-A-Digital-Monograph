@@ -120,6 +120,10 @@
   filter: saturate(0.6) brightness(0.9);
 }
 
+.cover__image--clickable {
+  cursor: pointer;
+}
+
 .cover__image-overlay {
   position: absolute;
   inset: 0;
