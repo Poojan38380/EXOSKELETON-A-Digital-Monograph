@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useRef, useEffect, useCallback } from 'react'
+import { useLayout } from '../context/LayoutContext'
 import { PAGES } from '../content/entomology-text'
 import {
   IMG_JEWEL_BEETLE, IMG_DRAGONFLY_WING, IMG_HORSEFLY_EYE,
@@ -30,17 +31,17 @@ interface NavRailProps {
 }
 
 export function NavigationRail({ currentPage, onPageSelect }: NavRailProps) {
-  const [expanded, setExpanded] = useState(false)
+  const { navExpanded: expanded, setNavExpanded } = useLayout()
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const handleMouseEnter = useCallback(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current)
-    setExpanded(true)
-  }, [])
+    setNavExpanded(true)
+  }, [setNavExpanded])
 
   const handleMouseLeave = useCallback(() => {
-    timeoutRef.current = setTimeout(() => setExpanded(false), 200)
-  }, [])
+    timeoutRef.current = setTimeout(() => setNavExpanded(false), 200)
+  }, [setNavExpanded])
 
   useEffect(() => {
     return () => {
@@ -60,7 +61,11 @@ export function NavigationRail({ currentPage, onPageSelect }: NavRailProps) {
           <button
             key={page.id}
             className={`nav-rail__item ${i === currentPage ? 'nav-rail__item--active' : ''}`}
-            onClick={() => onPageSelect(i)}
+            onClick={() => {
+              onPageSelect(i)
+              setNavExpanded(false)
+              if (timeoutRef.current) clearTimeout(timeoutRef.current)
+            }}
             aria-label={`Go to page ${page.number}: ${page.label}`}
           >
             <span className="nav-rail__number">

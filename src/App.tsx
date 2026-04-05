@@ -3,6 +3,7 @@ import { BookShell } from './components/BookShell'
 import { NavigationRail } from './components/NavigationRail'
 import { MobileNav } from './components/MobileNav'
 import { PageReveal } from './components/PageReveal'
+import { LayoutProvider, useLayout } from './context/LayoutContext'
 import { PageThemeProvider } from './context/PageThemeContext'
 import { CoverPage } from './components/pages/CoverPage'
 import { WingsPage } from './components/pages/WingsPage'
@@ -64,7 +65,16 @@ const PAGE_IDS = [
 const TOTAL_PAGES = PAGES.length
 
 export default function App() {
+  return (
+    <LayoutProvider>
+      <AppContent />
+    </LayoutProvider>
+  )
+}
+
+function AppContent() {
   const [currentPage, setCurrentPage] = useState(0)
+  const { navExpanded } = useLayout()
 
   const handlePageSelect = useCallback((page: number) => {
     // @ts-ignore — BookShell exposes window.__bookNav
@@ -90,7 +100,13 @@ export default function App() {
         const pageId = PAGE_IDS[pageIndex] ?? 'cover'
         return (
           <PageThemeProvider pageIndex={pageIndex} pageId={pageId}>
-            <div className="book-content">
+            <div
+              className="book-content"
+              style={{
+                marginLeft: navExpanded ? 280 : 48,
+                transition: 'margin-left 300ms cubic-bezier(0.4, 0, 0.2, 1)',
+              }}
+            >
               <PageReveal>
                 <PageComponent />
               </PageReveal>

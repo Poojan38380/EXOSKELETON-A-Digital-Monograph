@@ -525,8 +525,7 @@ body {
 
 .book-content {
   flex: 1;
-  margin-left: 48px; /* collapsed nav rail width */
-  transition: margin-left 300ms ease;
+  /* margin-left controlled inline via App.tsx based on nav state */
 }
 
 /* ── Parchment Texture Overlay ─────────────────────────── */

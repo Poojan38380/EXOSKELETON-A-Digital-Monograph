@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState, useCallback, type ReactNode } from 'react'
+import { useLayout } from '../context/LayoutContext'
 import { layoutText, type PositionedLine, type BandObstacle } from './spread-layout'
 import type { Rect } from '../layout-engine/wrap-geometry'
 
@@ -50,6 +51,7 @@ const GUTTER_DESKTOP = 64
 
 export function PageSpread({ config, children, onAnchorPositions, butterflyObstacle }: PageSpreadProps) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const { navExpanded } = useLayout()
   // Stable ref so computeLayout's useCallback dep array stays clean
   const onAnchorPositionsRef = useRef(onAnchorPositions)
   useEffect(() => { onAnchorPositionsRef.current = onAnchorPositions }, [onAnchorPositions])
@@ -74,7 +76,12 @@ export function PageSpread({ config, children, onAnchorPositions, butterflyObsta
 
     const isNarrow = containerWidth < 768
     const gutter = isNarrow ? 20 : GUTTER_DESKTOP
-    const contentWidth = containerWidth - gutter * 2
+
+    // When sidebar is expanded, content shifts right — narrow the column
+    // to a comfortable reading width (max 960px when expanded, 1200px when collapsed)
+    const maxWidth = navExpanded ? 960 : 1200
+    const effectiveContainerWidth = Math.min(containerWidth, maxWidth)
+    const contentWidth = effectiveContainerWidth - gutter * 2
 
     // Header region
     const headerY = 32
@@ -242,7 +249,7 @@ export function PageSpread({ config, children, onAnchorPositions, butterflyObsta
         lastWord: { x: last.x + last.width, y: last.y },
       })
     }
-  }, [config, butterflyObstacle])
+  }, [config, butterflyObstacle, navExpanded])
 
   // Keep a ref so the resize handler always calls the latest computeLayout
   // without needing to re-register on every butterfly position update.
