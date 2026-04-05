@@ -15,6 +15,7 @@ export function BookShell({
   onPageChange?: (page: number) => void
 }) {
   const [pageIndex, setPageIndex] = useState(0)
+  const [isInitialLoad, setIsInitialLoad] = useState(true)
   const [transitioning, setTransitioning] = useState(false)
   const touchStartX = useRef(0)
   const touchStartY = useRef(0)
@@ -27,9 +28,10 @@ export function BookShell({
     const pageEl = document.querySelector('.book-page')
     if (pageEl) pageEl.scrollTop = 0
     setTransitioning(true)
+    setIsInitialLoad(false)
     onPageChange?.(nextIndex)
     setPageIndex(nextIndex)
-    setTimeout(() => setTransitioning(false), 450)
+    setTimeout(() => setTransitioning(false), 550)
   }, [pageIndex, transitioning, onPageChange])
 
   const goNext = useCallback(() => navigateTo(pageIndex + 1), [navigateTo, pageIndex])
@@ -90,7 +92,10 @@ export function BookShell({
   return (
     <div className="book-container">
       {sidebar}
-      <div className={`book-page ${transitioning ? 'page-exit' : 'page-enter'}`} key={pageIndex}>
+      <div
+        className={`book-page ${isInitialLoad ? '' : 'page-enter'}`}
+        key={pageIndex}
+      >
         {children(pageIndex)}
       </div>
     </div>
