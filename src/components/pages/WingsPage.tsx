@@ -9,7 +9,7 @@ import {
   WINGS_BODY,
   PAGES,
 } from '../../content/entomology-text'
-import { IMG_DRAGONFLY_WING } from '../../content/image-urls'
+import { IMG_DRAGONFLY_WING, BG_DRAGONFLY_DETAIL, BG_WING_MONARCH } from '../../content/image-urls'
 import { Butterfly } from '../Butterfly'
 
 const config: SpreadConfig = {
@@ -17,12 +17,26 @@ const config: SpreadConfig = {
   credit: WINGS_CREDIT,
   pullQuote: WINGS_PULL_QUOTE,
   body: WINGS_BODY,
-  figure: {
-    src: IMG_DRAGONFLY_WING,
-    alt: 'Dragonfly wing venation, scientific engraving',
-    caption: 'Wing venation of \u{1D434}\u{1D45B}\u{1D44E}\u{1D465} \u{1D456}\u{1D45A}\u{1D45D}\u{1D452}\u{1D45F}\u{1D44E}\u{1D461}\u{1D45C}\u{1D45F} — the Emperor Dragonfly',
-    placement: 'right',
-  },
+  figures: [
+    {
+      src: IMG_DRAGONFLY_WING,
+      alt: 'Dragonfly wing venation, scientific engraving',
+      caption: 'Wing venation of Anax imperator — the Emperor Dragonfly',
+      placement: 'right',
+    },
+    {
+      src: BG_DRAGONFLY_DETAIL,
+      alt: 'Dragonfly wing detail showing membrane structure',
+      caption: 'Close-up of wing membrane revealing the microscopic architecture',
+      placement: 'left',
+    },
+    {
+      src: BG_WING_MONARCH,
+      alt: 'Monarch butterfly wing pattern',
+      caption: 'Monarch wing scales — each one a modified hair containing pigment',
+      placement: 'right',
+    },
+  ],
   pageNumber: PAGES[1].number,
 }
 
@@ -32,7 +46,7 @@ export function WingsPage() {
   const [butterflyObstacle, setButterflyObstacle] = useState<BandObstacle | null>(null)
 
   return (
-    <div style={{ position: 'relative', overflow: 'hidden' }}>
+    <div style={{ position: 'relative', overflow: 'visible' }}>
       <PageSpread
         config={config}
         ref={spreadRef}

@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState, useCallback, type ReactNode } from 
 import { layoutText, type PositionedLine, type BandObstacle } from './spread-layout'
 import type { Rect } from '../layout-engine/wrap-geometry'
 import { useLayoutData } from '../context/LayoutDataContext'
+import { useGlobalLightbox } from '../context/LightboxContext'
 
 /* ── PageSpread: Pretext-powered magazine layout ── */
 
@@ -19,7 +20,10 @@ export interface SpreadConfig {
   credit?: string
   pullQuote?: string
   body: string
+  /** Single figure (legacy) */
   figure?: SpreadFigure
+  /** Multiple figures (new - preferred) */
+  figures?: SpreadFigure[]
   /** Page number (Roman numeral) */
   pageNumber?: string
   /** Reserved height at the bottom for extra content (e.g. TOC on colophon) */
@@ -52,6 +56,7 @@ export const PageSpread = React.forwardRef<HTMLDivElement, PageSpreadProps>(
   function PageSpread({ config, children, onAnchorPositions, butterflyObstacle }: PageSpreadProps, ref) {
     const containerRef = useRef<HTMLDivElement>(null)
     const { registerLayout } = useLayoutData()
+    const { openLightbox } = useGlobalLightbox()
 
     // Merge forwarded ref with internal ref
     const setContainerRef = useCallback((el: HTMLDivElement | null) => {
@@ -71,7 +76,8 @@ export const PageSpread = React.forwardRef<HTMLDivElement, PageSpreadProps>(
       bodyLines: PositionedLine[]
       pullQuoteBlock: { x: number; y: number; width: number; height: number } | null
       figureRect: Rect | null
-      figureImgHeight: number
+      figureRects: Rect[]
+      figureImgHeights: number[]
       contentHeight: number
       extraY: number
     } | null>(null)
@@ -108,30 +114,44 @@ export const PageSpread = React.forwardRef<HTMLDivElement, PageSpreadProps>(
       const ruleY = creditY + (config.credit ? CREDIT_LINE_HEIGHT : 0) + 16
       const copyTop = ruleY + 32
 
-      // Figure geometry
+      // Figure geometry - support multiple figures
       let figureRect: Rect | null = null
-      let figureImgHeight = 0
-      let figW = 0
-      if (config.figure) {
-        figW = isNarrow ? contentWidth : Math.round(contentWidth * 0.45)
-        const figImgH = isNarrow ? 200 : config.figure.placement === 'full' || config.figure.placement === 'wide' ? 280 : 320
-        figureImgHeight = figImgH
+      const figureRects: Rect[] = []
+      const figureImgHeights: number[] = []
+      
+      // Use figures array if available, otherwise fall back to single figure
+      const figuresToRender = config.figures || (config.figure ? [config.figure] : [])
+      
+      let currentFigY = copyTop
+      for (let i = 0; i < figuresToRender.length; i++) {
+        const fig = figuresToRender[i]!
+        const figW = isNarrow ? contentWidth : Math.round(contentWidth * 0.45)
+        const figImgH = isNarrow ? 200 : fig.placement === 'full' || fig.placement === 'wide' ? 280 : 320
+        figureImgHeights.push(figImgH)
         const figCaptionH = 70
         const figH = figImgH + figCaptionH
-        const figX = config.figure.placement === 'right'
+        const figX = fig.placement === 'right'
           ? gutter + contentWidth - figW
-          : config.figure.placement === 'left'
+          : fig.placement === 'left'
             ? gutter
             : gutter
-        const figY = copyTop
-        figureRect = { x: figX, y: figY, width: figW, height: figH }
+        const figRect: Rect = { x: figX, y: currentFigY, width: figW, height: figH }
+        figureRects.push(figRect)
+        
+        // Track first figure for legacy compatibility
+        if (i === 0) {
+          figureRect = figRect
+        }
+        
+        // Add spacing between figures
+        currentFigY = currentFigY + figH + 24
       }
 
-      // Build obstacles
+      // Build obstacles - include all figures
       const figureObstacles: BandObstacle[] = []
-      if (figureRect) {
+      for (let i = 0; i < figureRects.length; i++) {
         figureObstacles.push({
-          rect: figureRect,
+          rect: figureRects[i]!,
           horizontalPadding: Math.round(BODY_LINE_HEIGHT * 0.7),
           verticalPadding: Math.round(BODY_LINE_HEIGHT * 0.6),
         })
@@ -141,8 +161,10 @@ export const PageSpread = React.forwardRef<HTMLDivElement, PageSpreadProps>(
       let pullQuoteBlock: { x: number; y: number; width: number; height: number } | null = null
       if (config.pullQuote) {
         const pqWidth = isNarrow ? contentWidth : Math.round(contentWidth * 0.4)
-        const figIsFullOrWide = config.figure && (config.figure.placement === 'full' || config.figure.placement === 'wide')
-        const figIsLeft = config.figure?.placement === 'left'
+        // Check if last figure is full/wide
+        const lastFig = figuresToRender[figuresToRender.length - 1]
+        const figIsFullOrWide = lastFig && (lastFig.placement === 'full' || lastFig.placement === 'wide')
+        const figIsLeft = lastFig?.placement === 'left'
         const pqX = isNarrow
           ? gutter
           : figIsLeft
@@ -166,10 +188,12 @@ export const PageSpread = React.forwardRef<HTMLDivElement, PageSpreadProps>(
         // If figure is full/wide, place pull quote below it.
         // If figure is right/left, pull quote goes on the opposite side but below figure bottom.
         let pqY: number
-        if (figIsFullOrWide) {
-          pqY = figureRect!.y + figureRect!.height + 24
-        } else if (figureRect) {
-          pqY = figureRect.y + figureRect.height + 24
+        if (figIsFullOrWide && figureRects.length > 0) {
+          const lastFigRect = figureRects[figureRects.length - 1]!
+          pqY = lastFigRect.y + lastFigRect.height + 24
+        } else if (figureRects.length > 0) {
+          const lastFigRect = figureRects[figureRects.length - 1]!
+          pqY = lastFigRect.y + lastFigRect.height + 24
         } else {
           pqY = copyTop + BODY_LINE_HEIGHT * 6
         }
@@ -226,10 +250,21 @@ export const PageSpread = React.forwardRef<HTMLDivElement, PageSpreadProps>(
         if (lineBottom > actualBodyBottom) actualBodyBottom = lineBottom
       }
 
-      const extraY = bottomReserve > 0 ? actualBodyBottom + 32 : 0
+      // Find where the last figure ends (figures stack vertically and can extend below body text)
+      let figureBottom = 0
+      for (let i = 0; i < figureRects.length; i++) {
+        const rect = figureRects[i]!
+        const b = rect.y + rect.height
+        if (b > figureBottom) figureBottom = b
+      }
+
+      // Container must be tall enough for both body text AND all figures
+      const neededHeight = Math.max(actualBodyBottom, figureBottom)
+
+      const extraY = bottomReserve > 0 ? neededHeight + 32 : 0
       const contentHeight = bottomReserve > 0
         ? extraY + bottomReserve + 40
-        : Math.max(actualBodyBottom + 80, 400) // tight-fit to actual text with bottom margin
+        : Math.max(neededHeight + 80, 400) // tight-fit to actual content with bottom margin
 
       const layoutData = {
         titleLines: titleResult.lines,
@@ -237,7 +272,8 @@ export const PageSpread = React.forwardRef<HTMLDivElement, PageSpreadProps>(
         bodyLines,
         pullQuoteBlock,
         figureRect,
-        figureImgHeight,
+        figureRects,
+        figureImgHeights,
         contentHeight,
         extraY,
       }
@@ -292,7 +328,7 @@ export const PageSpread = React.forwardRef<HTMLDivElement, PageSpreadProps>(
     }, [computeLayout])
 
     // ── Render ──────────────────────────────────────────────────────────
-    const fig = config.figure
+    const figuresToRender = config.figures || (config.figure ? [config.figure] : [])
 
     return (
       <div
@@ -366,27 +402,35 @@ export const PageSpread = React.forwardRef<HTMLDivElement, PageSpreadProps>(
           </div>
         )}
 
-        {/* Figure (regular DOM element, not positioned by Pretext) */}
-        {fig && layout?.figureRect && (
-          <figure
-            className={`page-figure page-figure--${fig.placement}`}
-            style={{
-              position: 'absolute',
-              left: `${layout.figureRect.x}px`,
-              top: `${layout.figureRect.y}px`,
-              width: `${layout.figureRect.width}px`,
-              margin: 0,
-            }}
-          >
-            <img
-              src={fig.src}
-              alt={fig.alt}
-              className="page-figure__img"
-              style={{ width: '100%', height: layout.figureImgHeight, objectFit: 'cover', maxHeight: 'none' }}
-            />
-            <figcaption className="page-figure__caption">{fig.caption}</figcaption>
-          </figure>
-        )}
+        {/* Multiple figures (regular DOM elements, not positioned by Pretext) */}
+        {layout && figuresToRender.length > 0 && figuresToRender.map((fig, i) => {
+          const figRect = layout.figureRects[i]
+          const imgHeight = layout.figureImgHeights[i] ?? 320
+          if (!figRect) return null
+          
+          return (
+            <figure
+              key={`figure-${i}`}
+              className={`page-figure page-figure--${fig.placement}`}
+              style={{
+                position: 'absolute',
+                left: `${figRect.x}px`,
+                top: `${figRect.y}px`,
+                width: `${figRect.width}px`,
+                margin: 0,
+              }}
+            >
+              <img
+                src={fig.src}
+                alt={fig.alt as string}
+                className="page-figure__img page-figure__img--clickable"
+                style={{ width: '100%', height: imgHeight, objectFit: 'cover', maxHeight: 'none' }}
+                onClick={() => openLightbox(fig.src, fig.alt as string)}
+              />
+              <figcaption className="page-figure__caption">{fig.caption}</figcaption>
+            </figure>
+          )
+        })}
 
         {/* Extra children (e.g. TOC for colophon) with page number below */}
         {children && layout && (

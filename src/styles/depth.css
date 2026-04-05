@@ -44,9 +44,13 @@
               box-shadow 400ms ease;
 }
 
+.page-figure__img--clickable {
+  cursor: pointer;
+}
+
 .page-figure__img:hover {
   transform: scale(1.02) translateY(-2px);
-  box-shadow: 
+  box-shadow:
     var(--depth-3),
     var(--depth-glow);
 }

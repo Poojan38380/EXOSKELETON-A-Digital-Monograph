@@ -5,6 +5,7 @@ import { MobileNav } from './components/MobileNav'
 import { PageReveal } from './components/PageReveal'
 import { LayoutProvider, useLayout } from './context/LayoutContext'
 import { LayoutDataProvider } from './context/LayoutDataContext'
+import { LightboxProvider } from './context/LightboxContext'
 import { PageThemeProvider } from './context/PageThemeContext'
 import { CoverPage } from './components/pages/CoverPage'
 import { WingsPage } from './components/pages/WingsPage'
@@ -69,7 +70,9 @@ export default function App() {
   return (
     <LayoutProvider>
       <LayoutDataProvider>
-        <AppContent />
+        <LightboxProvider>
+          <AppContent />
+        </LightboxProvider>
       </LayoutDataProvider>
     </LayoutProvider>
   )
