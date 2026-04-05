@@ -4,6 +4,7 @@ import { NavigationRail } from './components/NavigationRail'
 import { MobileNav } from './components/MobileNav'
 import { PageReveal } from './components/PageReveal'
 import { LayoutProvider, useLayout } from './context/LayoutContext'
+import { LayoutDataProvider } from './context/LayoutDataContext'
 import { PageThemeProvider } from './context/PageThemeContext'
 import { CoverPage } from './components/pages/CoverPage'
 import { WingsPage } from './components/pages/WingsPage'
@@ -67,7 +68,9 @@ const TOTAL_PAGES = PAGES.length
 export default function App() {
   return (
     <LayoutProvider>
-      <AppContent />
+      <LayoutDataProvider>
+        <AppContent />
+      </LayoutDataProvider>
     </LayoutProvider>
   )
 }

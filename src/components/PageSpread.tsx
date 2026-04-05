@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback, type ReactNode } from 'react'
 import { layoutText, type PositionedLine, type BandObstacle } from './spread-layout'
 import type { Rect } from '../layout-engine/wrap-geometry'
+import { useLayoutData } from '../context/LayoutDataContext'
 
 /* ── PageSpread: Pretext-powered magazine layout ── */
 
@@ -50,6 +51,7 @@ const PULL_QUOTE_LINE_HEIGHT = 28
 export const PageSpread = React.forwardRef<HTMLDivElement, PageSpreadProps>(
   function PageSpread({ config, children, onAnchorPositions, butterflyObstacle }: PageSpreadProps, ref) {
     const containerRef = useRef<HTMLDivElement>(null)
+    const { registerLayout } = useLayoutData()
 
     // Merge forwarded ref with internal ref
     const setContainerRef = useCallback((el: HTMLDivElement | null) => {
@@ -228,7 +230,7 @@ export const PageSpread = React.forwardRef<HTMLDivElement, PageSpreadProps>(
         ? extraY + bottomReserve + 40
         : Math.max(actualBodyBottom + 80, 400) // tight-fit to actual text with bottom margin
 
-      setLayout({
+      const layoutData = {
         titleLines: titleResult.lines,
         creditPos,
         bodyLines,
@@ -237,6 +239,14 @@ export const PageSpread = React.forwardRef<HTMLDivElement, PageSpreadProps>(
         figureImgHeight,
         contentHeight,
         extraY,
+      }
+
+      setLayout(layoutData)
+      registerLayout({
+        bodyLines: layoutData.bodyLines,
+        titleLines: layoutData.titleLines,
+        pullQuoteBlock: layoutData.pullQuoteBlock,
+        figureRect: layoutData.figureRect,
       })
 
       if (cleanResult.lines.length > 0) {
@@ -249,7 +259,7 @@ export const PageSpread = React.forwardRef<HTMLDivElement, PageSpreadProps>(
           lastWord: { x: last.x + last.width, y: last.y },
         })
       }
-    }, [config, butterflyObstacle])
+    }, [config, butterflyObstacle, registerLayout])
 
     // Keep a ref so the resize handler always calls the latest computeLayout
     // without needing to re-register on every butterfly position update.

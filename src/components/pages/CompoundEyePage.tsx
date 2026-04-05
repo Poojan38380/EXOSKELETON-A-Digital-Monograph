@@ -8,6 +8,7 @@ import {
   PAGES,
 } from '../../content/entomology-text'
 import { IMG_HORSEFLY_EYE } from '../../content/image-urls'
+import { CompoundEyeCursor } from '../CompoundEyeCursor'
 
 const config: SpreadConfig = {
   title: COMPOUND_EYE_TITLE,
@@ -24,5 +25,10 @@ const config: SpreadConfig = {
 }
 
 export function CompoundEyePage() {
-  return <PageSpread config={config} />
+  return (
+    <div className="compound-eye-wrapper">
+      <PageSpread config={config} />
+      <CompoundEyeCursor />
+    </div>
+  )
 }

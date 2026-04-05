@@ -21,3 +21,61 @@
 .page--vision .page-spread__header h2::after {
   background: linear-gradient(90deg, var(--ochre), var(--ochre-bright), transparent);
 }
+
+/* ═══════════════════════════════════════════════════════════
+   Compound Eye Cursor
+   ═══════════════════════════════════════════════════════════ */
+
+/* Hide default cursor on the vision page wrapper */
+.compound-eye-wrapper {
+  position: relative;
+  cursor: none;
+}
+
+/* Hide cursor on all child elements — the compound eye SVG replaces it */
+.compound-eye-wrapper,
+.compound-eye-wrapper * {
+  cursor: none !important;
+}
+
+/* Also hide the SVG's own cursor so only facets are visible */
+.compound-eye-cursor__svg {
+  cursor: none;
+}
+
+/* Cursor container — fills wrapper, invisible to pointer events */
+.compound-eye-cursor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
+.compound-eye-cursor--visible {
+  opacity: 1;
+}
+
+/* SVG fills container */
+.compound-eye-cursor__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Facet border strokes */
+.ce-facet-border {
+  fill: none;
+  stroke: rgba(26, 23, 20, 0.6);
+  stroke-width: 0.8;
+  stroke-linejoin: round;
+}
+
+/* Reduced motion: instant appearance, no transition */
+@media (prefers-reduced-motion: reduce) {
+  .compound-eye-cursor {
+    opacity: 1;
+    transition: none;
+  }
+}
