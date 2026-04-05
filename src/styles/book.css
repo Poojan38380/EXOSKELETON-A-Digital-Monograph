@@ -50,7 +50,6 @@
 /* ── Page Spread (generic content wrapper) ─────────────── */
 .page-spread {
   width: 100%;
-  max-width: 960px;
   margin: 0;
   padding: 3rem 3.5rem 4rem;
   min-height: 100vh;
@@ -234,7 +233,7 @@
 
 /* ── Page Spread (Pretext layout engine) ─────────────── */
 .page-spread {
-  max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
   position: relative;
   padding: 0; /* Pretext handles all positioning */

@@ -16,8 +16,6 @@ export function LayoutProvider({ children }: LayoutProviderProps) {
 
   const setNavExpanded = useCallback((expanded: boolean) => {
     setNavExpandedState(expanded);
-    // Trigger re-layout in PageSpread (resize listener will fire)
-    window.dispatchEvent(new Event('resize'))
   }, []);
 
   return (

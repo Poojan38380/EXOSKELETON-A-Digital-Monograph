@@ -102,10 +102,7 @@ function AppContent() {
           <PageThemeProvider pageIndex={pageIndex} pageId={pageId}>
             <div
               className="book-content"
-              style={{
-                marginLeft: navExpanded ? 280 : 48,
-                transition: 'margin-left 300ms cubic-bezier(0.4, 0, 0.2, 1)',
-              }}
+              style={{ marginLeft: navExpanded ? 280 : 48 }}
             >
               <PageReveal>
                 <PageComponent />

@@ -7,6 +7,8 @@ import { StatCard } from '../StatCard'
 
 const TITLE_FONT = '700 2.2rem "Playfair Display", Georgia, serif'
 const TITLE_LINE_HEIGHT = 38
+const PULL_QUOTE_FONT = 'italic 1.35rem "Cormorant Garamond", Georgia, serif'
+const PULL_QUOTE_LINE_HEIGHT = 28
 
 const INTRO_TEXT =
   'The numbers are so large that the human mind, evolved to track groups of perhaps a hundred and fifty individuals, simply cannot hold them. Over one million insect species have been discovered. The actual estimate is ten million — nine million of them unnamed, living and dying in forests we have not catalogued, on islands we have not surveyed, in soil we have not sifted.'
@@ -19,6 +21,7 @@ function NumbersPage() {
   const [layout, setLayout] = useState<{
     titleLines: Array<{ x: number; y: number; width: number; text: string }>
     creditPos: { x: number; y: number } | null
+    pullQuoteHeight: number
   } | null>(null)
 
   const computeLayout = () => {
@@ -43,9 +46,24 @@ function NumbersPage() {
 
     const creditY = headerY + titleResult.lines.length * TITLE_LINE_HEIGHT + 12
 
+    // Compute pull quote dimensions (same approach as PageSpread)
+    const pqWidth = isNarrow ? contentWidth : Math.round(contentWidth * 0.4)
+    const pqResult = layoutText(
+      NUMBERS_PULL_QUOTE,
+      PULL_QUOTE_FONT,
+      PULL_QUOTE_LINE_HEIGHT,
+      { x: 0, y: 0, width: pqWidth, height: 1000 },
+      [],
+    )
+    const pqTextHeight = pqResult.lines.length * PULL_QUOTE_LINE_HEIGHT
+    // CSS overhead: padding 1.25rem*2 = 40px, border-left = 3px
+    const cssOverhead = 43
+    const pqTotalHeight = pqTextHeight + cssOverhead
+
     setLayout({
       titleLines: titleResult.lines,
       creditPos: { x: gutter, y: creditY },
+      pullQuoteHeight: pqTotalHeight,
     })
   }
 
@@ -113,8 +131,15 @@ function NumbersPage() {
         </figcaption>
       </figure>
 
-      {/* Pull quote */}
-      <blockquote className="numbers-page__pull-quote">{NUMBERS_PULL_QUOTE}</blockquote>
+      {/* Pull quote — height reserved to prevent overlap with surrounding content */}
+      {layout && (
+        <blockquote
+          className="numbers-page__pull-quote"
+          style={{ minHeight: `${layout.pullQuoteHeight}px` }}
+        >
+          {NUMBERS_PULL_QUOTE}
+        </blockquote>
+      )}
 
       {/* Stat grid */}
       <div className="numbers-page__grid">

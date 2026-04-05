@@ -1,5 +1,4 @@
 import { useRef, useEffect, useState, useCallback, type ReactNode } from 'react'
-import { useLayout } from '../context/LayoutContext'
 import { layoutText, type PositionedLine, type BandObstacle } from './spread-layout'
 import type { Rect } from '../layout-engine/wrap-geometry'
 
@@ -47,11 +46,9 @@ const TITLE_LINE_HEIGHT = 38
 const CREDIT_LINE_HEIGHT = 16
 const PULL_QUOTE_FONT = 'italic 1.35rem "Cormorant Garamond", Georgia, serif'
 const PULL_QUOTE_LINE_HEIGHT = 28
-const GUTTER_DESKTOP = 64
 
 export function PageSpread({ config, children, onAnchorPositions, butterflyObstacle }: PageSpreadProps) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const { navExpanded } = useLayout()
   // Stable ref so computeLayout's useCallback dep array stays clean
   const onAnchorPositionsRef = useRef(onAnchorPositions)
   useEffect(() => { onAnchorPositionsRef.current = onAnchorPositions }, [onAnchorPositions])
@@ -75,13 +72,8 @@ export function PageSpread({ config, children, onAnchorPositions, butterflyObsta
     if (containerWidth === 0) return
 
     const isNarrow = containerWidth < 768
-    const gutter = isNarrow ? 20 : GUTTER_DESKTOP
-
-    // When sidebar is expanded, content shifts right — narrow the column
-    // to a comfortable reading width (max 960px when expanded, 1200px when collapsed)
-    const maxWidth = navExpanded ? 960 : 1200
-    const effectiveContainerWidth = Math.min(containerWidth, maxWidth)
-    const contentWidth = effectiveContainerWidth - gutter * 2
+    const gutter = isNarrow ? 16 : 32
+    const contentWidth = containerWidth - gutter * 2
 
     // Header region
     const headerY = 32
@@ -111,7 +103,6 @@ export function PageSpread({ config, children, onAnchorPositions, butterflyObsta
       figW = isNarrow ? contentWidth : Math.round(contentWidth * 0.45)
       const figImgH = isNarrow ? 200 : config.figure.placement === 'full' || config.figure.placement === 'wide' ? 280 : 320
       figureImgHeight = figImgH
-      // Extra space for caption below the image: padding + borders + up to 3 lines of text
       const figCaptionH = 70
       const figH = figImgH + figCaptionH
       const figX = config.figure.placement === 'right'
@@ -137,14 +128,12 @@ export function PageSpread({ config, children, onAnchorPositions, butterflyObsta
     let pullQuoteBlock: { x: number; y: number; width: number; height: number } | null = null
     if (config.pullQuote) {
       const pqWidth = isNarrow ? contentWidth : Math.round(contentWidth * 0.4)
-      // Placement: pull quote goes on the right side (or left if figure is there).
-      // For full/wide figures, pull quote goes below the figure.
       const figIsFullOrWide = config.figure && (config.figure.placement === 'full' || config.figure.placement === 'wide')
       const figIsLeft = config.figure?.placement === 'left'
       const pqX = isNarrow
         ? gutter
         : figIsLeft
-          ? gutter + contentWidth - pqWidth
+          ? gutter
           : gutter + contentWidth - pqWidth
       // Count lines the pull quote text will occupy
       const pqPreparedText = layoutText(
@@ -181,7 +170,7 @@ export function PageSpread({ config, children, onAnchorPositions, butterflyObsta
 
     const bottomReserve = config.bottomReserve ?? 0
 
-    // Lay out body text in columns — reasonable max height
+    // Lay out body text — reasonable max height
     const maxBodyHeight = bottomReserve > 0 ? 1200 : 4000
     const bodyRegion: Rect = {
       x: gutter,
@@ -249,7 +238,7 @@ export function PageSpread({ config, children, onAnchorPositions, butterflyObsta
         lastWord: { x: last.x + last.width, y: last.y },
       })
     }
-  }, [config, butterflyObstacle, navExpanded])
+  }, [config, butterflyObstacle])
 
   // Keep a ref so the resize handler always calls the latest computeLayout
   // without needing to re-register on every butterfly position update.
