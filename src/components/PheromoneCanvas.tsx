@@ -1,4 +1,5 @@
 import { useRef, useEffect, useCallback } from 'react'
+import { useLayoutData } from '../context/LayoutDataContext'
 
 const MAX_AGE = 2000
 const MAX_POINTS = 40
@@ -7,10 +8,16 @@ const BRUSH_RADIUS_MIN = 24
 const BRUSH_RADIUS_MAX = 40
 const PHEROMONE_COLOUR = '196, 150, 58' // ochre RGB
 
+const BODY_LINE_HEIGHT = 32
+
 const DROP_LIFETIME = 8000 // 8 seconds total
 const DROP_PULSE_DURATION = 6000 // 6 seconds of pulsing
 const DROP_FADE_DURATION = 2000 // 2 seconds of fading
 const CLICK_TOLERANCE = 5 // px tolerance for click vs drag
+
+// Moth text avoidance
+const MOTH_TEXT_AVOIDANCE_PADDING = 8 // extra px beyond text bbox
+const MOTH_TEXT_REPULSION_STRENGTH = 3 // px per frame push
 
 // Moth constants
 const MOTH_SPAWN_COUNT_MIN = 3
@@ -89,6 +96,24 @@ export function PheromoneCanvas() {
 
   // Container dimensions (cached for moth spawn/depart)
   const containerSizeRef = useRef<{ w: number; h: number }>({ w: 0, h: 0 })
+
+  // Text bounding boxes for moth avoidance
+  const { layout } = useLayoutData()
+  const textBBoxesRef = useRef<Array<{ x: number; y: number; right: number; bottom: number }>>([])
+
+  // Rebuild text bboxes when layout changes
+  useEffect(() => {
+    if (layout?.bodyLines) {
+      textBBoxesRef.current = layout.bodyLines.map((line) => ({
+        x: line.x - MOTH_TEXT_AVOIDANCE_PADDING,
+        y: line.y - MOTH_TEXT_AVOIDANCE_PADDING,
+        right: line.x + line.width + MOTH_TEXT_AVOIDANCE_PADDING,
+        bottom: line.y + BODY_LINE_HEIGHT + MOTH_TEXT_AVOIDANCE_PADDING,
+      }))
+    } else {
+      textBBoxesRef.current = []
+    }
+  }, [layout])
 
   // --- Catmull-Rom spline utilities ---
   function cr1d(p0: number, p1: number, p2: number, p3: number, t: number): number {
@@ -180,6 +205,40 @@ export function PheromoneCanvas() {
     if (minDist === distToRight) return { x: w + 30, y: y + (Math.random() - 0.5) * 60 }
     if (minDist === distToTop) return { x: x + (Math.random() - 0.5) * 60, y: -30 }
     return { x: x + (Math.random() - 0.5) * 60, y: h + 30 }
+  }
+
+  // --- Text avoidance: repel moth away from text bboxes ---
+  function avoidText(moth: Moth) {
+    // Resting moths stay on the drop regardless of text
+    if (moth.phase === 'resting') return
+
+    const bboxes = textBBoxesRef.current
+    if (bboxes.length === 0) return
+
+    const mothRadius = 8 // half-width of moth for collision
+
+    for (const bbox of bboxes) {
+      // Find closest point on bbox to moth
+      const closestX = Math.max(bbox.x, Math.min(moth.x, bbox.right))
+      const closestY = Math.max(bbox.y, Math.min(moth.y, bbox.bottom))
+
+      const dx = moth.x - closestX
+      const dy = moth.y - closestY
+      const dist = Math.sqrt(dx * dx + dy * dy)
+
+      if (dist < mothRadius) {
+        // Inside or overlapping bbox — push away
+        if (dist > 0) {
+          const nx = dx / dist
+          const ny = dy / dist
+          moth.x += nx * MOTH_TEXT_REPULSION_STRENGTH
+          moth.y += ny * MOTH_TEXT_REPULSION_STRENGTH
+        } else {
+          // Exactly at center — push upward by default
+          moth.y -= MOTH_TEXT_REPULSION_STRENGTH
+        }
+      }
+    }
   }
 
   // --- Draw moth ---
@@ -471,21 +530,21 @@ export function PheromoneCanvas() {
       }
 
       // Draw glow halo
-      const glowGradient = ctx.createRadialGradient(drop.x, drop.y, 0, drop.x, drop.y, 16)
+      const glowGradient = ctx.createRadialGradient(drop.x, drop.y, 0, drop.x, drop.y, 32)
       glowGradient.addColorStop(0, `rgba(230, 196, 102, ${alpha * 0.3})`)
       glowGradient.addColorStop(1, 'rgba(230, 196, 102, 0)')
       ctx.fillStyle = glowGradient
       ctx.beginPath()
-      ctx.arc(drop.x, drop.y, 16, 0, Math.PI * 2)
+      ctx.arc(drop.x, drop.y, 32, 0, Math.PI * 2)
       ctx.fill()
 
       // Draw core drop
-      const coreGradient = ctx.createRadialGradient(drop.x, drop.y, 0, drop.x, drop.y, 6)
+      const coreGradient = ctx.createRadialGradient(drop.x, drop.y, 0, drop.x, drop.y, 12)
       coreGradient.addColorStop(0, `rgba(196, 150, 58, ${alpha})`)
       coreGradient.addColorStop(1, `rgba(196, 150, 58, ${alpha * 0.3})`)
       ctx.fillStyle = coreGradient
       ctx.beginPath()
-      ctx.arc(drop.x, drop.y, 6, 0, Math.PI * 2)
+      ctx.arc(drop.x, drop.y, 12, 0, Math.PI * 2)
       ctx.fill()
     }
 
@@ -493,6 +552,7 @@ export function PheromoneCanvas() {
     const moths = mothsRef.current
     for (const moth of moths) {
       updateMoth(moth, now, dropsRef.current)
+      avoidText(moth)
       drawMoth(ctx, moth.x, moth.y, moth.alpha, moth.wingPhase, moth.phase)
     }
 

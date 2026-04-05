@@ -64,14 +64,6 @@
   height: 100%;
 }
 
-/* Facet border strokes */
-.ce-facet-border {
-  fill: none;
-  stroke: rgba(26, 23, 20, 0.6);
-  stroke-width: 0.8;
-  stroke-linejoin: round;
-}
-
 /* Reduced motion: instant appearance, no transition */
 @media (prefers-reduced-motion: reduce) {
   .compound-eye-cursor {

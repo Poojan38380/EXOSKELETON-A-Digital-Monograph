@@ -16,6 +16,24 @@ const BASELINE_OFFSET = 24 // SVG text baseline offset from line top (~75% of 32
 const MAGNIFICATION = 1.5
 const FIGURE_PADDING = 20
 
+/* ── Micro-saccade jitter config (insect eye micro-tremor) ── */
+const JITTER_AMPLITUDE = 2.5 // max px displacement per facet
+const JITTER_UPDATE_MS = 70 // how often jitter targets change
+const JITTER_LERP = 0.15 // smoothing factor per frame
+
+// Seeded RNG (Mulberry32) for deterministic organic jitter
+function mulberry32(a: number) {
+  return () => {
+    a |= 0; a = a + 0x6D2B79F5 | 0
+    let t = Math.imul(a ^ a >>> 15, 1 | a)
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t
+    return ((t ^ t >>> 14) >>> 0) / 4294967296
+  }
+}
+
+const SEED = 42
+const rng = mulberry32(SEED)
+
 /* ── Pre-compute facet offsets (relative to cursor center) ── */
 const FACET_OFFSETS: Facet[] = generateFacetCenters(0, 0)
 const FACET_COUNT = FACET_OFFSETS.length
@@ -80,8 +98,18 @@ export function CompoundEyeCursor() {
   const svgRef = useRef<SVGSVGElement>(null)
   const cursorGroupRef = useRef<SVGGElement>(null)
   const facetGroupsRef = useRef<SVGGElement[]>([])
+  const facetJitterRefs = useRef<SVGGElement[]>([])
   const mouseRef = useRef({ x: 0, y: 0 })
   const rafRef = useRef<number | null>(null)
+
+  // Per-facet jitter state (stored in refs to avoid React re-renders)
+  const jitterRef = useRef<Array<{ x: number; y: number }>>(
+    Array.from({ length: FACET_COUNT }, () => ({ x: 0, y: 0 })),
+  )
+  const jitterTargetRef = useRef<Array<{ x: number; y: number }>>(
+    Array.from({ length: FACET_COUNT }, () => ({ x: 0, y: 0 })),
+  )
+  const lastJitterUpdateRef = useRef(0)
 
   const { layout } = useLayoutData()
   const [visible, setVisible] = useState(false)
@@ -129,6 +157,35 @@ export function CompoundEyeCursor() {
     const loop = () => {
       const mouse = mouseRef.current
       const currentLayout = layoutRef.current
+      const now = performance.now()
+
+      // Update jitter targets periodically
+      if (now - lastJitterUpdateRef.current > JITTER_UPDATE_MS) {
+        lastJitterUpdateRef.current = now
+        for (let i = 0; i < FACET_COUNT; i++) {
+          jitterTargetRef.current[i] = {
+            x: (rng() - 0.5) * 2 * JITTER_AMPLITUDE,
+            y: (rng() - 0.5) * 2 * JITTER_AMPLITUDE,
+          }
+        }
+      }
+
+      // Lerp jitter toward targets (always, even when mouse is still)
+      for (let i = 0; i < FACET_COUNT; i++) {
+        const cur = jitterRef.current[i]!
+        const tgt = jitterTargetRef.current[i]!
+        cur.x += (tgt.x - cur.x) * JITTER_LERP
+        cur.y += (tgt.y - cur.y) * JITTER_LERP
+      }
+
+      // Apply jitter to each facet's jitter group
+      for (let i = 0; i < FACET_COUNT; i++) {
+        const g = facetJitterRefs.current[i]
+        if (g) {
+          const j = jitterRef.current[i]!
+          g.setAttribute('transform', `translate(${j.x}, ${j.y})`)
+        }
+      }
 
       // Only update if mouse moved or first frame
       if (mouse.x !== lastMouse.x || mouse.y !== lastMouse.y) {
@@ -232,22 +289,25 @@ export function CompoundEyeCursor() {
         <g ref={cursorGroupRef} className="compound-eye-cursor__group">
           {FACET_OFFSETS.map((facet, i) => (
             <g key={i} clipPath={`url(#ce-facet-${i})`}>
-              {/* Subtle amber/ochre facet tint — mimics ommatidia pigment */}
-              <path
-                d={hexagonPath(facet.cx, facet.cy, FACET_RADIUS)}
-                fill="rgba(196, 150, 58, 0.12)"
-              />
-              {/* Text group — populated by rAF loop */}
+              {/* Jitter group — micro-saccade transform applied per-frame */}
               <g
                 ref={(el) => {
-                  if (el) facetGroupsRef.current[i] = el
+                  if (el) facetJitterRefs.current[i] = el
                 }}
-              />
-              {/* Hexagonal border */}
-              <path
-                d={hexagonPath(facet.cx, facet.cy, FACET_RADIUS)}
-                className="ce-facet-border"
-              />
+              >
+                {/* Subtle amber/ochre facet tint — mimics ommatidia pigment */}
+                <path
+                  d={hexagonPath(facet.cx, facet.cy, FACET_RADIUS)}
+                  fill="rgba(196, 150, 58, 0.12)"
+                />
+                {/* Text group — populated by rAF loop */}
+                <g
+                  ref={(el) => {
+                    if (el) facetGroupsRef.current[i] = el
+                  }}
+                />
+                {/* Hexagonal border — removed, facets now overlap seamlessly */}
+              </g>
             </g>
           ))}
         </g>

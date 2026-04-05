@@ -24,7 +24,7 @@ export interface FacetText {
 // Hex grid configuration
 const RING_COUNT = 2 // center + 2 rings = 19 facets
 const FACET_SPACING = 18 // px between adjacent facet centers (axial distance)
-const FACET_RADIUS = 15 // circumradius of each individual hex facet
+const FACET_RADIUS = 18 // circumradius — increased to overlap adjacent facets, eliminating gaps
 const SQRT3 = Math.sqrt(3)
 
 // Pre-computed axial coordinates for 19 facets (ring 0 + 1 + 2)
