@@ -13,4 +13,12 @@ export const STATS: StatData[] = [
   { value: 400_000, label: 'beetle species', note: "Haldane's inordinate fondness" },
   { value: 10_000_000, label: 'nectar trips', note: 'to make one pound of honey' },
   { value: 1_400_000_000, label: 'insects per human', note: 'on Earth right now' },
+  { value: 62_760, label: 'wingbeats per minute', note: 'the midge — fastest of any insect' },
+  { value: 3_000, label: 'miles of monarch migration', note: 'Canada to central Mexico' },
+  { value: 50, label: 'years: longest-lived insect', note: 'termite queen in the right conditions' },
+  { value: 640, label: 'mm longest insect', note: 'Phryganistria chinensis stick insect' },
+  { value: 91_000, label: 'described species in the US', note: 'with ~170,000 undescribed estimated' },
+  { value: 230, label: 'Hz honeybee wingbeat', note: 'high-frequency hover strategy' },
+  { value: 1, label: 'species in Antarctica', note: 'Belgica antarctica, wingless midge' },
+  { value: 47, label: 'years as a larva', note: 'golden jewel beetle, longest larval stage' },
 ]

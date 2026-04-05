@@ -245,12 +245,23 @@ export function PageSpread({ config, children, onAnchorPositions, butterflyObsta
   const computeLayoutRef = useRef(computeLayout)
   useEffect(() => { computeLayoutRef.current = computeLayout }, [computeLayout])
 
-  // ── Effect: register resize listener once ──────────────────────────
+  // ── Effect: register resize listener + ResizeObserver ──────────────
   useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
     const onResize = () => computeLayoutRef.current()
     window.addEventListener('resize', onResize)
     document.fonts.ready.then(() => computeLayoutRef.current())
-    return () => window.removeEventListener('resize', onResize)
+
+    // ResizeObserver catches sidebar expand/collapse changing container width
+    const ro = new ResizeObserver(() => computeLayoutRef.current())
+    ro.observe(container)
+
+    return () => {
+      window.removeEventListener('resize', onResize)
+      ro.disconnect()
+    }
   }, [])
 
   // ── Effect: run layout whenever config or butterfly obstacle changes ─

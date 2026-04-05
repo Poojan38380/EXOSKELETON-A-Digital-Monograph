@@ -11,7 +11,13 @@ const PULL_QUOTE_FONT = 'italic 1.35rem "Cormorant Garamond", Georgia, serif'
 const PULL_QUOTE_LINE_HEIGHT = 28
 
 const INTRO_TEXT =
-  'The numbers are so large that the human mind, evolved to track groups of perhaps a hundred and fifty individuals, simply cannot hold them. Over one million insect species have been discovered. The actual estimate is ten million — nine million of them unnamed, living and dying in forests we have not catalogued, on islands we have not surveyed, in soil we have not sifted.'
+  'The numbers are so large that the human mind, evolved to track groups of perhaps a hundred and fifty individuals, simply cannot hold them. Over one million insect species have been discovered and formally described. The actual estimate is ten million — nine million of them unnamed, living and dying in forests we have not catalogued, on islands we have not surveyed, in soil we have not sifted.'
+
+const MID_TEXT_1 =
+  'Insects comprise roughly ninety percent of all animal species on the planet. More than half of every living organism — by species count, not weight — is an insect. The four largest orders tell the story. Coleoptera, the beetles, account for four hundred thousand described species alone. J. B. S. Haldane, when asked what his study of nature had revealed about the Creator, reportedly answered: "An inordinate fondness for beetles."'
+
+const MID_TEXT_2 =
+  'The extremes of insect biology stretch from the almost vanishingly small to the impossibly enduring. A midge wing beats at over sixty-two thousand times per minute. A monarch navigates three thousand miles from Canada to central Mexico. A termite queen can lay forty thousand eggs per day — one every two seconds — for half a century.'
 
 const CLOSING_TEXT =
   'Insects inhabit nearly every terrestrial environment on Earth. They have existed for more than three hundred and fifty million years, predating both dinosaurs and flowering plants by vast margins. They have survived five mass extinctions. They will, almost certainly, outlast us.'
@@ -141,12 +147,18 @@ function NumbersPage() {
         </blockquote>
       )}
 
+      {/* Mid-text 1 */}
+      <p className="numbers-page__body">{MID_TEXT_1}</p>
+
       {/* Stat grid */}
       <div className="numbers-page__grid">
         {STATS.map((stat, i) => (
           <StatCard key={i} stat={stat} />
         ))}
       </div>
+
+      {/* Mid-text 2 */}
+      <p className="numbers-page__body">{MID_TEXT_2}</p>
 
       {/* Closing passage */}
       <p className="numbers-page__body numbers-page__closing">{CLOSING_TEXT}</p>
