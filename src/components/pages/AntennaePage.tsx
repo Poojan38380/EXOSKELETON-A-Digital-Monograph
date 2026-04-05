@@ -8,6 +8,7 @@ import {
   PAGES,
 } from '../../content/entomology-text'
 import { IMG_SATURNIID_MOTH } from '../../content/image-urls'
+import { PheromoneCanvas } from '../PheromoneCanvas'
 
 const config: SpreadConfig = {
   title: ANTENNAE_TITLE,
@@ -24,5 +25,10 @@ const config: SpreadConfig = {
 }
 
 export function AntennaePage() {
-  return <PageSpread config={config} />
+  return (
+    <div style={{ position: 'relative', overflow: 'hidden' }}>
+      <PageSpread config={config} />
+      <PheromoneCanvas />
+    </div>
+  )
 }

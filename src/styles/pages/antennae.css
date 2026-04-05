@@ -2,6 +2,10 @@
    Page Atmosphere — Antennae (Signal)
    ═══════════════════════════════════════════════════════════ */
 
+.page--antennae {
+  --pheromone-colour: rgba(196, 150, 58, 0.12);
+}
+
 .page--antennae .atmosphere {
   background:
     radial-gradient(ellipse at 30% 70%, rgba(74, 140, 126, 0.04) 0%, transparent 50%),

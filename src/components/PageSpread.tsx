@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState, useCallback, type ReactNode } from 'react'
-import { layoutText, type PositionedLine, type BandObstacle } from './spread-layout'
+import { layoutText, type PositionedLine, type BandObstacle, createRectObstacle } from './spread-layout'
 import type { Rect } from '../layout-engine/wrap-geometry'
 
 /* ── PageSpread: Pretext-powered magazine layout ── */
@@ -115,13 +115,13 @@ export function PageSpread({ config, children, onAnchorPositions, butterflyObsta
     }
 
     // Build obstacles
-    const figureObstacles: { rect: Rect; horizontalPadding: number; verticalPadding: number }[] = []
+    const figureObstacles: BandObstacle[] = []
     if (figureRect) {
-      figureObstacles.push({
-        rect: figureRect,
-        horizontalPadding: Math.round(BODY_LINE_HEIGHT * 0.7),
-        verticalPadding: Math.round(BODY_LINE_HEIGHT * 0.6),
-      })
+      figureObstacles.push(createRectObstacle(
+        figureRect,
+        Math.round(BODY_LINE_HEIGHT * 0.7),
+        Math.round(BODY_LINE_HEIGHT * 0.6),
+      ))
     }
 
     // Pull quote — rendered as a normal DOM blockquote, but as an obstacle for body text
@@ -161,11 +161,11 @@ export function PageSpread({ config, children, onAnchorPositions, butterflyObsta
       }
       pullQuoteBlock = { x: pqX, y: pqY, width: pqWidth, height: pqHeight }
 
-      figureObstacles.push({
-        rect: pullQuoteBlock,
-        horizontalPadding: Math.round(BODY_LINE_HEIGHT * 0.8),
-        verticalPadding: Math.round(BODY_LINE_HEIGHT * 0.6),
-      })
+      figureObstacles.push(createRectObstacle(
+        pullQuoteBlock,
+        Math.round(BODY_LINE_HEIGHT * 0.8),
+        Math.round(BODY_LINE_HEIGHT * 0.6),
+      ))
     }
 
     const bottomReserve = config.bottomReserve ?? 0
