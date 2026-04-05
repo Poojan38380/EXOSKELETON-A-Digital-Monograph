@@ -157,9 +157,10 @@ export const PageSpread = React.forwardRef<HTMLDivElement, PageSpreadProps>(
           [],
         )
         const textHeight = pqPreparedText.lines.length * PULL_QUOTE_LINE_HEIGHT
-        // CSS overhead: padding 1.25rem*2 = 40px, border-left = 3px (margin overridden to 0)
-        const cssOverhead = 43
-        // Extra safety to prevent body text overlap below the quote
+        // CSS overhead: top padding 2rem (32px) + bottom padding 2rem (32px) +
+        // decorative ::before quote mark extends ~40px above text + border-left 4px
+        const cssOverhead = 108
+        // Extra safety margin to prevent body text overlap below the quote
         const safetyMargin = 32
         const pqHeight = textHeight + cssOverhead + safetyMargin
         // If figure is full/wide, place pull quote below it.
