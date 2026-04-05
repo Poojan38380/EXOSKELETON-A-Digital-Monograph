@@ -266,8 +266,11 @@
 .spread-line--title {
   font-family: "Playfair Display", Georgia, serif;
   font-weight: 700;
+  font-size: 2.2rem;
   color: var(--iron-gall);
   cursor: text;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
 }
 
 .spread-line--body {
@@ -339,16 +342,14 @@
 
   /* Responsive titles for pretext layout engine */
   .spread-line--title {
-    font-size: clamp(1.4rem, 5vw, 2.2rem) !important;
-    line-height: 1.2 !important;
-    letter-spacing: 0.01em;
+    font-size: clamp(1.4rem, 5vw, 2rem);
   }
 }
 
 /* Small screens: further reduce title size */
 @media (max-width: 480px) {
   .spread-line--title {
-    font-size: clamp(1.2rem, 6vw, 1.8rem) !important;
+    font-size: clamp(1.2rem, 6vw, 1.6rem);
   }
 
   .page-spread {
@@ -367,7 +368,7 @@
 /* Very small screens: extra tight titles */
 @media (max-width: 360px) {
   .spread-line--title {
-    font-size: clamp(1.1rem, 7vw, 1.5rem) !important;
+    font-size: clamp(1.1rem, 7vw, 1.4rem);
   }
 }
 

@@ -12,8 +12,8 @@ import {
 } from '../hex-facet-grid'
 
 describe('constants', () => {
-  it('should have 2 rings (19 total facets)', () => {
-    expect(RING_COUNT).toBe(2)
+  it('should have 3 rings (37 total facets)', () => {
+    expect(RING_COUNT).toBe(3)
   })
 
   it('should have reasonable spacing and radius', () => {
@@ -24,9 +24,9 @@ describe('constants', () => {
 })
 
 describe('generateFacetCenters', () => {
-  it('should return exactly 19 facets', () => {
+  it('should return exactly 37 facets', () => {
     const facets = generateFacetCenters(100, 100)
-    expect(facets).toHaveLength(19)
+    expect(facets).toHaveLength(37)
   })
 
   it('should have the first facet at the cursor position (center)', () => {
@@ -35,10 +35,10 @@ describe('generateFacetCenters', () => {
     expect(facets[0]!.cy).toBe(300)
   })
 
-  it('should have unique indices from 0 to 18', () => {
+  it('should have unique indices from 0 to 36', () => {
     const facets = generateFacetCenters(0, 0)
     const indices = facets.map((f) => f.index).sort((a, b) => a - b)
-    expect(indices).toEqual(Array.from({ length: 19 }, (_, i) => i))
+    expect(indices).toEqual(Array.from({ length: 37 }, (_, i) => i))
   })
 
   it('should produce facets at increasing distances from center', () => {
@@ -46,15 +46,19 @@ describe('generateFacetCenters', () => {
     // Ring 1 facets should be closer than ring 2 facets
     const ring1Distances = facets.slice(1, 7).map((f) => Math.sqrt(f.cx ** 2 + f.cy ** 2))
     const ring2Distances = facets.slice(7, 19).map((f) => Math.sqrt(f.cx ** 2 + f.cy ** 2))
+    const ring3Distances = facets.slice(19, 37).map((f) => Math.sqrt(f.cx ** 2 + f.cy ** 2))
     const maxRing1 = Math.max(...ring1Distances)
     const minRing2 = Math.min(...ring2Distances)
+    const maxRing2 = Math.max(...ring2Distances)
+    const minRing3 = Math.min(...ring3Distances)
     expect(minRing2).toBeGreaterThan(maxRing1)
+    expect(minRing3).toBeGreaterThan(maxRing2)
   })
 
   it('should shift all facets when cursor moves', () => {
     const facetsA = generateFacetCenters(100, 100)
     const facetsB = generateFacetCenters(200, 200)
-    for (let i = 0; i < 19; i++) {
+    for (let i = 0; i < 37; i++) {
       expect(facetsB[i]!.cx - facetsA[i]!.cx).toBeCloseTo(100, 5)
       expect(facetsB[i]!.cy - facetsA[i]!.cy).toBeCloseTo(100, 5)
     }

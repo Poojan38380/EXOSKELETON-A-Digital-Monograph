@@ -290,6 +290,7 @@ function NumbersPage() {
                 style={{
                   left: `${line.x}px`,
                   top: `${line.y}px`,
+                  lineHeight: `${TITLE_LINE_HEIGHT}px`,
                 }}
               >
                 {line.text}

@@ -16,6 +16,18 @@
   padding: 3rem 3.5rem 4rem;
 }
 
+@media (max-width: 768px) {
+  .numbers-page {
+    padding: 1.25rem 1rem 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .numbers-page {
+    padding: 1rem 0.75rem 1.5rem;
+  }
+}
+
 .numbers-page__header {
   margin-bottom: 2.5rem;
   padding-bottom: 1.5rem;

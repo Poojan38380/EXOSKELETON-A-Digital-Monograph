@@ -22,12 +22,12 @@ export interface FacetText {
 }
 
 // Hex grid configuration
-const RING_COUNT = 2 // center + 2 rings = 19 facets
+const RING_COUNT = 3 // center + 3 rings = 37 facets
 const FACET_SPACING = 18 // px between adjacent facet centers (axial distance)
-const FACET_RADIUS = 18 // circumradius — increased to overlap adjacent facets, eliminating gaps
+const FACET_RADIUS = 21.6 // circumradius — increased by 20% for larger facets
 const SQRT3 = Math.sqrt(3)
 
-// Pre-computed axial coordinates for 19 facets (ring 0 + 1 + 2)
+// Pre-computed axial coordinates for 37 facets (ring 0 + 1 + 2 + 3)
 // Using cube-coordinate-derived axial (q, r) pairs
 const AXIAL_COORDS: [number, number][] = [
   // Ring 0 — center
@@ -52,6 +52,25 @@ const AXIAL_COORDS: [number, number][] = [
   [1, -2],
   [2, -2],
   [2, -1],
+  // Ring 3 — 18 neighbors
+  [3, 0],
+  [2, 1],
+  [1, 2],
+  [0, 3],
+  [-1, 3],
+  [-2, 3],
+  [-3, 3],
+  [-3, 2],
+  [-3, 1],
+  [-3, 0],
+  [-2, -1],
+  [-1, -2],
+  [0, -3],
+  [1, -3],
+  [2, -3],
+  [3, -3],
+  [3, -2],
+  [3, -1],
 ]
 
 // Convert axial (q, r) to pixel coords for pointy-topped hex layout

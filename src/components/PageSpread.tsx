@@ -346,7 +346,6 @@ export const PageSpread = React.forwardRef<HTMLDivElement, PageSpreadProps>(
                 style={{
                   left: `${line.x}px`,
                   top: `${line.y}px`,
-                  font: TITLE_FONT,
                   lineHeight: `${TITLE_LINE_HEIGHT}px`,
                 }}
               >
