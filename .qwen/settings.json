@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Read(D:\\Arthur\\.claude\\skills\\prd-to-plan/**)"
+      "Read(D:\\Arthur\\.claude\\skills\\prd-to-plan/**)",
+      "Bash(npx *)",
+      "Bash(findstr *)"
     ]
   },
   "$version": 3

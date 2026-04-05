@@ -30,22 +30,22 @@ function cr1d(p0: number, p1: number, p2: number, p3: number, t: number): number
 }
 
 function splineAt(pts: Point[], t: number): Point {
-  const n   = pts.length - 1
+  const n = pts.length - 1
   const seg = Math.min(Math.floor(t * n), n - 1)
-  const lt  = t * n - seg
-  const p0  = pts[Math.max(0, seg - 1)]!
-  const p1  = pts[seg]!
-  const p2  = pts[Math.min(n, seg + 1)]!
-  const p3  = pts[Math.min(n, seg + 2)]!
+  const lt = t * n - seg
+  const p0 = pts[Math.max(0, seg - 1)]!
+  const p1 = pts[seg]!
+  const p2 = pts[Math.min(n, seg + 1)]!
+  const p3 = pts[Math.min(n, seg + 2)]!
   return { x: cr1d(p0.x, p1.x, p2.x, p3.x, lt), y: cr1d(p0.y, p1.y, p2.y, p3.y, lt) }
 }
 
 // ── Gentle flutter easing — minimal speed variation for a smooth glide ─────
 function flutterT(t: number, seed: number): number {
-  const s   = seed % 997
+  const s = seed % 997
   const env = Math.sin(t * Math.PI)  // zero at endpoints, peak in middle
-  const f   = env * (
-    Math.sin(t * 9.1  + s * 0.02) * 0.018 +
+  const f = env * (
+    Math.sin(t * 9.1 + s * 0.02) * 0.018 +
     Math.sin(t * 14.7 + s * 0.05) * 0.012
   )
   return Math.max(0, Math.min(1, t + f))
@@ -54,29 +54,29 @@ function flutterT(t: number, seed: number): number {
 // ── Generate graceful waypoints — fewer, moderate amplitude ───────────────
 function generateWaypoints(seed: number, start: Point, end: Point): Point[] {
   const rng = makePrng(seed)
-  const N   = 5  // fewer waypoints = wider, lazier curves
+  const N = 5  // fewer waypoints = wider, lazier curves
 
-  const dx  = end.x - start.x
-  const dy  = end.y - start.y
+  const dx = end.x - start.x
+  const dy = end.y - start.y
   const len = Math.sqrt(dx * dx + dy * dy) || 1
 
-  const ax = dx / len,  ay = dy / len
-  const px = -ay,       py = ax
+  const ax = dx / len, ay = dy / len
+  const px = -ay, py = ax
 
   // Moderate amplitude — 10–22% of total path length
-  const baseAmp  = len * 0.10
+  const baseAmp = len * 0.10
   const extraAmp = len * 0.12
 
   const pts: Point[] = [start]
 
   for (let i = 1; i <= N; i++) {
     const frac = i / (N + 1)
-    const bx   = start.x + dx * frac
-    const by   = start.y + dy * frac
+    const bx = start.x + dx * frac
+    const by = start.y + dy * frac
 
-    const side    = rng() > 0.45 ? 1 : -1
+    const side = rng() > 0.45 ? 1 : -1
     const swingMag = (baseAmp + rng() * extraAmp) * side
-    const stutter  = (rng() - 0.5) * len * 0.04  // very gentle along-axis drift
+    const stutter = (rng() - 0.5) * len * 0.04  // very gentle along-axis drift
 
     pts.push({
       x: bx + px * swingMag + ax * stutter,
@@ -96,17 +96,17 @@ interface ButterflyProps {
 }
 
 export function Butterfly({ anchorPositions, onObstacleChange }: ButterflyProps) {
-  const [position, setPosition]   = useState<Point | null>(null)
-  const [phase, setPhase]         = useState<ButterflyPhase>('at-start')
-  const animRef                   = useRef<number>(0)
-  const startTimeRef              = useRef(0)
-  const pathSeed                  = useRef(Math.floor(Math.random() * 100000))
-  const waypointsRef              = useRef<Point[]>([])
-  const lastObstacleFrame         = useRef(0)
+  const [position, setPosition] = useState<Point | null>(null)
+  const [phase, setPhase] = useState<ButterflyPhase>('at-start')
+  const animRef = useRef<number>(0)
+  const startTimeRef = useRef(0)
+  const pathSeed = useRef(Math.floor(Math.random() * 100000))
+  const waypointsRef = useRef<Point[]>([])
+  const lastObstacleFrame = useRef(0)
 
-  const anchorRef           = useRef(anchorPositions)
+  const anchorRef = useRef(anchorPositions)
   const onObstacleChangeRef = useRef(onObstacleChange)
-  useEffect(() => { anchorRef.current           = anchorPositions  }, [anchorPositions])
+  useEffect(() => { anchorRef.current = anchorPositions }, [anchorPositions])
   useEffect(() => { onObstacleChangeRef.current = onObstacleChange }, [onObstacleChange])
 
   /* ── Anchors ── */
@@ -142,8 +142,8 @@ export function Butterfly({ anchorPositions, onObstacleChange }: ButterflyProps)
     (progress: number, direction: 'forward' | 'reverse'): Point => {
       const pts = waypointsRef.current
       if (pts.length < 2) return getStartPos()
-      const t   = direction === 'forward' ? progress : 1 - progress
-      const ft  = flutterT(t, pathSeed.current)
+      const t = direction === 'forward' ? progress : 1 - progress
+      const ft = flutterT(t, pathSeed.current)
       const raw = splineAt(pts, ft)
       return {
         x: Math.round(raw.x - BUTTERFLY_SIZE / 2),
@@ -158,23 +158,23 @@ export function Butterfly({ anchorPositions, onObstacleChange }: ButterflyProps)
     (timestamp: number) => {
       if (phase !== 'flying-forward' && phase !== 'flying-backward') return
 
-      const elapsed   = timestamp - startTimeRef.current
-      const progress  = Math.min(1, elapsed / FLIGHT_DURATION)
+      const elapsed = timestamp - startTimeRef.current
+      const progress = Math.min(1, elapsed / FLIGHT_DURATION)
       const direction = phase === 'flying-forward' ? 'forward' : 'reverse'
-      const pos       = flightPath(progress, direction)
+      const pos = flightPath(progress, direction)
 
       setPosition(pos)
 
       if (timestamp - lastObstacleFrame.current > 33) {
         lastObstacleFrame.current = timestamp
-        const raw        = elapsed / FLIGHT_DURATION
+        const raw = elapsed / FLIGHT_DURATION
         const edgeFactor = Math.max(0, Math.min(raw * 10, 1) * Math.min((1 - raw) * 10, 1))
         onObstacleChangeRef.current?.(makeObstacle(pos, Math.round(16 * edgeFactor)))
       }
 
       if (progress >= 1) {
         if (phase === 'flying-forward') {
-          setPhase('at-end');   setPosition(getEndPos())
+          setPhase('at-end'); setPosition(getEndPos())
         } else {
           setPhase('at-start'); setPosition(getStartPos())
         }
@@ -206,27 +206,27 @@ export function Butterfly({ anchorPositions, onObstacleChange }: ButterflyProps)
   useEffect(() => {
     if (anchorPositions === null) return
     setPosition(prev => {
-      if (prev === null)        return getStartPos()
+      if (prev === null) return getStartPos()
       if (phase === 'at-start') return getStartPos()
-      if (phase === 'at-end')   return getEndPos()
+      if (phase === 'at-end') return getEndPos()
       return prev
     })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [anchorPositions, getStartPos, getEndPos])
 
   useEffect(() => {
     const t = setTimeout(() => setPosition(p => p ?? getStartPos()), 500)
     return () => clearTimeout(t)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   /* ── Click ── */
   const handleClick = useCallback(() => {
     if (phase === 'flying-forward' || phase === 'flying-backward') return
 
-    pathSeed.current     = Math.floor(Math.random() * 100000)
-    const start          = getStartPos()
-    const end            = getEndPos()
+    pathSeed.current = Math.floor(Math.random() * 100000)
+    const start = getStartPos()
+    const end = getEndPos()
     waypointsRef.current = generateWaypoints(pathSeed.current, start, end)
 
     if (phase === 'at-start') {
@@ -263,20 +263,19 @@ export function Butterfly({ anchorPositions, onObstacleChange }: ButterflyProps)
       viewBox="0 0 48 48"
       width={BUTTERFLY_SIZE}
       height={BUTTERFLY_SIZE}
-      aria-label={isFlying ? 'Butterfly in flight' : 'Click the butterfly'}
-      role="img"
-      title={
-        phase === 'at-start' ? 'Click to fly to the last word' :
-        phase === 'at-end'   ? 'Click to return to the first word' :
-        undefined
+      aria-label={
+        isFlying ? 'Butterfly in flight' :
+          phase === 'at-start' ? 'Click to fly to the last word' :
+            'Click to return to the first word'
       }
+      role="img"
       className={`butterfly-anim ${phase}`}
       style={{
         position: 'absolute',
-        left:    `${position.x}px`,
-        top:     `${position.y}px`,
+        left: `${position.x}px`,
+        top: `${position.y}px`,
         overflow: 'visible',
-        cursor:  isFlying ? 'default' : 'pointer',
+        cursor: isFlying ? 'default' : 'pointer',
         transition: isFlying ? 'none' : 'left 0.5s ease, top 0.5s ease',
       }}
       onClick={handleClick}
