@@ -19,6 +19,7 @@ export const IMG_JUMPING_BEAN = '/images/jumping-bean.png'
 export const IMG_ZIGZAG_SAWFLY = '/images/zigzag-sawfly.png'
 export const IMG_MONARCH_WING = '/images/monarch-wing.jpg'
 export const IMG_MOSQUITO_PROBOSCIS = '/images/mosquito-proboscis.jpg'
+export const IMG_COLLOPHON = '/images/bg/vintage-collection.webp'
 
 // Background/detail images (from public/images/bg/)
 export const BG_AEDES_PROBOSCIS = '/images/bg/aedes-proboscis.jpg'

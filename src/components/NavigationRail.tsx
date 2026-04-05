@@ -5,22 +5,22 @@ import {
   IMG_JEWEL_BEETLE, IMG_DRAGONFLY_WING, IMG_HORSEFLY_EYE,
   IMG_BUTTERFLY_METAMORPHOSIS, IMG_SATURNIID_MOTH,
   IMG_HOUSEFLY_FOOT, IMG_ANTARCTIC_MIDGE, IMG_DUNG_BEETLE,
-  IMG_MONARCH_WING, IMG_MOSQUITO_PROBOSCIS,
+  IMG_MONARCH_WING, IMG_MOSQUITO_PROBOSCIS, IMG_COLLOPHON,
 } from '../content/image-urls'
 
 /* One representative image per page for the nav rail thumbnails */
 const PAGE_THUMB = [
-  IMG_JEWEL_BEETLE,          // 1  Cover
-  IMG_DRAGONFLY_WING,        // 2  Wings
-  IMG_HORSEFLY_EYE,          // 3  Vision
+  IMG_JEWEL_BEETLE,           // 1  Cover
+  IMG_DRAGONFLY_WING,         // 2  Wings
+  IMG_HORSEFLY_EYE,           // 3  Vision
   IMG_BUTTERFLY_METAMORPHOSIS,// 4  Metamorphosis
-  IMG_SATURNIID_MOTH,        // 5  Antennae
-  IMG_HOUSEFLY_FOOT,         // 6  By the Numbers
-  IMG_ANTARCTIC_MIDGE,       // 7  Records
-  IMG_DUNG_BEETLE,           // 8  Strange Behavior
-  IMG_MONARCH_WING,          // 9  Mimicry
-  IMG_MOSQUITO_PROBOSCIS,    // 10 Insects & Humans
-  '',                        // 11 Colophon — no image
+  IMG_SATURNIID_MOTH,         // 5  Antennae
+  IMG_HOUSEFLY_FOOT,          // 6  By the Numbers
+  IMG_ANTARCTIC_MIDGE,        // 7  Records
+  IMG_DUNG_BEETLE,            // 8  Strange Behavior
+  IMG_MONARCH_WING,           // 9  Mimicry
+  IMG_MOSQUITO_PROBOSCIS,     // 10 Insects & Humans
+  IMG_COLLOPHON,              // 11 Colophon
 ]
 
 /* ── NavigationRail: collapsible spine nav with page thumbnails ── */
