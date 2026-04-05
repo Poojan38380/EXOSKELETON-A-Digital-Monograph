@@ -1,0 +1,24 @@
+/* ═══════════════════════════════════════════════════════════
+   Page Atmosphere — Behavior (Curious)
+   ═══════════════════════════════════════════════════════════ */
+
+.page--behavior .atmosphere {
+  background:
+    radial-gradient(ellipse at 60% 40%, rgba(74, 140, 126, 0.04) 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 80%, rgba(196, 150, 58, 0.03) 0%, transparent 45%);
+}
+
+.page--behavior .page-spread__header h2::after {
+  background: linear-gradient(90deg, var(--verdigris), var(--verdigris-light), transparent);
+}
+
+.page--behavior .pull-quote {
+  border-left-color: var(--verdigris);
+}
+
+/* Slightly playful typography for behavior descriptions */
+.page--behavior .behavior-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-style: italic;
+  color: var(--verdigris);
+}

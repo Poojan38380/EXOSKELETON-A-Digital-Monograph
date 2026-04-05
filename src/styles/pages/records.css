@@ -1,0 +1,24 @@
+/* ═══════════════════════════════════════════════════════════
+   Page Atmosphere — Records (Extreme)
+   ═══════════════════════════════════════════════════════════ */
+
+.page--records .atmosphere {
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(155, 35, 53, 0.05), transparent 50%),
+    radial-gradient(ellipse at 70% 20%, rgba(155, 35, 53, 0.03), transparent 40%);
+}
+
+.page--records .page-spread__header h2::after {
+  background: linear-gradient(90deg, var(--carmine), var(--carmine-light), transparent);
+}
+
+/* Record cards for specimen display */
+.page--records .record-card {
+  animation: fadeUp 450ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.page--records .record-card:nth-child(1) { animation-delay: 200ms; }
+.page--records .record-card:nth-child(2) { animation-delay: 300ms; }
+.page--records .record-card:nth-child(3) { animation-delay: 400ms; }
+.page--records .record-card:nth-child(4) { animation-delay: 500ms; }
+.page--records .record-card:nth-child(5) { animation-delay: 600ms; }

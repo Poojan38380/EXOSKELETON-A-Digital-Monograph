@@ -1,0 +1,17 @@
+/* ═══════════════════════════════════════════════════════════
+   Page Atmosphere — Cover (First Light)
+   ═══════════════════════════════════════════════════════════ */
+
+.page--cover .atmosphere {
+  background:
+    radial-gradient(ellipse at center, rgba(196, 150, 58, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 30% 70%, rgba(74, 140, 126, 0.04) 0%, transparent 50%);
+}
+
+.page--cover .page-spread__header h1 {
+  color: var(--ochre);
+}
+
+.page--cover .page-spread__header h2::after {
+  background: linear-gradient(90deg, var(--ochre-bright), var(--ochre-light), transparent);
+}

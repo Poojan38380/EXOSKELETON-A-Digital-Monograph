@@ -1,0 +1,29 @@
+/* ═══════════════════════════════════════════════════════════
+   Page Atmosphere — Numbers (Precision)
+   ═══════════════════════════════════════════════════════════ */
+
+.page--numbers .atmosphere {
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(196, 150, 58, 0.05) 0%, transparent 50%);
+}
+
+.page--numbers .page-spread__header h2::after {
+  background: linear-gradient(90deg, var(--ochre-bright), var(--ochre), transparent);
+}
+
+/* Statistics in large monospace with counting feel */
+.page--numbers .stat-number {
+  font-family: "Source Code Pro", monospace;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--ochre);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.page--numbers .stat-label {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--marginalia);
+  letter-spacing: var(--tracking-wide);
+}

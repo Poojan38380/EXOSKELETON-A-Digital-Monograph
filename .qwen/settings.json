@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(D:\\Arthur\\.claude\\skills\\prd-to-plan/**)"
+    ]
+  },
+  "$version": 3
+}

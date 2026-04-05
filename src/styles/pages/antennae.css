@@ -1,0 +1,17 @@
+/* ═══════════════════════════════════════════════════════════
+   Page Atmosphere — Antennae (Signal)
+   ═══════════════════════════════════════════════════════════ */
+
+.page--antennae .atmosphere {
+  background:
+    radial-gradient(ellipse at 30% 70%, rgba(74, 140, 126, 0.04) 0%, transparent 50%),
+    repeating-linear-gradient(90deg, rgba(74, 140, 126, 0.02) 0px, transparent 2px, transparent 20px);
+}
+
+.page--antennae .page-spread__header h2::after {
+  background: linear-gradient(90deg, var(--verdigris), var(--verdigris-light), transparent);
+}
+
+.page--antennae .pull-quote {
+  border-left-color: var(--verdigris);
+}

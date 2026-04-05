@@ -1,0 +1,22 @@
+/* ═══════════════════════════════════════════════════════════
+   Page Atmosphere — Metamorphosis (Transformation)
+   ═══════════════════════════════════════════════════════════ */
+
+.page--metamorphosis .atmosphere {
+  background:
+    linear-gradient(to bottom, rgba(155, 35, 53, 0.04), transparent 50%),
+    radial-gradient(ellipse at 30% 60%, rgba(155, 35, 53, 0.03) 0%, transparent 45%);
+}
+
+.page--metamorphosis .page-spread__header h2::after {
+  background: linear-gradient(90deg, var(--carmine), var(--carmine-light), transparent);
+}
+
+.page--metamorphosis .pull-quote {
+  border-left-color: var(--carmine);
+}
+
+.page--metamorphosis .page-figure__caption {
+  border-top-color: rgba(155, 35, 53, 0.2);
+  border-bottom-color: rgba(155, 35, 53, 0.2);
+}

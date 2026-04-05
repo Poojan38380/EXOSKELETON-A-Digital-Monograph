@@ -2,6 +2,8 @@ import { useState, useCallback } from 'react'
 import { BookShell } from './components/BookShell'
 import { NavigationRail } from './components/NavigationRail'
 import { MobileNav } from './components/MobileNav'
+import { PageReveal } from './components/PageReveal'
+import { PageThemeProvider } from './context/PageThemeContext'
 import { CoverPage } from './components/pages/CoverPage'
 import { WingsPage } from './components/pages/WingsPage'
 import { CompoundEyePage } from './components/pages/CompoundEyePage'
@@ -17,6 +19,19 @@ import { PAGES } from './content/entomology-text'
 import './index.css'
 import './styles/book.css'
 import './styles/navigation.css'
+import './styles/depth.css'
+import './styles/animations.css'
+import './styles/pages/cover.css'
+import './styles/pages/wings.css'
+import './styles/pages/vision.css'
+import './styles/pages/metamorphosis.css'
+import './styles/pages/antennae.css'
+import './styles/pages/numbers.css'
+import './styles/pages/records.css'
+import './styles/pages/behavior.css'
+import './styles/pages/mimicry.css'
+import './styles/pages/humans.css'
+import './styles/pages/colophon.css'
 
 const PAGE_COMPONENTS = [
   CoverPage,
@@ -30,6 +45,20 @@ const PAGE_COMPONENTS = [
   MimicryPage,
   HumansPage,
   ColophonPage,
+]
+
+const PAGE_IDS = [
+  'cover',
+  'wings',
+  'vision',
+  'metamorphosis',
+  'antennae',
+  'numbers',
+  'records',
+  'behavior',
+  'mimicry',
+  'humans',
+  'colophon',
 ]
 
 const TOTAL_PAGES = PAGES.length
@@ -58,10 +87,13 @@ export default function App() {
     >
       {(pageIndex) => {
         const PageComponent = PAGE_COMPONENTS[pageIndex] ?? CoverPage
+        const pageId = PAGE_IDS[pageIndex] ?? 'cover'
         return (
-          <>
+          <PageThemeProvider pageIndex={pageIndex} pageId={pageId}>
             <div className="book-content">
-              <PageComponent />
+              <PageReveal>
+                <PageComponent />
+              </PageReveal>
             </div>
             <MobileNav
               currentPage={currentPage}
@@ -69,7 +101,7 @@ export default function App() {
               onPrev={() => handlePageSelect(currentPage - 1)}
               onNext={() => handlePageSelect(currentPage + 1)}
             />
-          </>
+          </PageThemeProvider>
         )
       }}
     </BookShell>

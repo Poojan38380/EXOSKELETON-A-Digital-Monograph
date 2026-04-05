@@ -1,0 +1,43 @@
+/* ═══════════════════════════════════════════════════════════
+   Page Atmosphere — Humans (Intersection)
+   ═══════════════════════════════════════════════════════════ */
+
+.page--humans .atmosphere {
+  background:
+    radial-gradient(ellipse at 40% 60%, rgba(155, 35, 53, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 30%, rgba(196, 150, 58, 0.03) 0%, transparent 45%);
+}
+
+.page--humans .page-spread__header h2::after {
+  background: linear-gradient(90deg, var(--carmine), var(--carmine-light), transparent);
+}
+
+.page--humans .pull-quote {
+  border-left-color: var(--carmine);
+}
+
+/* Timeline visualization with golden thread */
+.page--humans .timeline {
+  position: relative;
+  padding-left: 2rem;
+  border-left: 2px solid var(--ochre);
+  margin: 2rem 0;
+}
+
+.page--humans .timeline__event {
+  position: relative;
+  margin-bottom: 2rem;
+  padding-left: 1rem;
+}
+
+.page--humans .timeline__event::before {
+  content: '';
+  position: absolute;
+  left: -2.35rem;
+  top: 0.5rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--ochre);
+  box-shadow: 0 0 8px rgba(196, 150, 58, 0.3);
+}
