@@ -1,11 +1,15 @@
 /* ═══════════════════════════════════════════════════════════
-   BookShell & Page Styles
+   BookShell & Page Styles — Obsidian Cabinet
    ═══════════════════════════════════════════════════════════ */
 
 .book-container {
   display: flex;
   min-height: 100vh;
-  background: var(--parchment);
+  background: 
+    radial-gradient(ellipse at 20% 50%, rgba(196, 150, 58, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(74, 140, 126, 0.03) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 80%, rgba(155, 35, 53, 0.02) 0%, transparent 45%),
+    var(--parchment);
 }
 
 .book-page {
@@ -15,35 +19,13 @@
   scroll-behavior: smooth;
 }
 
-/* Page turn animations */
+/* Page turn animations — Specimen Reveal */
 .page-enter {
-  animation: pageIn 400ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: pageEnter 500ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .page-exit {
-  animation: pageOut 400ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-@keyframes pageIn {
-  from {
-    opacity: 0;
-    transform: scale(1.015);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes pageOut {
-  from {
-    opacity: 1;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: scale(0.985);
-  }
+  animation: pageExit 400ms cubic-bezier(0.55, 0, 1, 0.45) forwards;
 }
 
 /* ── Parchment Texture Overlay ─────────────────────────── */
@@ -79,6 +61,7 @@
   margin-bottom: 2.5rem;
   padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--rule);
+  animation: slideDown 400ms 100ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .page-spread__content {
@@ -88,11 +71,25 @@
 }
 
 .page-spread__content p {
-  margin: 0 0 1.25rem 0;
+  margin: 0 0 1.5rem 0;
   text-indent: 1.5em;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--ink);
+  text-align: justify;
+  hyphens: auto;
+  animation: fadeUp 450ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.page-spread__content p:first-of-type {
+.page-spread__content p:nth-child(1) { animation-delay: 200ms; }
+.page-spread__content p:nth-child(2) { animation-delay: 280ms; }
+.page-spread__content p:nth-child(3) { animation-delay: 360ms; }
+.page-spread__content p:nth-child(4) { animation-delay: 440ms; }
+.page-spread__content p:nth-child(5) { animation-delay: 520ms; }
+
+/* First paragraph after heading — no indent */
+.page-spread__content h2 + p,
+.page-spread__content h3 + p {
   text-indent: 0;
 }
 
@@ -142,14 +139,17 @@
   color: var(--iron-gall);
   margin-bottom: 0.3em;
   line-height: 1.1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
 .cover__rule {
   width: 80px;
   height: 2px;
-  background: var(--ochre);
+  background: linear-gradient(90deg, var(--ochre), var(--ochre-light));
   margin: 1.5rem 0;
   border: none;
+  border-radius: 1px;
+  box-shadow: 0 0 8px rgba(196, 150, 58, 0.3);
 }
 
 .cover__subtitle {
@@ -194,9 +194,10 @@
   margin-top: 1rem;
   padding: 0.75rem;
   border: none;
-  background: var(--parchment-dark);
+  background: var(--parchment-warm);
   border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
+  box-shadow: var(--depth-0);
 }
 
 .page-figure--right {
@@ -268,10 +269,12 @@
   font-family: "EB Garamond", Georgia, serif;
   font-weight: 400;
   color: var(--ink);
+  transition: color 150ms ease, text-shadow 150ms ease;
 }
 
 .spread-line--body:hover {
   color: var(--ochre);
+  text-shadow: 0 0 8px rgba(196, 150, 58, 0.15);
 }
 
 .spread-line--pullquote {
@@ -399,11 +402,29 @@
   transition: color 150ms ease;
   padding: 0.35rem 0;
   border-radius: 4px;
+  position: relative;
+  overflow: hidden;
 }
 
-.colophon__toc-link:hover,
-.colophon__toc-link:focus-visible {
+.colophon__toc-link::before {
+  content: '';
+  position: absolute;
+  left: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 0;
+  background: var(--ochre);
+  border-radius: 2px;
+  transition: height 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.colophon__toc-link:hover {
   color: var(--ochre);
+}
+
+.colophon__toc-link:hover::before {
+  height: 70%;
 }
 
 .colophon__toc-number {

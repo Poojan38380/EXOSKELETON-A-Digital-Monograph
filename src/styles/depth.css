@@ -1,0 +1,116 @@
+/* ═══════════════════════════════════════════════════════════
+   EXOSKELETON — Depth & Spatial System
+   Theme: Obsidian Cabinet (100x Experience)
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Depth Utility Classes ─────────────────────────────── */
+.depth-0 { box-shadow: var(--depth-0); }
+.depth-1 { box-shadow: var(--depth-1); }
+.depth-2 { box-shadow: var(--depth-2); }
+.depth-3 { box-shadow: var(--depth-3); }
+.depth-4 { box-shadow: var(--depth-4); }
+.depth-glow { box-shadow: var(--depth-glow); }
+
+/* ── Content Elevation ─────────────────────────────────── */
+
+/* Figure cards — layered depth */
+.page-figure {
+  position: relative;
+  border-radius: 4px;
+  background: var(--parchment);
+  box-shadow: 
+    var(--depth-2),
+    0 1px 0 rgba(255, 255, 255, 0.6) inset;
+  transition: box-shadow 400ms ease, transform 400ms ease;
+}
+
+.page-figure:hover {
+  box-shadow: 
+    var(--depth-3),
+    var(--depth-glow),
+    0 1px 0 rgba(255, 255, 255, 0.6) inset;
+  transform: translateY(-2px);
+}
+
+/* Pull quotes — subtle lift */
+.pull-quote {
+  box-shadow: var(--depth-1), inset 0 0 0 1px rgba(196, 150, 58, 0.08);
+}
+
+/* Figure images — responsive depth on hover */
+.page-figure__img {
+  box-shadow: var(--depth-2);
+  transition: transform 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 400ms ease;
+}
+
+.page-figure__img:hover {
+  transform: scale(1.02) translateY(-2px);
+  box-shadow: 
+    var(--depth-3),
+    var(--depth-glow);
+}
+
+/* ── Sticky Header Elevation ───────────────────────────── */
+.page-spread__header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(to bottom, var(--parchment) 80%, transparent);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Card Surfaces ─────────────────────────────────────── */
+
+/* Record cards for specimen display */
+.record-card {
+  position: relative;
+  border-radius: 4px;
+  background: var(--parchment);
+  border: 1px solid var(--rule-light);
+  box-shadow: var(--depth-1);
+  transition: all 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: hidden;
+}
+
+.record-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: var(--depth-3), var(--depth-glow);
+  border-color: var(--rule-accent);
+}
+
+.record-card__image {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.record-card:hover .record-card__image {
+  transform: scale(1.03);
+}
+
+/* ── Atmospheric Backgrounds ───────────────────────────── */
+
+/* Content area — soft volumetric lighting */
+.book-container {
+  background: 
+    radial-gradient(ellipse at 20% 50%, rgba(196, 150, 58, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(74, 140, 126, 0.03) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 80%, rgba(155, 35, 53, 0.02) 0%, transparent 45%),
+    var(--parchment);
+}
+
+/* ── Z-Index Scale ─────────────────────────────────────── */
+
+/*
+  Z-Index Hierarchy (use these consistently):
+  0   — Base content
+  1   — Elevated content (figures, cards)
+  10  — Sticky headers
+  50  — Floating elements (pills, badges)
+  100 — Texture overlays (parchment noise)
+  500 — Navigation (rail, mobile bar)
+  1000 — Global overlays (modals, loaders)
+*/
