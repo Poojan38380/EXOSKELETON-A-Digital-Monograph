@@ -16,6 +16,7 @@ vi.mock('../../content/image-urls', () => ({
   IMG_DUNG_BEETLE: '/mock/dung-beetle.jpg',
   IMG_MONARCH_WING: '/mock/monarch-wing.jpg',
   IMG_MOSQUITO_PROBOSCIS: '/mock/mosquito-proboscis.jpg',
+  IMG_COLLOPHON: '/mock/colophon.jpg',
 }))
 
 describe('NavigationRail', () => {

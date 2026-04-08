@@ -33,6 +33,7 @@ export interface SpreadConfig {
 export type AnchorPositions = {
   firstWord: { x: number; y: number }
   lastWord: { x: number; y: number }
+  title: { x: number; y: number }
 }
 
 export interface PageSpreadProps {
@@ -289,11 +290,14 @@ export const PageSpread = React.forwardRef<HTMLDivElement, PageSpreadProps>(
       if (cleanResult.lines.length > 0) {
         const first = cleanResult.lines[0]!
         const last = cleanResult.lines[cleanResult.lines.length - 1]!
+        const titleFirst = titleResult.lines[0]!
         onAnchorPositionsRef.current?.({
           // Start: left edge of first word — butterfly will sit just to its left
           firstWord: { x: first.x, y: first.y },
           // End: right edge of last word's line — butterfly will sit just to its right
           lastWord: { x: last.x + last.width, y: last.y },
+          // Title position — butterfly starts near here
+          title: { x: titleFirst.x, y: titleFirst.y },
         })
       }
     }, [config, butterflyObstacle, registerLayout])

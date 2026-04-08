@@ -78,6 +78,15 @@ export function NavigationRail({ currentPage, onPageSelect }: NavRailProps) {
           </button>
         ))}
       </div>
+      <a
+        href="https://github.com/Poojan38380/EXOSKELETON-A-Digital-Monograph"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="nav-rail__github"
+        aria-label="View source on GitHub"
+      >
+        <img src="/github.svg" alt="" className="nav-rail__github-icon" />
+      </a>
     </nav>
   )
 }

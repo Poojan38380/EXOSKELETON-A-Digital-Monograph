@@ -91,7 +91,7 @@ function generateWaypoints(seed: number, start: Point, end: Point): Point[] {
 // ──────────────────────────────────────────────────────────────────────────
 interface ButterflyProps {
   containerRef: React.RefObject<HTMLDivElement | null>
-  anchorPositions: { firstWord: Point; lastWord: Point } | null
+  anchorPositions: { firstWord: Point; lastWord: Point; title: Point } | null
   onObstacleChange?: (obs: BandObstacle | null) => void
 }
 
@@ -113,10 +113,10 @@ export function Butterfly({ anchorPositions, onObstacleChange }: ButterflyProps)
   const getStartPos = useCallback((): Point => {
     const a = anchorRef.current
     if (!a) return { x: 16, y: 160 }
-    // Right edge of butterfly flush with left edge of "To" — sits just before the first word
+    // Start near the title area — butterfly sits just below and to the right of title
     return {
-      x: a.firstWord.x - BUTTERFLY_SIZE,
-      y: a.firstWord.y + BODY_LINE_HEIGHT / 2 - BUTTERFLY_SIZE / 2,
+      x: a.title.x + BUTTERFLY_SIZE,
+      y: a.title.y + BUTTERFLY_SIZE / 2,
     }
   }, [])
 
