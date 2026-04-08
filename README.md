@@ -1,4 +1,4 @@
-# EXOSKELETON
+# Exoskeleton
 
 > A Digital Monograph on Insect Morphology
 
@@ -7,12 +7,49 @@
 [![React 19](https://img.shields.io/badge/react-19-61dafb)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/typescript-5.8-blue)](https://www.typescriptlang.org)
 [![Vite 7](https://img.shields.io/badge/vite-7-646cff)](https://vite.dev)
+[![CI](https://github.com/Poojan38380/EXOSKELETON-A-Digital-Monograph/actions/workflows/test.yml/badge.svg)](https://github.com/Poojan38380/EXOSKELETON-A-Digital-Monograph/actions/workflows/test.yml)
 
 An interactive, beautifully typeset book about entomology — built with React, TypeScript, and a **custom text layout engine** that wraps text around images, handles bidirectional text, and corrects emoji. Features a compound-eye cursor that magnifies text with chromatic aberration, a pheromone-and-moth simulation, an animated SVG butterfly that displaces layout, and scroll-driven reveal animations.
 
-**[View the live demo →](#)** *(add your URL)*
+**[→ View Live Demo](https://exoskeleton-tau.vercel.app)**
 
-![Screenshot placeholder — replace with actual screenshot](./docs/assets/hero-placeholder.png)
+---
+
+## Screenshots
+
+**Home Page**
+
+<img src="./public/media/exoskeleton-home.png" alt="Exoskeleton Home Page" width="100%" />
+
+**Expanded Sidebar Navigation**
+
+<img src="./public/media/exoskeleton-home-sidebar-expanded..png" alt="Expanded Sidebar Navigation" width="100%" />
+
+**Page with Sidebar Extended**
+
+<img src="./public/media/page-with-sidebar-extended.png" alt="Page with Sidebar Extended" width="100%" />
+
+**Masonry Grid Layout**
+
+<img src="./public/media/masongry-grid.png" alt="Masonry Grid Layout" width="100%" />
+
+## Interactive Features
+
+**Compound Eye Cursor**
+
+https://github.com/user-attachments/assets/exoskeleton-compund-vision-cursor.mp4
+
+**Butterfly Interaction — Text Re-flows Around Animated Obstacle**
+
+https://github.com/user-attachments/assets/exoskeleton-butterfly-interaction.mp4
+
+**Antennae Page — Pheromone Drop Effect**
+
+https://github.com/user-attachments/assets/exoskeleton-antannae-pheromon-effext.mp4
+
+**Full Demo Walkthrough**
+
+https://github.com/user-attachments/assets/exoskeleton-full-demo.mp4
 
 ---
 
@@ -103,7 +140,7 @@ See [TESTING.md](./TESTING.md) for the full guide, and [CONTRIBUTING.md](./CONTR
 | [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) | Community guidelines (Contributor Covenant 2.1) |
 | [CHANGELOG.md](./CHANGELOG.md) | Version history |
 | [TESTING.md](./TESTING.md) | Testing conventions and patterns |
-| [docs/GUIDES/worktree-guide.md](./.github/docs/GUIDES/worktree-guide.md) | Git worktree setup for parallel development |
+| [Worktree Guide](./.github/docs/GUIDES/worktree-guide.md) | Git worktree setup for parallel development |
 
 ## Contributing
 
