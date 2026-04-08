@@ -292,4 +292,4 @@ git worktree remove ../exoskeleton-my-feature
 
 Each worktree is an isolated checkout on its own branch. Agents can work independently without conflicts.
 
-**Full guide:** See [`docs/GUIDES/worktree-guide.md`](./docs/GUIDES/worktree-guide.md) for complete instructions for both humans and AI agents.
+**Full guide:** See [`.github/docs/GUIDES/worktree-guide.md`](./.github/docs/GUIDES/worktree-guide.md) for complete instructions for both humans and AI agents.

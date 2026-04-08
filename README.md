@@ -1,10 +1,38 @@
-# Exoskeleton
+# EXOSKELETON
 
-A digital monograph exploring entomology through interactive design and typography.
+> A Digital Monograph on Insect Morphology
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![Node.js >= 18](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org)
+[![React 19](https://img.shields.io/badge/react-19-61dafb)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/typescript-5.8-blue)](https://www.typescriptlang.org)
+[![Vite 7](https://img.shields.io/badge/vite-7-646cff)](https://vite.dev)
+
+An interactive, beautifully typeset book about entomology — built with React, TypeScript, and a **custom text layout engine** that wraps text around images, handles bidirectional text, and corrects emoji. Features a compound-eye cursor that magnifies text with chromatic aberration, a pheromone-and-moth simulation, an animated SVG butterfly that displaces layout, and scroll-driven reveal animations.
+
+**[View the live demo →](#)** *(add your URL)*
+
+![Screenshot placeholder — replace with actual screenshot](./docs/assets/hero-placeholder.png)
+
+---
+
+## Features
+
+- **Custom Text Layout Engine** — Canvas-based measurement, CSS-accurate line wrapping, obstacle avoidance for inline images, bidi/RTL support, CJK handling
+- **Compound Eye Cursor** — Hexagonal facet grid magnifies text under your mouse with chromatic aberration and barrel distortion
+- **Pheromone & Moth Simulation** — Click anywhere to drop pheromone trails; watch moths navigate toward them
+- **Animated SVG Butterfly** — Flies between text anchors and acts as a live layout obstacle
+- **Per-Page Theming** — Each chapter has its own accent color, glow pattern, and texture overlay
+- **Collapsible Navigation Rail** — Sidebar with page thumbnails, expands on hover
+- **Responsive Design** — Bottom navigation bar on mobile, full sidebar on desktop
+- **Image Lightbox** — Fullscreen viewer for insect photographs
+- **Zero External UI Libraries** — Only React, React DOM, and test dependencies
 
 ## Quick Start
 
 ```bash
+git clone https://github.com/Poojan38380/EXOSKELETON-A-Digital-Monograph.git
+cd EXOSKELETON-A-Digital-Monograph
 npm install
 npm run dev
 ```
@@ -16,63 +44,86 @@ Open `http://localhost:5173` in your browser.
 | Command | Description |
 |---------|-------------|
 | `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run preview` | Preview production build |
+| `npm run build` | Type-check and produce a production build |
+| `npm run preview` | Preview the production build |
 | `npm test` | Run all tests |
 | `npm run test:watch` | Run tests in watch mode |
 | `npm run test:coverage` | Run tests with coverage report |
 
-## Testing
-
-This project uses **Vitest** + **Testing Library** for testing. All new features must include tests.
-
-- **Test guide:** See [`TESTING.md`](./TESTING.md) for testing conventions and patterns
-- **Test utilities:** `src/test/utils.tsx`, `src/test/mocks.ts`
-- **Existing tests:** `src/**/__tests__/*.test.tsx`
-
-## Git Worktrees (Parallel Development)
-
-This project supports multiple AI agents working simultaneously via git worktrees:
-
-```powershell
-# Create a worktree for a feature
-.\scripts\create-worktree.ps1 feature/my-feature
-
-# List worktrees
-git worktree list
-```
-
-- **Full guide:** See [`docs/GUIDES/worktree-guide.md`](./docs/GUIDES/worktree-guide.md) for complete instructions for both humans and AI agents
-
-## Project Structure
+## Architecture
 
 ```
 src/
-├── components/          # React components
-│   ├── pages/          # Page-specific components
+├── components/          # React UI components
+│   ├── pages/          # Page-specific components (11 chapters)
 │   └── __tests__/      # Component tests
-├── context/            # React context providers
-│   └── __tests__/      # Context tests
-├── content/            # Text content and data
-├── layout-engine/      # Text layout algorithms
-│   └── __tests__/      # Layout engine tests
-├── utils/              # Utility functions
-│   └── __tests__/      # Utility tests
-├── test/               # Test utilities and setup
-└── styles/             # CSS styles
+├── context/            # React context providers (theme, layout, lightbox)
+├── content/            # Book text, image URLs, and data
+├── layout-engine/      # Custom text layout system (~3,000+ lines)
+│   ├── layout.ts       # Main engine: canvas measurement, prepare/layout
+│   ├── line-break.ts   # Segment-based line wrapping matching CSS behavior
+│   ├── analysis.ts     # Text segmentation, Intl.Segmenter, URL detection
+│   ├── measurement.ts  # Canvas text sizing, emoji correction
+│   ├── bidi.ts         # Simplified UBA for mixed LTR/RTL
+│   └── wrap-geometry.ts # Polygon hull extraction, obstacle avoidance
+├── hooks/              # Custom React hooks
+├── utils/              # Utility functions (hex grid math)
+├── styles/             # CSS: Obsidian Cabinet theme, animations, page styles
+└── test/               # Test setup, utilities, mocks
 ```
 
 ## Tech Stack
 
-- **React 19** — UI framework
-- **TypeScript** — Type safety
-- **Vite** — Build tool and dev server
-- **Vitest** — Test runner
-- **Testing Library** — Component testing
+| Layer | Technology |
+|-------|-----------|
+| **UI** | React 19, TypeScript |
+| **Build** | Vite 7 |
+| **Testing** | Vitest, Testing Library, jsdom |
+| **CI/CD** | GitHub Actions |
+| **Styling** | Plain CSS (no CSS-in-JS) |
+| **Pre-commit** | Husky + lint-staged |
+
+## Testing
+
+All features include tests. The project has a solid test suite with 75+ tests across unit, component, and context suites.
+
+```bash
+npm test                 # Run all tests
+npm run test:watch       # Watch mode
+npm run test:coverage    # Coverage report
+```
+
+See [TESTING.md](./TESTING.md) for the full guide, and [CONTRIBUTING.md](./CONTRIBUTING.md) for how to contribute.
 
 ## Documentation
 
-- [`TESTING.md`](./TESTING.md) — Testing guide and conventions
-- [`docs/GUIDES/worktree-guide.md`](./docs/GUIDES/worktree-guide.md) — Git worktree guide
-- [`docs/PLANS/`](./docs/PLANS/) — Product requirements and plans
-- [`docs/TODOS/`](./docs/TODOS/) — Task lists and backlogs
+| Document | Description |
+|----------|-------------|
+| [CONTRIBUTING.md](./CONTRIBUTING.md) | How to contribute: setup, workflow, coding standards |
+| [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) | Community guidelines (Contributor Covenant 2.1) |
+| [CHANGELOG.md](./CHANGELOG.md) | Version history |
+| [TESTING.md](./TESTING.md) | Testing conventions and patterns |
+| [docs/GUIDES/worktree-guide.md](./.github/docs/GUIDES/worktree-guide.md) | Git worktree setup for parallel development |
+
+## Contributing
+
+Contributions are welcome! Please read [CONTRIBUTING.md](./CONTRIBUTING.md) to get started. Don't forget to review our [Code of Conduct](./CODE_OF_CONDUCT.md).
+
+**TL;DR:**
+
+1. Fork & clone
+2. `npm install && npm run dev`
+3. Create a branch: `git checkout -b feat/your-feature`
+4. Add tests for your changes
+5. `npm test` — make sure everything passes
+6. Open a Pull Request
+
+## License
+
+This project is licensed under the **MIT License** — see the [LICENSE](./LICENSE) file for details.
+
+## Acknowledgments
+
+- Google Fonts: Playfair Display, EB Garamond, Cormorant Garamond, Source Code Pro
+- Insect imagery from public domain sources
+- Inspired by the tradition of natural history monographs

@@ -1,8 +1,29 @@
 {
-  "name": "glypdfress",
-  "private": true,
+  "name": "exoskeleton",
   "version": "0.1.0",
+  "description": "A Digital Monograph on Insect Morphology — an interactive, beautifully typeset book with custom text layout engine, compound-eye cursor, pheromone moth simulation, and scroll-driven animations.",
   "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Poojan38380/EXOSKELETON-A-Digital-Monograph.git"
+  },
+  "homepage": "https://github.com/Poojan38380/EXOSKELETON-A-Digital-Monograph#readme",
+  "bugs": {
+    "url": "https://github.com/Poojan38380/EXOSKELETON-A-Digital-Monograph/issues"
+  },
+  "author": "Poojan",
+  "keywords": [
+    "digital-monograph",
+    "entomology",
+    "interactive-book",
+    "text-layout-engine",
+    "react",
+    "vite",
+    "typescript",
+    "compound-eye-cursor",
+    "pheromone-simulation"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -10,7 +31,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "prepare": "husky"
   },
   "dependencies": {
     "react": "^19.1.0",
@@ -23,9 +45,16 @@
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
     "@vitejs/plugin-react": "^5.0.0",
+    "husky": "^9.1.7",
     "jsdom": "^29.0.1",
+    "lint-staged": "^16.1.0",
     "typescript": "~5.8.0",
     "vite": "^7.0.0",
     "vitest": "^4.1.2"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "tsc --noEmit --skipLibCheck"
+    ]
   }
 }
